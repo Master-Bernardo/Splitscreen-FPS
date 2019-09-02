@@ -21,7 +21,8 @@ public class MissileWeapon : Weapon
     float shootingInterval;
 
     [SerializeField]
-    protected GameObject projectilePrefab; //later only the children have this
+    //protected GameObject projectilePrefab; //later only the children have this
+    public string projectileTag;
     public float initialLaunchSpeed;
 
     public AmmoType ammoType;
@@ -31,15 +32,17 @@ public class MissileWeapon : Weapon
         Reset();
         nextShootTime = 0;
         shootingInterval = 1 / fireRate;
+        nextShootTime = Time.time + Random.Range(0, shootingInterval);
     }
 
 
-    public virtual void Shoot()
+    protected virtual void Shoot()
     {
         //Debug.Log("piu piu");
 
-        Projectile projectile = Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation * Quaternion.Euler(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0f)).GetComponent<Projectile>();
-        projectile.startVelocity = initialLaunchSpeed;
+        //Projectile projectile = Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation * Quaternion.Euler(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0f)).GetComponent<Projectile>();
+        Projectile projectile = ProjectilePooler.Instance.SpawnFromPool(projectileTag, shootPoint.position, shootPoint.rotation * Quaternion.Euler(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0f)).GetComponent<Projectile>();
+        projectile.SetVelocity(initialLaunchSpeed);
         projectile.projectileTeamID = teamID;
         projectile.damage = damage;
         if(!infiniteMagazine)currentMagazineAmmo--;
@@ -55,7 +58,7 @@ public class MissileWeapon : Weapon
                 nextShootTime = Time.time + shootingInterval;
                 if (currentMagazineAmmo == 0)
                 {
-                    weaponSystem.StartReload();
+                    if(weaponSystem!=null)weaponSystem.StartReload();
                 }
             }
         } 
@@ -80,9 +83,24 @@ public class MissileWeapon : Weapon
         }
     }
 
+    public Vector3 GetProjectileSpawnPoint()
+    {
+        return shootPoint.position;
+    }
+
+    /*public float GetInitialLaunchSpeed()
+    {
+        initialLaunchSpeed
+    }*/
+
     public virtual void Reload(int value)
     {
         currentMagazineAmmo = value;
+    }
+
+    public void Reload()
+    {
+        currentMagazineAmmo = magazineSize;
     }
 
     /*public int GetCurrentMagazineAmmo()

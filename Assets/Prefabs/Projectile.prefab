@@ -126,6 +126,7 @@ MonoBehaviour:
   damage: 0
   startVelocity: 0
   projectileTeamID: 0
+  rb: {fileID: 2573830092429471737}
   pushes: 1
   pushForce: 10000
   defaultPushForce: 0

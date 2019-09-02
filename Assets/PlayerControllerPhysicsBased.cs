@@ -75,6 +75,7 @@ public class PlayerControllerPhysicsBased : MonoBehaviour
         {
             jump = true;
         }
+
     }
 
     private void FixedUpdate()
@@ -86,13 +87,13 @@ public class PlayerControllerPhysicsBased : MonoBehaviour
 
 
         Vector3 velocityToCheck = new Vector3(rb.velocity.x,0f, rb.velocity.z);
+       
         if (velocityToCheck.magnitude > maxMovementSpeed)
         {
             velocityToCheck = velocityToCheck.normalized * maxMovementSpeed;
             //Debug.Log("too fast");
             rb.velocity = new Vector3(velocityToCheck.x, rb.velocity.y, velocityToCheck.z);
         }
-
 
         //rotation
         //Quaternion desiredRotation = Quaternion.LookRotation(currentLookVector);
@@ -111,7 +112,7 @@ public class PlayerControllerPhysicsBased : MonoBehaviour
         if (torque > maxRotationSpeed) torque = maxRotationSpeed;
         else if (torque < -maxRotationSpeed) torque = -maxRotationSpeed;
 
-        rb.AddTorque(transform.up*torque);
+        rb.AddTorque(transform.up*torque); 
 
 
 

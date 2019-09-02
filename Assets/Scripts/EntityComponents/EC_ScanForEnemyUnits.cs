@@ -18,14 +18,17 @@ public class EC_ScanForEnemyUnits : EntityComponent
     {
         base.SetUpComponent(entity);
         nextScanTime = Time.time + Random.Range(0, scanInterval);
+        Debug.Log("nextScanTime" + nextScanTime);
     }
 
     public override void UpdateComponent()
     {
         if (Time.time > nextScanTime)
         {
-            nextScanTime = Time.time + scanInterval;
+            //time.time is not very accurate
+            nextScanTime += scanInterval;
             Scan();
+           
         }
     }
 

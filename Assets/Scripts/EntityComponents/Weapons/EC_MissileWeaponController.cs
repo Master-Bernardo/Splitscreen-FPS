@@ -6,15 +6,17 @@ using UnityEngine;
 /* 
  * later on , make either a type enum or children - for drawable - bow and magic and - reloadable - crossbow or gun weapons
  */ 
-public class EC_MissileWeapon : EntityComponent
+public class EC_MissileWeaponController : EntityComponent
 {
-    public float shootingInterval;
-    float nextShootingTime;
-    public float damage;
+    //public float shootingInterval;
+    //float nextShootingTime;
+    //public float damage;
+    public MissileWeapon weapon;
 
+    [Tooltip("how fast do we aim")]
     public float turningSpeed;
-    public GameObject projectilePrefab;
-    public Transform projectileSpawnPoint;
+    //public GameObject projectilePrefab;
+    //public Transform projectileSpawnPoint;
 
     public Transform parent;
     bool aiming = false;
@@ -22,18 +24,21 @@ public class EC_MissileWeapon : EntityComponent
 
     public bool gravityProjectile;
     //projectuile needs to weight 1kg?
-    public float initialLaunchSpeed;
+    //public float initialLaunchSpeed;
     bool hasMovement; //does currentTarget have movement?
     EC_Movement currentEnemyMovement;
 
     [Tooltip("the bullet gets rotated randomly upon shooting, so we add some skill based aiming")]
     public float shootingError;
 
-    public override void SetUpComponent(GameEntity entity)
+    public bool reloading = false;
+    float reloadEndTime;
+
+    /*public override void SetUpComponent(GameEntity entity)
     {
         base.SetUpComponent(entity);
         nextShootingTime = Time.time + shootingInterval;
-    }
+    }*/
 
     public override void UpdateComponent()
     {
@@ -54,10 +59,10 @@ public class EC_MissileWeapon : EntityComponent
 
                     if (hasMovement)
                     {
-                        float timeInAir = (currentTarget.GetPositionForAiming() - projectileSpawnPoint.position).magnitude/initialLaunchSpeed;
+                        float timeInAir = (currentTarget.GetPositionForAiming() - weapon.GetProjectileSpawnPoint()).magnitude / weapon.initialLaunchSpeed;
 
                         //now calculate again, but with speed of the target added
-                        timeInAir = ((currentTarget.GetPositionForAiming() + currentEnemyMovement.GetCurrentVelocity() * timeInAir) - projectileSpawnPoint.position).magnitude / initialLaunchSpeed;
+                        timeInAir = ((currentTarget.GetPositionForAiming() + currentEnemyMovement.GetCurrentVelocity() * timeInAir) - weapon.GetProjectileSpawnPoint()).magnitude / weapon.initialLaunchSpeed;
 
                         desiredAimVector = (currentTarget.GetPositionForAiming()+currentEnemyMovement.GetCurrentVelocity()*timeInAir) - transform.position;
                     }
@@ -70,7 +75,7 @@ public class EC_MissileWeapon : EntityComponent
                 {
 
                     Vector3 enemyPosition = currentTarget.GetPositionForAiming();
-                    Vector3 launchPointPosition = projectileSpawnPoint.position;
+                    Vector3 launchPointPosition = weapon.GetProjectileSpawnPoint();
                     Vector3 weaponPosition = transform.position;
 
                     //refactor positions - get the m only once
@@ -82,7 +87,7 @@ public class EC_MissileWeapon : EntityComponent
                         Vector3 distDelta = enemyPosition - launchPointPosition;
                         float launchAngle = GetLaunchAngle
                         (
-                            initialLaunchSpeed,
+                            weapon.initialLaunchSpeed,
                             new Vector3(distDelta.x, 0f, distDelta.z).magnitude,
                             distDelta.y,
                             true
@@ -93,7 +98,7 @@ public class EC_MissileWeapon : EntityComponent
 
                         float timeInAir;
                         float g = Physics.gravity.magnitude;
-                        float vY = initialLaunchSpeed * Mathf.Sin(launchAngle * (Mathf.PI / 180));
+                        float vY = weapon.initialLaunchSpeed * Mathf.Sin(launchAngle * (Mathf.PI / 180));
                         //vY = 5f;
                         float startH = launchPointPosition.y;
                         float finalH = enemyPosition.y;
@@ -104,7 +109,7 @@ public class EC_MissileWeapon : EntityComponent
                         }
                         else
                         {
-                            float vX = initialLaunchSpeed * Mathf.Cos(launchAngle * (Mathf.PI / 180));
+                            float vX = weapon.initialLaunchSpeed * Mathf.Cos(launchAngle * (Mathf.PI / 180));
                             float distanceX = Vector3.Distance(enemyPosition, launchPointPosition);
                             timeInAir = distanceX / vX;
                         }
@@ -121,7 +126,7 @@ public class EC_MissileWeapon : EntityComponent
                         //1. calculate the launch angle
                         float launchAngle = GetLaunchAngle
                         (
-                            initialLaunchSpeed,
+                            weapon.initialLaunchSpeed,
                             new Vector3(distDelta.x, 0f, distDelta.z).magnitude,
                             distDelta.y,
                             true
@@ -147,23 +152,40 @@ public class EC_MissileWeapon : EntityComponent
         {
             RotateTowards(parent.forward);
         }
+
+        if (reloading)
+        {
+            if (Time.time > reloadEndTime)
+            {
+                reloading = false;
+                weapon.Reload();
+            }
+        }
     }
 
     public void Shoot()
     {
         //add random rotation based on skill
-        
 
-        Projectile projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation * Quaternion.Euler(Random.Range(-shootingError, shootingError), Random.Range(-shootingError, shootingError), 0f)).GetComponent<Projectile>();
+        weapon.HandleLMBDown();
+        /*Projectile projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation * Quaternion.Euler(Random.Range(-shootingError, shootingError), Random.Range(-shootingError, shootingError), 0f)).GetComponent<Projectile>();
         projectile.startVelocity = initialLaunchSpeed;
         projectile.projectileTeamID = myEntity.teamID;
         projectile.damage = damage;
-        nextShootingTime = Time.time + shootingInterval;
+        nextShootingTime = Time.time + shootingInterval;*/
     }
 
     public bool CanShoot()
     {
-        if (Time.time > nextShootingTime)
+        /*if (Time.time > nextShootingTime)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }*/
+        if (weapon.currentMagazineAmmo > 0)
         {
             return true;
         }
@@ -172,6 +194,12 @@ public class EC_MissileWeapon : EntityComponent
             return false;
         }
 
+    }
+
+    public void Reload()
+    {
+        reloading = true;
+        reloadEndTime = Time.time + weapon.reloadTime;
     }
 
     public void AimAt(GameEntity target)

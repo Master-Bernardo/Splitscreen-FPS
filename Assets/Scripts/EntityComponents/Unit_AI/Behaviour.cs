@@ -169,7 +169,7 @@ public class B_MeleeFighter : Behaviour
     {
         if (Time.time > nextDistanceCheckTime)
         {
-            nextDistanceCheckTime = Time.time + distanceCheckingInterval;
+            nextDistanceCheckTime += distanceCheckingInterval;
 
             myWidth = entity.width;
             enemyWidth = enemySensing.nearestEnemy.width;
@@ -241,7 +241,7 @@ public class B_MissileFighter : Behaviour
 
     EC_Movement movement;
     EC_ScanForEnemyUnits enemySensing;
-    EC_MissileWeapon weapon;
+    EC_MissileWeaponController weapon;
     //goes to nearest enemy, shoots  and looks at them when in range, tries not to get too close
 
     public float perfectShootingDistance;
@@ -255,7 +255,7 @@ public class B_MissileFighter : Behaviour
     public float distanceCheckingInterval;
     float nextDistanceCheckTime;
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_ScanForEnemyUnits enemySensing, EC_MissileWeapon weapon)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_ScanForEnemyUnits enemySensing, EC_MissileWeaponController weapon)
     {
         this.enemySensing = enemySensing;
         this.entity = entity;
@@ -270,9 +270,10 @@ public class B_MissileFighter : Behaviour
 
     protected override void Update()
     {
+       // Debug.Log("updateAI");
         if (Time.time > nextDistanceCheckTime)
         {
-            nextDistanceCheckTime = Time.time + distanceCheckingInterval;
+            nextDistanceCheckTime += distanceCheckingInterval;
 
             myWidth = entity.width;
             enemyWidth = enemySensing.nearestEnemy.width;
@@ -309,6 +310,10 @@ public class B_MissileFighter : Behaviour
             if (weapon.CanShoot())
             {
                 weapon.Shoot();
+            }
+            else if(!weapon.reloading)
+            {
+                weapon.Reload();
             }
         }
 

@@ -23,7 +23,7 @@ public class WeaponSystem : MonoBehaviour
 
     public WeaponHUD weaponHUD;
 
-    public Camera rayCastCamera; //fp camera
+    //public Camera rayCastCamera; //fp camera
     //[Header("Animation")]
     //public Animator animator;
 
@@ -55,7 +55,7 @@ public class WeaponSystem : MonoBehaviour
             }
             
         }
-        weaponHUD.SetUp(this);
+        if(weaponHUD!=null)weaponHUD.SetUp(this);
         ChangeWeapon(0);
 
 
@@ -129,7 +129,7 @@ public class WeaponSystem : MonoBehaviour
         }
 
         //point the weapon to aim correctly
-        if (currentSelectedWeapon is MissileWeapon)
+        /*if (currentSelectedWeapon is MissileWeapon)
         {
             //raycast
             Ray ray = rayCastCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
@@ -143,9 +143,9 @@ public class WeaponSystem : MonoBehaviour
             {
                 currentSelectedWeapon.transform.forward = ray.direction;
             }
-        }
+        }*/
 
-            weaponHUD.UpdateHUD(currentSelectedWeapon);
+           if(weaponHUD != null) weaponHUD.UpdateHUD(currentSelectedWeapon);
     }
 
     void ChangeWeapon(int inventorySlot)

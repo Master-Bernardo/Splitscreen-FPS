@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     public int projectileTeamID; //who shoot this projectile
 
     //public float radius;
+    [SerializeField]
     Rigidbody rb;
     [Tooltip("does this projectile push enemies back?")]
     public bool pushes;
@@ -21,13 +22,13 @@ public class Projectile : MonoBehaviour
 
     Vector3 velocityLastFrame; //wen need to save this because it changes on collision
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * startVelocity;
 
+    public void SetVelocity(float startVelocity)
+    {
+        this.startVelocity = startVelocity;
+        rb.velocity = transform.forward * startVelocity;
     }
+
 
     private void FixedUpdate()
     {
@@ -86,7 +87,7 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
 
     }
 
