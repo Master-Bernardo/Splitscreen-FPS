@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
 
         if (damageable != null)
         {
-            Debug.Log("hit");
+           // Debug.Log("hit");
             // check who did we hit, check if he has an gameEntity
             GameEntity entity = collision.gameObject.GetComponent<GameEntity>();
             if (entity != null)

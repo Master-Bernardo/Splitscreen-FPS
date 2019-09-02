@@ -13,8 +13,8 @@ public class EC_Health : EntityComponent
     public Color damageColor;
     Color[] normalColor;
     public MeshRenderer[] renderersToTint;
-    public float changeColorTIme;
-    float nextGoBackToNormalColorTIme;
+    public float changeColorTime = 0.2f;
+    float nextGoBackToNormalColorTime;
 
     public override void SetUpComponent(GameEntity entity)
     {
@@ -45,7 +45,7 @@ public class EC_Health : EntityComponent
 
         if (changeColorOnDamage)
         {
-            nextGoBackToNormalColorTIme = Time.time + changeColorTIme;
+            nextGoBackToNormalColorTime = Time.time + changeColorTime;
 
             colorChanged = true;
             for (int i = 0; i < renderersToTint.Length; i++)
@@ -68,7 +68,7 @@ public class EC_Health : EntityComponent
 
         if (colorChanged)
         {
-            if(Time.time> nextGoBackToNormalColorTIme)
+            if(Time.time> nextGoBackToNormalColorTime)
             {
                 colorChanged = false;
 
