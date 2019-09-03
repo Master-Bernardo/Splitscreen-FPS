@@ -1,0 +1,98 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//scans the area around player and shows the nearest interactable
+public class InteractableShower : MonoBehaviour
+{
+    public float scanRadius;
+    public LayerMask scanLayer;
+    public float scanInterval;
+    float nextScanTime;
+
+    Interactable interactableLastFrame;
+    // Start is called before the first frame update
+    void Start()
+    {
+        nextScanTime = Time.time;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Time.time > nextScanTime)
+        {
+            Collider[] visibleColliders = Physics.OverlapSphere(transform.position, scanRadius, scanLayer);
+
+            //get the nearest
+            float nearestDistance = Mathf.Infinity;
+            Collider nearestInteractible = null;
+
+            for (int i = 0; i < visibleColliders.Length; i++)
+            {
+                Collider currentCollider = visibleColliders[i];
+                float currentDistance = (currentCollider.transform.position - transform.position).sqrMagnitude;
+                if (currentDistance < nearestDistance)
+                {
+                    currentDistance = nearestDistance;
+                    nearestInteractible = currentCollider;
+                }
+
+            }
+
+            Interactable interactableThisFrame = null;
+
+            if (nearestInteractible != null)
+            {
+                interactableThisFrame = nearestInteractible.GetComponent<Interactable>();
+            }
+
+            if (interactableLastFrame != null)
+            {
+                if(interactableLastFrame!= interactableThisFrame)
+                {
+                    interactableLastFrame.Hide();
+                }
+            }
+
+            if (interactableThisFrame != null)
+            {
+                if (interactableLastFrame != interactableThisFrame)
+                {
+                    interactableThisFrame.Show();
+                }
+            }
+
+            interactableLastFrame = interactableThisFrame;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (interactableLastFrame != null)
+            {
+                interactableLastFrame.StartInteract();
+            }
+        }
+
+        if (Input.GetKey(KeyCode.F))
+        {
+            if (interactableLastFrame != null)
+            {
+                interactableLastFrame.HoldInteract();
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            if (interactableLastFrame != null)
+            {
+                interactableLastFrame.StopInteract();
+
+            }
+        }
+
+
+    }
+
+   
+}

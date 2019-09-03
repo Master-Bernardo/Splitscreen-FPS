@@ -1,0 +1,209 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
+
+public class Interactable : MonoBehaviour
+{
+
+    //how fast does our fill rect empthy itself
+    public float defillSpeed;
+    public float fillSpeed;
+    //value between 0 and 1
+    float interactionFill;
+
+
+
+    [Tooltip("does the fill bar reset if we stop filluing or does it defill with a certain speed")]
+    public bool resetOnRelease;
+
+    public Canvas uiHolder;
+    public Image fillImage;
+
+    public Color sucessfulColor;
+    public Color failedColor;
+    //Color currentTransitionColor;
+    public Color normalColor;
+
+    public Image[] imagesToTint;
+
+    public bool hideOnSucessfulInteract;
+    public float animationPlayTime;
+    float changeBackToNormalColorTime;
+
+    bool interactionSucessful;
+    public float scaleSpeed;
+
+    public UnityEvent OnStartInteract;
+    public UnityEvent OnHoldInteract;
+    public UnityEvent OnStopInteract;
+    public UnityEvent OnSucessfullyInteract;
+
+    enum InteractionState
+    {
+        NoInteraction,
+        Interacting,
+        PlayingInteractionAnimation,
+    }
+
+    InteractionState state = InteractionState.NoInteraction;
+
+
+    //the interactibles zoom up and down depending on visiblity
+    enum VisibilityState
+    {
+        Default,
+        ScalingUp,
+        ScalingDown
+    }
+
+    VisibilityState visibilityState;
+
+    public void StartInteract()
+    {
+        if(state == InteractionState.NoInteraction)
+        {
+            state = InteractionState.Interacting;
+
+        }
+
+        OnStartInteract.Invoke();
+    }
+
+    public void HoldInteract()
+    {
+        if (state == InteractionState.Interacting)
+        {
+            //interactedThisFrame = true;
+            interactionFill += fillSpeed;
+
+            if (interactionFill >= 1)
+            {
+                interactionFill = 1;
+
+                state = InteractionState.PlayingInteractionAnimation;
+                changeBackToNormalColorTime = Time.time + animationPlayTime;
+
+                for (int i = 0; i < imagesToTint.Length; i++)
+                {
+                    imagesToTint[i].color = sucessfulColor;
+                }
+                interactionSucessful = true;
+
+                if (hideOnSucessfulInteract) Hide();
+
+            }
+
+            fillImage.fillAmount = interactionFill;
+
+        }
+
+        OnHoldInteract.Invoke();
+    }
+
+    public void StopInteract()
+    {
+        if(state == InteractionState.Interacting)
+        {
+            state = InteractionState.PlayingInteractionAnimation;
+            changeBackToNormalColorTime = Time.time + animationPlayTime;
+
+            for (int i = 0; i < imagesToTint.Length; i++)
+            {
+                imagesToTint[i].color = failedColor;
+            }
+
+            interactionSucessful = false;
+        }
+
+        OnStopInteract.Invoke();
+    }
+
+    void Update()
+    {
+        switch (state)
+        {
+            case InteractionState.NoInteraction:
+
+                interactionFill -= defillSpeed;
+                if (interactionFill < 0) interactionFill = 0;
+                fillImage.fillAmount = interactionFill;
+
+                break;
+
+            case InteractionState.PlayingInteractionAnimation:
+                Debug.Log("yee");
+                if(Time.time> changeBackToNormalColorTime)
+                {
+                    state = InteractionState.NoInteraction;
+
+                    Debug.Log("Time.time: " + Time.time);
+                    Debug.Log("changeBackToNormalColorTime: " + changeBackToNormalColorTime);
+
+                    for (int i = 0; i < imagesToTint.Length; i++)
+                    {
+                        imagesToTint[i].color = normalColor;
+                    }
+
+                    if (interactionSucessful)
+                    {
+                        OnSucessfullyInteract.Invoke();
+                        Reset();
+                    }
+                    else
+                    {
+                        OnStopInteract.Invoke();
+                    }
+                }
+
+
+                break;
+        }
+
+        if(visibilityState == VisibilityState.ScalingUp)
+        {
+            uiHolder.transform.localScale += new Vector3(scaleSpeed, scaleSpeed, scaleSpeed);
+            if (uiHolder.transform.localScale.magnitude > 0.99)
+            {
+                uiHolder.transform.localScale = new Vector3(1, 1, 1);
+                visibilityState = VisibilityState.Default;
+            }
+
+        }
+        else if(visibilityState == VisibilityState.ScalingDown)
+        {
+            uiHolder.transform.localScale -= new Vector3(scaleSpeed, scaleSpeed, scaleSpeed);
+            if (uiHolder.transform.localScale.magnitude < 0.01)
+            {
+                uiHolder.transform.localScale = new Vector3(0, 0, 0);
+                Debug.Log("backToDefault");
+                visibilityState = VisibilityState.Default;
+                Debug.Log("visiblityState: " + visibilityState);
+                uiHolder.enabled = false;
+            }
+        }
+
+    }
+
+    void Reset()
+    {
+        interactionFill = 0;
+        fillImage.fillAmount = interactionFill;
+    }
+
+
+
+    public void Show()
+    {
+        visibilityState = VisibilityState.ScalingUp;
+        uiHolder.enabled = true;
+        //uiHolder.enabled = true;
+    }
+
+    public void Hide()
+    {
+        visibilityState = VisibilityState.ScalingDown;
+        //uiHolder.enabled = false;
+    }
+}

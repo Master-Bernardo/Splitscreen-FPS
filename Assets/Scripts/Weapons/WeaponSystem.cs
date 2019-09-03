@@ -160,13 +160,15 @@ public class WeaponSystem : MonoBehaviour
         if (currentSelectedWeapon != null)
         {
             currentSelectedWeapon.gameObject.SetActive(false);
+            currentSelectedWeapon.OnWeaponDeselect();
         }
 
         currentSelectedWeapon = inventory[inventorySlot];
 
         if (currentSelectedWeapon != null)
         {
-            currentSelectedWeapon.gameObject.SetActive(true);           
+            currentSelectedWeapon.gameObject.SetActive(true);
+            currentSelectedWeapon.OnWeaponSelect();
         }
     }
 

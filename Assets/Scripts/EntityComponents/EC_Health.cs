@@ -7,14 +7,16 @@ public class EC_Health : EntityComponent
 {
     public float currentHealth;
     public float maxHealth;
-    public RectTransform healthBarFill; // for later
+    public Image healthBarFill; // for later
     public bool changeColorOnDamage;
     bool colorChanged;
-    public Color damageColor;
-    Color[] normalColor;
+    public Material damageMaterial;
+    Material[] normalMaterials;
     public MeshRenderer[] renderersToTint;
     public float changeColorTime = 0.2f;
     float nextGoBackToNormalColorTime;
+
+    public DeathEffect deathEffect;
 
     public override void SetUpComponent(GameEntity entity)
     {
@@ -24,11 +26,11 @@ public class EC_Health : EntityComponent
         currentHealth = maxHealth;
 
 
-        normalColor = new Color[renderersToTint.Length];
+        normalMaterials = new Material[renderersToTint.Length];
 
         for (int i = 0; i < renderersToTint.Length; i++)
         {
-            normalColor[i] = renderersToTint[i].material.GetColor("_BaseColor");
+            normalMaterials[i] = renderersToTint[i].material;
         }
     }
 
@@ -40,7 +42,13 @@ public class EC_Health : EntityComponent
         if (currentHealth <= 0)
         {
             currentHealth = 0;
+            if (deathEffect != null) deathEffect.OnDie();
             myEntity.Die();
+        }
+
+        if (healthBarFill != null)
+        {
+            healthBarFill.fillAmount = currentHealth / maxHealth;
         }
 
         if (changeColorOnDamage)
@@ -50,20 +58,48 @@ public class EC_Health : EntityComponent
             colorChanged = true;
             for (int i = 0; i < renderersToTint.Length; i++)
             {
-                // You can re-use this block between calls rather than constructing a new one each time.
-                var block = new MaterialPropertyBlock();
+                renderersToTint[i].material = damageMaterial;
+            }
+        }
+    }
 
-                // You can look up the property by ID instead of the string to be more efficient.
-                block.SetColor("_BaseColor", damageColor);
+    public override void OnTakeDamage(float damage, Vector3 force)
+    {
+        base.OnTakeDamage(damage);
 
-                // You can cache a reference to the renderer to avoid searching for it.
-                renderersToTint[i].SetPropertyBlock(block);
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            if (deathEffect != null) deathEffect.OnDie(force);
+            myEntity.Die();
+
+        }
+
+        if (healthBarFill != null)
+        {
+            healthBarFill.fillAmount = currentHealth / maxHealth;
+        }
+
+        if (changeColorOnDamage)
+        {
+            nextGoBackToNormalColorTime = Time.time + changeColorTime;
+
+            colorChanged = true;
+            for (int i = 0; i < renderersToTint.Length; i++)
+            {
+                renderersToTint[i].material = damageMaterial;
             }
         }
     }
 
     public override void UpdateComponent()
     {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            OnTakeDamage(500);
+        }
+
         base.UpdateComponent();
 
         if (colorChanged)
@@ -74,14 +110,16 @@ public class EC_Health : EntityComponent
 
                 for (int i = 0; i < renderersToTint.Length; i++)
                 {
+                    renderersToTint[i].material = normalMaterials[i];
+
                     // You can re-use this block between calls rather than constructing a new one each time.
-                    var block = new MaterialPropertyBlock();
+                    //var block = new MaterialPropertyBlock();
 
                     // You can look up the property by ID instead of the string to be more efficient.
-                    block.SetColor("_BaseColor", normalColor[i]);
+                    //block.SetColor("_BaseColor", normalColor[i]);
 
                     // You can cache a reference to the renderer to avoid searching for it.
-                    renderersToTint[i].SetPropertyBlock(block);
+                    //renderersToTint[i].SetPropertyBlock(block);
                 }
             }
         }

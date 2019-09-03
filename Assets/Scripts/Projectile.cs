@@ -19,6 +19,8 @@ public class Projectile : MonoBehaviour
     public float pushForce;
     [Tooltip("default pushForce is the one from the rb")]
     public bool defaultPushForce;
+    [Tooltip("this Force gets pllied to the corpse")]
+    public float killPushForce;
 
     Vector3 velocityLastFrame; //wen need to save this because it changes on collision
 
@@ -56,19 +58,19 @@ public class Projectile : MonoBehaviour
                     DiplomacyStatus diplomacyStatus = Settings.Instance.GetDiplomacyStatus(projectileTeamID, entity.teamID);
                     if(diplomacyStatus == DiplomacyStatus.War)
                     {
-                        damageable.TakeDamage(damage);
+                        GiveDamage(damageable);
                     }
 
                 }
                 else
                 {
-                    damageable.TakeDamage(damage);
+                    GiveDamage(damageable);
                 }
 
             }
             else
             {
-                damageable.TakeDamage(damage);
+                GiveDamage(damageable);
             }
         }
 
@@ -80,15 +82,24 @@ public class Projectile : MonoBehaviour
             }
             else
             {
-                pusheable.Push(velocityLastFrame.normalized* pushForce);
-               // Debug.Log(rb.velocity);
-                //Debug.Log("actual: " + rb.velocity.normalized * pushForce);
-                
+                pusheable.Push(velocityLastFrame.normalized* pushForce);              
             }
         }
 
         gameObject.SetActive(false);
 
+    }
+
+    void GiveDamage(IDamageable<float> damageable)
+    {
+        if (pushes)
+        {
+            damageable.TakeDamage(damage, velocityLastFrame.normalized * killPushForce);
+        }
+        else
+        {
+            damageable.TakeDamage(damage);
+        }                    
     }
 
 

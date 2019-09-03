@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+//[RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Rigidbody))]
 public class EC_Movement : EntityComponent, IPusheable<Vector3>
 {  
@@ -13,7 +13,8 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //for rotation independent of navmeshAgent;
     float angularSpeed;
 
-    public bool showGizmo;
+    [SerializeField]
+    bool showGizmo;
 
 
     //for optimisation we can call the updater only every x frames

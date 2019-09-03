@@ -42,7 +42,7 @@ public class EC_MeleeWeapon : EntityComponent
             //target.TakeDamage(meleeDamage);
             attack = true;
             nextMeleeAttackTime = Time.time + attackDuration;
-            weaponAnimator.SetTrigger("Attack");
+            weaponAnimator.SetTrigger("Attack1");
             //currentTarget = target;
         }
     }

@@ -6,6 +6,9 @@ using UnityEngine.Events;
 public interface IDamageable<T>
 {
     void TakeDamage(T damage);
+
+    //the other form of take damage, we also give a force to throw the corpse by
+    void TakeDamage(T damage, Vector3 force);
 }
 
 

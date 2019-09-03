@@ -130,3 +130,4 @@ MonoBehaviour:
   pushes: 1
   pushForce: 10000
   defaultPushForce: 0
+  killPushForce: 500

@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public string weaponName;
     public float damage; //could be expanded later to diffeent damages  
-    public bool isEquipped = true;
+    //public bool isEquipped = true;
     //public float ammoMultiplier=1;
     public int teamID;
     protected WeaponSystem weaponSystem;
@@ -14,6 +14,16 @@ public class Weapon : MonoBehaviour
     public void SetUp(WeaponSystem weaponSystem)
     {
         this.weaponSystem = weaponSystem;
+    }
+
+    public virtual void OnWeaponSelect()
+    {
+
+    }
+
+    public virtual void OnWeaponDeselect()
+    {
+
     }
 
     public virtual void HandleLMBDown()

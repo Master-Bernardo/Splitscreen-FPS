@@ -13,6 +13,11 @@ public class EC_DestructiveEnvironment : MonoBehaviour, IDamageable<float>//, IP
         health.OnTakeDamage(damage);
     }
 
+    public virtual void TakeDamage(float damage, Vector3 force)
+    {
+
+    }
+
     /*public void Push(Vector3 force)
     {
         if (isPusheable)

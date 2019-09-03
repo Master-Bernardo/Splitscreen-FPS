@@ -26,6 +26,11 @@ public class EntityComponent : MonoBehaviour
     {
 
     }
+
+    public virtual void OnTakeDamage(float damage, Vector3  force)
+    {
+
+    }
 }
 /*
 //can be toogled on of via UI

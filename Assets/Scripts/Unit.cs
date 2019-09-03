@@ -20,4 +20,12 @@ public class Unit : GameEntity, IDamageable<float>
             ability.OnTakeDamage(damage);
         }
     }
+
+    public void TakeDamage(float damage, Vector3 force)
+    {
+        foreach (EntityComponent ability in components)
+        {
+            ability.OnTakeDamage(damage, force);
+        }
+    }
 }
