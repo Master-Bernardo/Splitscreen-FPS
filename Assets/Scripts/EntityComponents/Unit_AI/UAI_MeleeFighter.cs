@@ -8,7 +8,7 @@ public class UAI_MeleeFighter : Ab_UnitAI
 
     public EC_Movement movement;
     public EC_ScanForEnemyUnits sensing;
-    public EC_MeleeWeapon weapon;
+    public MeleeWeapon weapon;
 
     // Start is called before the first frame update
     public override void SetUpComponent(GameEntity entity)

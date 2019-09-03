@@ -179,18 +179,7 @@ MonoBehaviour:
   aimingCorrector: {x: 0, y: 1, z: 0}
   onDieEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OnDie
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   width: 0.5
   unitData: {fileID: 0}
 --- !u!114 &6076253166484247145
@@ -270,6 +259,7 @@ MonoBehaviour:
   - {fileID: 7784719811065085507}
   - {fileID: 4833457907693621127}
   changeColorTime: 0.2
+  deathEffect: {fileID: 6300934294058530171}
 --- !u!195 &1362219360397472213
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1020,11 +1010,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathEffect
       objectReference: {fileID: 0}
+    - target: {fileID: 6604589183905111465, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604589183905111465, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 425685759070711666, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df929418312630c41bb6aa5be091ddb3, type: 3}
 --- !u!4 &7745279501281761960 stripped
@@ -1033,3 +1038,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8100251221325192276}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6300934294058530171 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2817201449613420847, guid: df929418312630c41bb6aa5be091ddb3,
+    type: 3}
+  m_PrefabInstance: {fileID: 8100251221325192276}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc7430bfd5a660e4a80df7c1ad05c419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

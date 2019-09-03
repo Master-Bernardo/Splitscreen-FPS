@@ -13,9 +13,13 @@ public class DeathEffect : MonoBehaviour
     public Vector3 forcePosition;
 
     bool dead = false;
-    bool timerStarted = false;
+    bool timer1Started = false; //timer 1 is how long it will stay and dont move
+    bool timer2Started = false; //timer 2 is for going underground slowly
+    public float stayOnEarthTime;
     public float dissapearTime;
-    float nextDissapearTime;
+    float stayOnEarthTimeEnd;
+    public float descendSpeed;
+    float dissapearTimeEnd;
 
     //bool defaultForce = true; //should the corpse just be pushed back or should we use the force, from the weapon?
 
@@ -34,7 +38,7 @@ public class DeathEffect : MonoBehaviour
         //defaultForce = false;
         corpse.SetActive(true);
         transform.SetParent(null);
-        Debug.Log("force:" + force);
+        //Debug.Log("force:" + force);
         rb.AddForceAtPosition(force, transform.InverseTransformPoint(forcePosition), ForceMode.Impulse);
 
         dead = true;
@@ -45,23 +49,40 @@ public class DeathEffect : MonoBehaviour
     {
         if (dead)
         {
-            if (!timerStarted)
+            if (!timer1Started)
             {
                 if (rb.velocity.magnitude < 0.1)
                 {
-                    nextDissapearTime = Time.time + dissapearTime;
-                    timerStarted = true;
+                    stayOnEarthTimeEnd = Time.time + stayOnEarthTime;
+                    timer1Started = true;
                 }
             }
             
         }
 
-        if (timerStarted)
+        if (timer2Started)
         {
-            if(Time.time> nextDissapearTime)
+            if (Time.time > dissapearTimeEnd)
             {
                 Destroy(gameObject);
             }
+            else
+            {
+                transform.position -= Vector3.up * descendSpeed;
+            }
         }
+        else if (timer1Started)
+        {
+            if(Time.time> stayOnEarthTimeEnd)
+            {
+                timer2Started = true;
+                dissapearTimeEnd = Time.time + dissapearTime;
+                //timer1Started = false;
+                rb.isKinematic = true;
+
+
+            }
+        }
+       
     }
 }

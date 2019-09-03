@@ -141,11 +141,11 @@ public class B_MeleeFighter : Behaviour
     float enemyWidth;
 
     //meleefighting
-    EC_MeleeWeapon weapon;
+    MeleeWeapon weapon;
     [SerializeField]
     bool inRange;
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_ScanForEnemyUnits enemySensing, EC_MeleeWeapon weapon)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_ScanForEnemyUnits enemySensing, MeleeWeapon weapon)
     {
         this.entity = entity;
         this.movement = movement;
@@ -220,7 +220,7 @@ public class B_MeleeFighter : Behaviour
         {
             if (weapon.CanAttack())
             {
-                weapon.Attack();
+                weapon.HandleLMBDown();
             }
         }
 

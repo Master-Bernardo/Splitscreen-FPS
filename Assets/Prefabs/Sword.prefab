@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7659392283760347961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6527649046478672803}
+  - component: {fileID: 3790087924391094189}
+  m_Layer: 0
+  m_Name: Sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6527649046478672803
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7659392283760347961}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4479023422070185342}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3790087924391094189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7659392283760347961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 397fa643e07bbad488c3e5fd08ce05a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: Sword
+  damage: 10
+  teamID: 0
+  weaponAnimator: {fileID: 290857813310168982}
+  drawDamageGizmo: 0
+  attacks:
+  - damage: 10
+    meleeAttackInterval: 0.5
+    attackDuration: 0.35
+    hitPosition: {x: 0, y: 0.6, z: 1.3}
+    hitSphereRadius: 0.7
+    pushes: 1
+    pushForce: 3000
+    pushKillForce: 500
+    pushDirection: {x: 0, y: 0, z: 0}
+    defaultDirection: 1
+    animationName: Attack1
+  - damage: 10
+    meleeAttackInterval: 0.5
+    attackDuration: 0.35
+    hitPosition: {x: 0, y: 0.6, z: 1.3}
+    hitSphereRadius: 0.7
+    pushes: 1
+    pushForce: 3000
+    pushKillForce: 500
+    pushDirection: {x: -1, y: 0, z: 0}
+    defaultDirection: 0
+    animationName: Attack2
+--- !u!1 &8670779621177161047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4479023422070185342}
+  m_Layer: 0
+  m_Name: AnimationHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4479023422070185342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8670779621177161047}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.454, y: 0, z: 0.193}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1518594011234347594}
+  m_Father: {fileID: 6527649046478672803}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4764754120236957465
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4479023422070185342}
+    m_Modifications:
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140427676598268024, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_Name
+      value: Sword
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8b0f0b71d0d992146a58f15464f78d24, type: 3}
+--- !u!4 &1518594011234347594 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6272651807460545875, guid: 8b0f0b71d0d992146a58f15464f78d24,
+    type: 3}
+  m_PrefabInstance: {fileID: 4764754120236957465}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &290857813310168982 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5050394470549463183, guid: 8b0f0b71d0d992146a58f15464f78d24,
+    type: 3}
+  m_PrefabInstance: {fileID: 4764754120236957465}
+  m_PrefabAsset: {fileID: 0}

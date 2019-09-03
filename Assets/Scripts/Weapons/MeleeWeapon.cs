@@ -44,7 +44,7 @@ public class MeleeWeapon : Weapon
 
 
             Attack(attackID);
-            Debug.Log("attack: " + attackID);
+            //Debug.Log("attack: " + attackID);
             if (attackID == 0)
             {
                 attackID = 1;
@@ -54,7 +54,7 @@ public class MeleeWeapon : Weapon
                 attackID = 0;
             }
         }
-        else Debug.Log("attack: too fast" );
+        //else Debug.Log("attack: too fast" );
 
     }
 
