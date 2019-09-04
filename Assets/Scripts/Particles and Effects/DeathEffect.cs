@@ -5,10 +5,10 @@ using UnityEngine;
 //dont do it with he dissolve shader?
 public class DeathEffect : MonoBehaviour
 {
-    //TODO let the body fly on the ground, but make a seperate physics layer for this, which only collides with environemnt,
     //also add particle effect and a timer after which the body dissappears, maybe let the body slowly side to the ground
     public GameObject corpse;
     public Rigidbody rb;
+    [Tooltip("default force if the wepon does not give any")]
     public float force;
     public Vector3 forcePosition;
 
@@ -21,9 +21,9 @@ public class DeathEffect : MonoBehaviour
     public float descendSpeed;
     float dissapearTimeEnd;
 
-    //bool defaultForce = true; //should the corpse just be pushed back or should we use the force, from the weapon?
 
-    public void OnDie()
+
+    public void OnDie() //if no force is given as parameter the body gets pushed backwards
     {
         //defaultForce = true;
         corpse.SetActive(true);

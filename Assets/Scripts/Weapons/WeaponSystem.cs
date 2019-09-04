@@ -119,7 +119,7 @@ public class WeaponSystem : MonoBehaviour
 
             case WeaponSystemState.Reloading:
 
-                Debug.Log("Reloading");
+                //Debug.Log("Reloading");
                 if (Time.time > reloadingEndTime)
                 {
                     EndReload();
