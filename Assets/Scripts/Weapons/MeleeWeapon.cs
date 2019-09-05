@@ -37,7 +37,7 @@ public class MeleeWeapon : Weapon
     }
 
 
-    public override void HandleLMBDown()
+    public override void HandleWeaponKey(int weaponKey)
     {
         if (Time.time > nextPrepareMeleeAttackTime)
         {
@@ -58,9 +58,9 @@ public class MeleeWeapon : Weapon
 
     }
 
-    public override void HandleLMBHold()
+   /* public override void HandleLMBHold()
     {
-    }
+    }*/
 
     public override void OnWeaponSelect()
     {

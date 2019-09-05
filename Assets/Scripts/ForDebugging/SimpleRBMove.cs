@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class SimpleAgent : MonoBehaviour
+public class SimpleRBMove : MonoBehaviour
 {
+    public float speed;
 
-    public NavMeshAgent agent;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +15,6 @@ public class SimpleAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            agent.SetDestination(transform.position + transform.forward * 5);
-        }
+        transform.position += transform.forward * speed;
     }
 }

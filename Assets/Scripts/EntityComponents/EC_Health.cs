@@ -124,4 +124,15 @@ public class EC_Health : EntityComponent
             }
         }
     }
+
+    public void AddHealth(int value)
+    {
+        currentHealth += value;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+
+        if (healthBarFill != null)
+        {
+            healthBarFill.fillAmount = currentHealth / maxHealth;
+        }
+    }
 }

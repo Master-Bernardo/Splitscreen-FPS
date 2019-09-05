@@ -34,12 +34,11 @@ public class InteractableShower : MonoBehaviour
                 float currentDistance = (currentCollider.transform.position - transform.position).sqrMagnitude;
                 if (currentDistance < nearestDistance)
                 {
-                    currentDistance = nearestDistance;
+                    nearestDistance = currentDistance;
                     nearestInteractible = currentCollider;
                 }
 
             }
-
             Interactable interactableThisFrame = null;
 
             if (nearestInteractible != null)
@@ -70,7 +69,7 @@ public class InteractableShower : MonoBehaviour
         {
             if (interactableLastFrame != null)
             {
-                interactableLastFrame.StartInteract();
+                interactableLastFrame.StartInteract(gameObject);
             }
         }
 

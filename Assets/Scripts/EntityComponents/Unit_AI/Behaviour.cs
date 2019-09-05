@@ -220,7 +220,7 @@ public class B_MeleeFighter : Behaviour
         {
             if (weapon.CanAttack())
             {
-                weapon.HandleLMBDown();
+                weapon.HandleWeaponKey(0);
             }
         }
 

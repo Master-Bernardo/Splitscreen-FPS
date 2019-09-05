@@ -26,15 +26,15 @@ public class Weapon : MonoBehaviour
 
     }
 
-    public virtual void HandleLMBDown()
+    public virtual void HandleWeaponKey(int weaponKey)
     {
 
     }
 
-    public virtual void HandleLMBHold()
+    /*public virtual void HandleLMBHold()
     {
 
-    }
+    }*/
 
     /*public virtual void HandleRMBHold()
     {

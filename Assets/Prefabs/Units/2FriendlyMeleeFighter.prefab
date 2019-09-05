@@ -155,7 +155,7 @@ MonoBehaviour:
   - {fileID: 3734641105251542954}
   - {fileID: 2075905972073420398}
   changeColorTime: 0.2
-  deathEffect: {fileID: 0}
+  deathEffect: {fileID: 5604096991553550271}
 --- !u!195 &1362219360397472213
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -308,11 +308,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1362219360397472216}
     m_Modifications:
-    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
-        type: 3}
-      propertyPath: m_Name
-      value: Sword
-      objectReference: {fileID: 0}
     - target: {fileID: 6527649046478672803, guid: a3d7ea4283f824548be4fe5a48a704cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -367,6 +362,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
+        type: 3}
+      propertyPath: m_Name
+      value: Sword
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3d7ea4283f824548be4fe5a48a704cb, type: 3}
@@ -543,3 +543,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7700439921991753360}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5604096991553550271 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2817201449613420847, guid: df929418312630c41bb6aa5be091ddb3,
+    type: 3}
+  m_PrefabInstance: {fileID: 7700439921991753360}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc7430bfd5a660e4a80df7c1ad05c419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

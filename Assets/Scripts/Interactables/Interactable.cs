@@ -29,6 +29,8 @@ public class Interactable : MonoBehaviour
     public Image[] imagesToTint;
 
     public bool hideOnSucessfulInteract;
+    [Tooltip("if we want the interactabele button to scale down and up again after sucessful interaction")]
+    public bool hideForASecondOnSucessfulInteract;
     public float animationPlayTime;
     float changeBackToNormalColorTime;
 
@@ -39,6 +41,8 @@ public class Interactable : MonoBehaviour
     public UnityEvent OnHoldInteract;
     public UnityEvent OnStopInteract;
     public UnityEvent OnSucessfullyInteract;
+
+    public GameObject goInteracting; //the personInteracting with it 
 
     enum InteractionState
     {
@@ -55,14 +59,17 @@ public class Interactable : MonoBehaviour
     {
         Default,
         ScalingUp,
-        ScalingDown
+        ScalingDown,
+        ScalingDownAndUp
     }
 
     VisibilityState visibilityState;
 
-    public void StartInteract()
+    public void StartInteract(GameObject goInteracting)
     {
-        if(state == InteractionState.NoInteraction)
+        this.goInteracting = goInteracting;
+
+        if (state == InteractionState.NoInteraction)
         {
             state = InteractionState.Interacting;
 
@@ -92,6 +99,7 @@ public class Interactable : MonoBehaviour
                 interactionSucessful = true;
 
                 if (hideOnSucessfulInteract) Hide();
+                else if (hideForASecondOnSucessfulInteract) HideAndShow();
 
             }
 
@@ -133,13 +141,13 @@ public class Interactable : MonoBehaviour
                 break;
 
             case InteractionState.PlayingInteractionAnimation:
-                Debug.Log("yee");
+                //Debug.Log("yee");
                 if(Time.time> changeBackToNormalColorTime)
                 {
                     state = InteractionState.NoInteraction;
 
-                    Debug.Log("Time.time: " + Time.time);
-                    Debug.Log("changeBackToNormalColorTime: " + changeBackToNormalColorTime);
+                    //Debug.Log("Time.time: " + Time.time);
+                    //Debug.Log("changeBackToNormalColorTime: " + changeBackToNormalColorTime);
 
                     for (int i = 0; i < imagesToTint.Length; i++)
                     {
@@ -149,6 +157,7 @@ public class Interactable : MonoBehaviour
                     if (interactionSucessful)
                     {
                         OnSucessfullyInteract.Invoke();
+                        
                         Reset();
                     }
                     else
@@ -177,10 +186,25 @@ public class Interactable : MonoBehaviour
             if (uiHolder.transform.localScale.magnitude < 0.01)
             {
                 uiHolder.transform.localScale = new Vector3(0, 0, 0);
-                Debug.Log("backToDefault");
+                //Debug.Log("backToDefault");
                 visibilityState = VisibilityState.Default;
-                Debug.Log("visiblityState: " + visibilityState);
+                //Debug.Log("visiblityState: " + visibilityState);
                 uiHolder.enabled = false;
+ 
+            }
+        }
+        else if (visibilityState == VisibilityState.ScalingDownAndUp)
+        {
+            uiHolder.transform.localScale -= new Vector3(scaleSpeed, scaleSpeed, scaleSpeed);
+            if (uiHolder.transform.localScale.magnitude < 0.01)
+            {
+                uiHolder.transform.localScale = new Vector3(0, 0, 0);
+                //Debug.Log("backToDefault");
+                visibilityState = VisibilityState.Default;
+                //Debug.Log("visiblityState: " + visibilityState);
+                uiHolder.enabled = false;
+
+                Show();
             }
         }
 
@@ -205,5 +229,12 @@ public class Interactable : MonoBehaviour
     {
         visibilityState = VisibilityState.ScalingDown;
         //uiHolder.enabled = false;
+    }
+
+    //cool effect upon sucessfully interacting
+    public void HideAndShow()
+    {
+        visibilityState = VisibilityState.ScalingDownAndUp;
+
     }
 }

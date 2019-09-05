@@ -21,6 +21,11 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
     public float gravityMultiplier;
 
+    bool grounded = false; //do we touch the earth?
+    public Transform rayCastStartPosition;
+    public float groundedCheckRaycastDistance;
+    public LayerMask groundedCheckLayermask;
+
     [Header("PID Controller")]
     //for PID Controller
     public float pGain = 1f;
@@ -85,15 +90,28 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
         rb.AddTorque(transform.up * torque);
 
-
-
+        //check if gorunded
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(rayCastStartPosition.position, -Vector3.up, out hit, groundedCheckRaycastDistance))
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
 
         if (jump)
         {
-            Debug.Log("Jump");
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            if (grounded)
+            {
+                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);       
+            }
+
             jump = false;
         }
+
     }
 
 

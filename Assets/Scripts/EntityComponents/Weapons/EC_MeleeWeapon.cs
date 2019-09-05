@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EC_MeleeWeapon : EntityComponent
+/*public class EC_MeleeWeapon : EntityComponent
 {
     //public float meleeRange;
     public float meleeDamage;
@@ -138,7 +138,7 @@ public class EC_MeleeWeapon : EntityComponent
          {
              return false;
          }/*/
-        return false;
+      /*  return false;
     }
 
     private void OnDrawGizmos()
@@ -153,3 +153,4 @@ public class EC_MeleeWeapon : EntityComponent
         }   
     }
 }
+*/

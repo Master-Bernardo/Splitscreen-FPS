@@ -20,6 +20,10 @@ public class BlobShadow : MonoBehaviour
             shadow.position = hit.point + correctionVector;
             shadow.up = Vector3.up;
         }
+        else
+        {
+            shadow.position = projectionPoint.position + (-Vector3.up * 40);
+        }
 
     }
 }

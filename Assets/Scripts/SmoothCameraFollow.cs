@@ -14,7 +14,7 @@ public class SmoothCameraFollow : MonoBehaviour
         offset = transform.position - target.position ;
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         Vector3 desiredPosition = target.position + offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);

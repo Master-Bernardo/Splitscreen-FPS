@@ -167,7 +167,7 @@ public class EC_MissileWeaponController : EntityComponent
     {
         //add random rotation based on skill
 
-        weapon.HandleLMBDown();
+        weapon.HandleWeaponKey(0);
         /*Projectile projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation * Quaternion.Euler(Random.Range(-shootingError, shootingError), Random.Range(-shootingError, shootingError), 0f)).GetComponent<Projectile>();
         projectile.startVelocity = initialLaunchSpeed;
         projectile.projectileTeamID = myEntity.teamID;

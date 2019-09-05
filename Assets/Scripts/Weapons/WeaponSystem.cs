@@ -9,6 +9,7 @@ public class WeaponSystem : MonoBehaviour
     [SerializeField]
     Weapon[] inventory; //will be set up in inspector
     Weapon currentSelectedWeapon;
+    int currentSelectedWeaponID;
     //public Text weaponInfo; //shows weapon name and ammo
 
     public Transform weaponHolder;
@@ -68,6 +69,8 @@ public class WeaponSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentSelectedWeapon = inventory[currentSelectedWeaponID];
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ChangeWeapon(0);
@@ -86,35 +89,46 @@ public class WeaponSystem : MonoBehaviour
         {
             case WeaponSystemState.Default:
 
-                if (Input.GetMouseButtonDown(0))
+                if (currentSelectedWeapon != null)
                 {
-                    currentSelectedWeapon.HandleLMBDown();
-
-                }
-                else
-                {
-                    if (Input.GetMouseButton(0))
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        currentSelectedWeapon.HandleLMBHold();
+                        currentSelectedWeapon.HandleWeaponKey(0);
+
                     }
-                }
-
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
-                    if (mw != null)
+                    else
                     {
-                        if (!mw.infiniteMagazine)
+                        if (Input.GetMouseButton(0))
                         {
-                            if (!mw.IsMagazineFull())
+                            MissileWeapon currentMissileWeapon = currentSelectedWeapon as MissileWeapon;
+                            if (currentMissileWeapon != null)
                             {
-                                StartReload();
+                                if (currentMissileWeapon.automaticTrigger)
+                                {
+                                    currentSelectedWeapon.HandleWeaponKey(0);
+                                }
                             }
                         }
-                    }
-                   
-                }
 
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.R))
+                    {
+                        MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
+                        if (mw != null)
+                        {
+                            if (!mw.infiniteMagazine)
+                            {
+                                if (!mw.IsMagazineFull())
+                                {
+                                    StartReload();
+                                }
+                            }
+                        }
+
+                    }
+                }
+               
                 break;
 
             case WeaponSystemState.Reloading:
@@ -145,11 +159,18 @@ public class WeaponSystem : MonoBehaviour
             }
         }*/
 
-           if(weaponHUD != null) weaponHUD.UpdateHUD(currentSelectedWeapon);
+        if (weaponHUD != null)
+        {
+            if (currentSelectedWeapon != null)
+            {
+                weaponHUD.UpdateHUD(currentSelectedWeapon);
+            }
+        }
     }
 
     void ChangeWeapon(int inventorySlot)
     {
+        
         //animator.SetTrigger("changeWeapon");
         //animator.SetBool("reloading", false);
         if (state == WeaponSystemState.Reloading)
@@ -163,13 +184,37 @@ public class WeaponSystem : MonoBehaviour
             currentSelectedWeapon.OnWeaponDeselect();
         }
 
-        currentSelectedWeapon = inventory[inventorySlot];
+        currentSelectedWeaponID = inventorySlot;
+
+        currentSelectedWeapon = inventory[currentSelectedWeaponID];
 
         if (currentSelectedWeapon != null)
         {
             currentSelectedWeapon.gameObject.SetActive(true);
             currentSelectedWeapon.OnWeaponSelect();
         }
+    }
+
+
+    //returns the current selected weapon
+    public Weapon SwapWeapon(Weapon newWeapon)
+    {
+        AbortReloading();
+
+        Weapon oldWeapon = currentSelectedWeapon;
+        if(oldWeapon != null)oldWeapon.OnWeaponDeselect();
+
+        currentSelectedWeapon = newWeapon;
+        currentSelectedWeapon.OnWeaponSelect();
+        inventory[currentSelectedWeaponID] = currentSelectedWeapon;
+
+        currentSelectedWeapon.transform.SetParent(weaponHolder.transform);
+        currentSelectedWeapon.transform.localPosition = new Vector3(0, 0, 0);
+        currentSelectedWeapon.transform.forward = weaponHolder.transform.forward;
+        currentSelectedWeapon.SetUp(this);
+
+        return oldWeapon;
+
     }
 
     public void StartReload()

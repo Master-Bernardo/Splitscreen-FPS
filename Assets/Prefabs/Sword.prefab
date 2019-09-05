@@ -170,6 +170,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sword
       objectReference: {fileID: 0}
+    - target: {fileID: 579858056938741000, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.568
+      objectReference: {fileID: 0}
+    - target: {fileID: 579858056938741000, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.307
+      objectReference: {fileID: 0}
+    - target: {fileID: 579858056938741000, guid: 8b0f0b71d0d992146a58f15464f78d24,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.9390349
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b0f0b71d0d992146a58f15464f78d24, type: 3}
 --- !u!4 &1518594011234347594 stripped

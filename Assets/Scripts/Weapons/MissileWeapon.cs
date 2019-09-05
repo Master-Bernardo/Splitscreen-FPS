@@ -48,7 +48,8 @@ public class MissileWeapon : Weapon
         if(!infiniteMagazine)currentMagazineAmmo--;
     }
 
-    public override void HandleLMBDown()
+
+    public override void HandleWeaponKey(int weaponKey)
     {
         if (currentMagazineAmmo > 0)
         {
@@ -64,7 +65,7 @@ public class MissileWeapon : Weapon
         } 
     }
 
-    public override void HandleLMBHold()
+   /* public override void HandleLMBHold()
     {
         if (automaticTrigger)
         {
@@ -81,7 +82,7 @@ public class MissileWeapon : Weapon
                 }
             }
         }
-    }
+    }*/
 
     public Vector3 GetProjectileSpawnPoint()
     {
