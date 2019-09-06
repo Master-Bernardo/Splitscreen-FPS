@@ -193,8 +193,19 @@ public class B_MeleeFighter : Behaviour
                     float timeToReachEnemy = distanceToEnemy / movement.GetMaxSpeed();
                     //2. where will the enemy be after this time
                     Vector3 futurePosition = nearestEnemyPosition + enemyMovement.GetCurrentVelocity() * timeToReachEnemy;
- 
+
+                //if the future positionof the target is behind the follower, he should not run backward
+
+                if (Vector3.Angle((futurePosition - myPosition), (nearestEnemyPosition - myPosition)) > 90)
+                {
+                    movement.MoveTo(nearestEnemyPosition + (myPosition - nearestEnemyPosition).normalized * (perfectMeleeDistance + myWidth + enemyWidth));
+                }
+                else
+                {
                     movement.MoveTo(futurePosition);
+                }
+
+
             }   
             else
             {

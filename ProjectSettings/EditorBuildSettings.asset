@@ -5,7 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
+  - enabled: 0
+    path: Assets/Scenes/FirstLevelPerspective.unity
+    guid: 3f236ac9b5cbe6d4b974e99fa299538f
+  - enabled: 0
+    path: Assets/Scenes/FirstLevelOrtho.unity
+    guid: 0bd7b3f797b034a4b86f633ff3277c3b
+  - enabled: 1
+    path: Assets/Scenes/FirstLevelPerspectiveBetterLigting.unity
+    guid: 81fd964f4a9206145be718fe9c9d9c21
   m_configObjects: {}
