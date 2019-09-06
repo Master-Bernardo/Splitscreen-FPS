@@ -304,8 +304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8371d4912010a947ae521efa645ca5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defillSpeed: 0.02
-  fillSpeed: 0.01
+  defillSpeed: 1.2
+  fillSpeed: 0.6
   resetOnRelease: 0
   uiHolder: {fileID: 6428495043154780594}
   fillImage: {fileID: 6428495042636260709}
@@ -316,8 +316,9 @@ MonoBehaviour:
   - {fileID: 6428495042702893989}
   - {fileID: 6428495042636260709}
   hideOnSucessfulInteract: 1
+  hideForASecondOnSucessfulInteract: 0
   animationPlayTime: 0.2
-  scaleSpeed: 0.05
+  scaleSpeed: 3
   OnStartInteract:
     m_PersistentCalls:
       m_Calls: []
@@ -330,6 +331,7 @@ MonoBehaviour:
   OnSucessfullyInteract:
     m_PersistentCalls:
       m_Calls: []
+  goInteracting: {fileID: 0}
 --- !u!65 &6428495044551992181
 BoxCollider:
   m_ObjectHideFlags: 0

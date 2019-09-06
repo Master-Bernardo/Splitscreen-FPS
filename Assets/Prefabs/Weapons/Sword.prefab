@@ -256,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Sword
   damage: 10
+  automaticTrigger: 1
   teamID: 0
   weaponAnimator: {fileID: 290857813310168982}
   drawDamageGizmo: 0

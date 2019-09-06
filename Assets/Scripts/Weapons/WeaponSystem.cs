@@ -100,13 +100,9 @@ public class WeaponSystem : MonoBehaviour
                     {
                         if (Input.GetMouseButton(0))
                         {
-                            MissileWeapon currentMissileWeapon = currentSelectedWeapon as MissileWeapon;
-                            if (currentMissileWeapon != null)
+                            if (currentSelectedWeapon.automaticTrigger)
                             {
-                                if (currentMissileWeapon.automaticTrigger)
-                                {
-                                    currentSelectedWeapon.HandleWeaponKey(0);
-                                }
+                                currentSelectedWeapon.HandleWeaponKey(0);
                             }
                         }
 

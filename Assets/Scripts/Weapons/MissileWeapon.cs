@@ -7,7 +7,7 @@ public class MissileWeapon : Weapon
     
     [SerializeField]
     protected Transform shootPoint; //point from which the projectiles are being shot
-    public bool automaticTrigger;
+    //public bool automaticTrigger;
     [Tooltip("in rounds per second")]
     public float fireRate;
     public float reloadTime;

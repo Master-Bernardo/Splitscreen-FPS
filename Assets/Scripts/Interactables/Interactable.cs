@@ -83,7 +83,7 @@ public class Interactable : MonoBehaviour
         if (state == InteractionState.Interacting)
         {
             //interactedThisFrame = true;
-            interactionFill += fillSpeed;
+            interactionFill += fillSpeed*Time.deltaTime;
 
             if (interactionFill >= 1)
             {
@@ -134,7 +134,7 @@ public class Interactable : MonoBehaviour
         {
             case InteractionState.NoInteraction:
 
-                interactionFill -= defillSpeed;
+                interactionFill -= defillSpeed * Time.deltaTime;
                 if (interactionFill < 0) interactionFill = 0;
                 fillImage.fillAmount = interactionFill;
 
@@ -172,7 +172,8 @@ public class Interactable : MonoBehaviour
 
         if(visibilityState == VisibilityState.ScalingUp)
         {
-            uiHolder.transform.localScale += new Vector3(scaleSpeed, scaleSpeed, scaleSpeed);
+            float deltaScaleSpeed = scaleSpeed*Time.deltaTime;
+            uiHolder.transform.localScale += new Vector3(deltaScaleSpeed, deltaScaleSpeed, deltaScaleSpeed);
             if (uiHolder.transform.localScale.magnitude > 0.99)
             {
                 uiHolder.transform.localScale = new Vector3(1, 1, 1);
@@ -182,7 +183,8 @@ public class Interactable : MonoBehaviour
         }
         else if(visibilityState == VisibilityState.ScalingDown)
         {
-            uiHolder.transform.localScale -= new Vector3(scaleSpeed, scaleSpeed, scaleSpeed);
+            float deltaScaleSpeed = scaleSpeed * Time.deltaTime;
+            uiHolder.transform.localScale -= new Vector3(deltaScaleSpeed, deltaScaleSpeed, deltaScaleSpeed);
             if (uiHolder.transform.localScale.magnitude < 0.01)
             {
                 uiHolder.transform.localScale = new Vector3(0, 0, 0);
@@ -195,7 +197,8 @@ public class Interactable : MonoBehaviour
         }
         else if (visibilityState == VisibilityState.ScalingDownAndUp)
         {
-            uiHolder.transform.localScale -= new Vector3(scaleSpeed, scaleSpeed, scaleSpeed);
+            float deltaScaleSpeed = scaleSpeed * Time.deltaTime;
+            uiHolder.transform.localScale -= new Vector3(deltaScaleSpeed, deltaScaleSpeed, deltaScaleSpeed);
             if (uiHolder.transform.localScale.magnitude < 0.01)
             {
                 uiHolder.transform.localScale = new Vector3(0, 0, 0);

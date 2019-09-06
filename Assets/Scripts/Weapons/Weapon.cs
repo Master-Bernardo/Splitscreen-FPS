@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public string weaponName;
     public float damage; //could be expanded later to diffeent damages  
+    public bool automaticTrigger;
     //public bool isEquipped = true;
     //public float ammoMultiplier=1;
     public int teamID;
