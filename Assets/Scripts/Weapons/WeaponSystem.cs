@@ -66,6 +66,51 @@ public class WeaponSystem : MonoBehaviour
 
     }
 
+    public void UseWeaponStart(int actionID)
+    {
+        if(state == WeaponSystemState.Default)
+        {
+            if (currentSelectedWeapon != null)
+            {
+                currentSelectedWeapon.HandleWeaponKey(actionID);
+            }
+        }
+       
+    }
+
+    public void UseWeaponHold(int actionID)
+    {
+        if (state == WeaponSystemState.Default)
+        {
+            if (currentSelectedWeapon != null)
+            {
+                if (currentSelectedWeapon.automaticTrigger)
+                {
+                    currentSelectedWeapon.HandleWeaponKey(actionID);
+                }
+            }
+        }
+    }
+
+    public void ReloadWeapon()
+    {
+        if (state == WeaponSystemState.Default)
+        {
+            MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
+            if (mw != null)
+            {
+                if (!mw.infiniteMagazine)
+                {
+                    if (!mw.IsMagazineFull())
+                    {
+                        StartReload();
+                    }
+                }
+            }
+        }
+          
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -87,7 +132,7 @@ public class WeaponSystem : MonoBehaviour
 
         switch (state)
         {
-            case WeaponSystemState.Default:
+           /* case WeaponSystemState.Default:
 
                 if (currentSelectedWeapon != null)
                 {
@@ -125,7 +170,7 @@ public class WeaponSystem : MonoBehaviour
                     }
                 }
                
-                break;
+                break;*/
 
             case WeaponSystemState.Reloading:
 

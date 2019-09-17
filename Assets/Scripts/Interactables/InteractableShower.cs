@@ -45,6 +45,15 @@ public class InteractableShower : MonoBehaviour
             {
                 interactableThisFrame = nearestInteractible.GetComponent<Interactable>();
             }
+            else
+            {
+                //reset the one which is too far
+                if(interactableLastFrame != null)
+                {
+                    interactableLastFrame.StopInteract();
+
+                }
+            }
 
             if (interactableLastFrame != null)
             {
@@ -65,32 +74,31 @@ public class InteractableShower : MonoBehaviour
             interactableLastFrame = interactableThisFrame;
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+    }
+
+    public void StartInteract()
+    {
+        if (interactableLastFrame != null)
         {
-            if (interactableLastFrame != null)
-            {
-                interactableLastFrame.StartInteract(gameObject);
-            }
+            interactableLastFrame.StartInteract(gameObject);
         }
+    }
 
-        if (Input.GetKey(KeyCode.F))
+    public void HoldInteract()
+    {
+        if (interactableLastFrame != null)
         {
-            if (interactableLastFrame != null)
-            {
-                interactableLastFrame.HoldInteract();
-            }
+            interactableLastFrame.HoldInteract();
         }
+    }
 
-        if (Input.GetKeyUp(KeyCode.F))
+    public void StopInteract()
+    {
+        if (interactableLastFrame != null)
         {
-            if (interactableLastFrame != null)
-            {
-                interactableLastFrame.StopInteract();
+            interactableLastFrame.StopInteract();
 
-            }
         }
-
-
     }
 
    

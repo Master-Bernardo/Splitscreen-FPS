@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 695186444330799899}
   - component: {fileID: 8595038264206013268}
   - component: {fileID: 7619780001613938120}
+  - component: {fileID: 1786274937611999345}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -228,8 +229,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
-  currentLookVector: {x: 0, y: 0, z: 0}
   playerMovement: {fileID: 7992794992404175054}
+  playerInput: {fileID: 1786274937611999345}
+  weaponSystem: {fileID: 8595038264206013268}
+  interactableShower: {fileID: 7619780001613938120}
+  currentLookVector: {x: 0, y: 0, z: 0}
 --- !u!114 &7992794992404175054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +324,33 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   scanInterval: 0.2
+--- !u!114 &1786274937611999345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2366190835090200063}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 32ef9743b386bb741ab3d90b6c96e0bc,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Gamepad
+  m_DefaultActionMap: 594091e0-9fc8-4a1b-ad1b-2a2dca95b451
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &2731674346835915034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,6 +1151,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366190835090200056}
     m_Modifications:
+    - target: {fileID: 3082245522138485886, guid: 83d591f793407114883b120b4c8a1a6f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 191a9e575e67bb04ab8512cc93d15d3d, type: 2}
     - target: {fileID: 162194869008924412, guid: 83d591f793407114883b120b4c8a1a6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1185,11 +1221,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3082245522138485886, guid: 83d591f793407114883b120b4c8a1a6f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 191a9e575e67bb04ab8512cc93d15d3d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83d591f793407114883b120b4c8a1a6f, type: 3}
 --- !u!23 &3602149101854982465 stripped

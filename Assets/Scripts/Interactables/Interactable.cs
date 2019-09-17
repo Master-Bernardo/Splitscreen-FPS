@@ -174,7 +174,7 @@ public class Interactable : MonoBehaviour
         {
             float deltaScaleSpeed = scaleSpeed*Time.deltaTime;
             uiHolder.transform.localScale += new Vector3(deltaScaleSpeed, deltaScaleSpeed, deltaScaleSpeed);
-            if (uiHolder.transform.localScale.magnitude > 0.99)
+            if (uiHolder.transform.localScale.x > 0.99)
             {
                 uiHolder.transform.localScale = new Vector3(1, 1, 1);
                 visibilityState = VisibilityState.Default;
@@ -185,7 +185,7 @@ public class Interactable : MonoBehaviour
         {
             float deltaScaleSpeed = scaleSpeed * Time.deltaTime;
             uiHolder.transform.localScale -= new Vector3(deltaScaleSpeed, deltaScaleSpeed, deltaScaleSpeed);
-            if (uiHolder.transform.localScale.magnitude < 0.01)
+            if (uiHolder.transform.localScale.x < 0.01)
             {
                 uiHolder.transform.localScale = new Vector3(0, 0, 0);
                 //Debug.Log("backToDefault");
@@ -199,7 +199,7 @@ public class Interactable : MonoBehaviour
         {
             float deltaScaleSpeed = scaleSpeed * Time.deltaTime;
             uiHolder.transform.localScale -= new Vector3(deltaScaleSpeed, deltaScaleSpeed, deltaScaleSpeed);
-            if (uiHolder.transform.localScale.magnitude < 0.01)
+            if (uiHolder.transform.localScale.x < 0.01)
             {
                 uiHolder.transform.localScale = new Vector3(0, 0, 0);
                 //Debug.Log("backToDefault");
