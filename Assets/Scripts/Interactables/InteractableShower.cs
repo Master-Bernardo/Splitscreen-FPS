@@ -31,6 +31,7 @@ public class InteractableShower : MonoBehaviour
             for (int i = 0; i < visibleColliders.Length; i++)
             {
                 Collider currentCollider = visibleColliders[i];
+                //Debug.Log("currentCollir: " + currentCollider);
                 float currentDistance = (currentCollider.transform.position - transform.position).sqrMagnitude;
                 if (currentDistance < nearestDistance)
                 {

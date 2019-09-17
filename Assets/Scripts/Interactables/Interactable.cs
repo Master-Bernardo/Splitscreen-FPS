@@ -232,6 +232,7 @@ public class Interactable : MonoBehaviour
     {
         visibilityState = VisibilityState.ScalingDown;
         //uiHolder.enabled = false;
+
     }
 
     //cool effect upon sucessfully interacting

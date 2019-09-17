@@ -8,6 +8,7 @@ public class SpiltscreenManager : MonoBehaviour
     public Camera[] cameras;
     public GameObject[] playerContainers;
     public int playerNumber;
+    public bool useMultipleMonitors;
 
     public PlayerInput[] playerInputs;
     //public PlayerInputManager playerInputManager;
@@ -15,6 +16,10 @@ public class SpiltscreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //Display.displays[1].Activate();
+        //Display.displays[2].Activate();
+
+
         //set up the cameras depending on the playernumber
         switch (playerNumber)
         {
@@ -35,11 +40,12 @@ public class SpiltscreenManager : MonoBehaviour
                 break;
 
             case 2:
-                Debug.Log("2");
+
                 playerContainers[0].SetActive(true);
                 playerContainers[1].SetActive(true);
                 playerContainers[2].SetActive(false);
                 playerContainers[3].SetActive(false);
+
 
                 cameras[0].rect = new Rect(0, 0, 0.5f, 1);
                 cameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
@@ -47,10 +53,18 @@ public class SpiltscreenManager : MonoBehaviour
                 playerInputs[0].enabled = true;
                 playerInputs[1].enabled = true;
 
-                // playerInputManager.JoinPlayer(1);
-                // playerInputManager.JoinPlayer(2);
+                //if we have 2 monitors, we seperate them
+                if (useMultipleMonitors)
+                {
+                    if (Display.displays.Length > 1)
+                    {
+                        Display.displays[1].Activate();
+                        cameras[1].targetDisplay = 1;
 
-
+                        cameras[0].rect = new Rect(0, 0, 1, 1);
+                        cameras[1].rect = new Rect(0, 0, 1, 1);
+                    }
+                }
 
                 break;
 
@@ -68,6 +82,21 @@ public class SpiltscreenManager : MonoBehaviour
                 playerInputs[0].enabled = true;
                 playerInputs[1].enabled = true;
                 playerInputs[2].enabled = true;
+
+                //if we have 2 monitors, we seperate them
+                if (useMultipleMonitors)
+                {
+                    if (Display.displays.Length > 1)
+                    {
+                        Display.displays[1].Activate();
+                        cameras[1].targetDisplay = 1;
+                        cameras[2].targetDisplay = 1;
+
+                        cameras[0].rect = new Rect(0, 0, 1, 1);
+                        cameras[1].rect = new Rect(0, 0, 0.5f, 1);
+                        cameras[2].rect = new Rect(0.5f, 0, 0.5f, 1);
+                    }
+                }
 
                 break;
 
@@ -87,6 +116,22 @@ public class SpiltscreenManager : MonoBehaviour
                 playerInputs[1].enabled = true;
                 playerInputs[2].enabled = true;
                 playerInputs[3].enabled = true;
+
+                //if we have 2 monitors, we seperate them
+                if (useMultipleMonitors)
+                {
+                    if (Display.displays.Length > 1)
+                    {
+                        Display.displays[1].Activate();
+                        cameras[2].targetDisplay = 1;
+                        cameras[3].targetDisplay = 1;
+
+                        cameras[0].rect = new Rect(0, 0, 0.5f, 1);
+                        cameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        cameras[2].rect = new Rect(0, 0, 0.5f, 1);
+                        cameras[3].rect = new Rect(0.5f, 0, 0.5f, 1);
+                    }
+                }
 
                 break;
 
