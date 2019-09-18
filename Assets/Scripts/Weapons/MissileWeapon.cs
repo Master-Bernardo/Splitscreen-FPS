@@ -7,7 +7,6 @@ public class MissileWeapon : Weapon
     
     [SerializeField]
     protected Transform shootPoint; //point from which the projectiles are being shot
-    //public bool automaticTrigger;
     [Tooltip("in rounds per second")]
     public float fireRate;
     public float reloadTime;
@@ -21,7 +20,6 @@ public class MissileWeapon : Weapon
     float shootingInterval;
 
     [SerializeField]
-    //protected GameObject projectilePrefab; //later only the children have this
     public string projectileTag;
     public float initialLaunchSpeed;
 
@@ -65,24 +63,6 @@ public class MissileWeapon : Weapon
         } 
     }
 
-   /* public override void HandleLMBHold()
-    {
-        if (automaticTrigger)
-        {
-            if (currentMagazineAmmo > 0)
-            {
-                if (Time.time > nextShootTime)
-                {
-                    Shoot();
-                    nextShootTime = Time.time + shootingInterval;
-                    if (currentMagazineAmmo == 0)
-                    {
-                        weaponSystem.StartReload();
-                    }
-                }
-            }
-        }
-    }*/
 
     public Vector3 GetProjectileSpawnPoint()
     {

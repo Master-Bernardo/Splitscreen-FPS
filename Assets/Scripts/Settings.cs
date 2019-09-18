@@ -13,7 +13,7 @@ public class Settings : MonoBehaviour
 {
     public static Settings Instance;
     public bool friendlyFire;
-    public int unitsLayer;
+    //public int unitsLayer;
 
     //how to handle who is enemy with who
    

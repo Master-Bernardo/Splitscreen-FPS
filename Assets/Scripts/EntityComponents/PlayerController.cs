@@ -29,21 +29,6 @@ public class PlayerController : MonoBehaviour
 
     #region controls
 
-    /* private void Awake()
-     {
-         controls.Player.Shoot.performed += ctx => ShootTest(3);
-     }
-
-     private void OnEnable()
-     {
-         controls.Enable();
-     }
-
-     private void OnDisable()
-     {
-         controls.Disable();
-     }*/
-
     public void OnMovement(InputValue value)
     {
         movementInputVector = value.Get<Vector2>();
@@ -51,7 +36,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnW1Press()
     {
-        Debug.Log("shoot");
         weaponSystem.UseWeaponStart(0);
         pressedWeaponID = 0;
         weaponPressed = true;
@@ -59,7 +43,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnW1Release()
     {
-        Debug.Log("shootRelease");
         weaponPressed = false;
     }
 
@@ -90,12 +73,10 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("control sheme: " + playerInput.controlScheme);
         if(playerInput.controlScheme == "Gamepad")
         {
-            Debug.Log("rotate towards");
             lookInputVector = value.Get<Vector2>();
             //Debug.Log("gamepad");
             if(lookInputVector == new Vector2(0,0))
             {
-                Debug.Log("is zero");
                 lookInputVector = lookInputVectorLastFrame;
             }
         }
@@ -106,7 +87,54 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnNextWeapon(InputValue value)
+    {
+        if (playerInput.controlScheme == "Gamepad")
+        {
+            weaponSystem.SelectNextWeapon();
+        }
+        else
+        {
+            if (value.Get<float>() > 0)
+            {
+                weaponSystem.SelectNextWeapon();
+            }
+        }
+    }
+
+    void OnPreviousWeapon(InputValue value)
+    {
+        if (playerInput.controlScheme == "Gamepad")
+        {
+            weaponSystem.SelectPreviousWeapon();
+        }
+        else
+        {
+            if (value.Get<float>() < 0)
+            {
+                weaponSystem.SelectPreviousWeapon();
+            }
+        }
+    }
+
+    void OnSelectWeapon1()
+    {
+        weaponSystem.ChangeWeapon(0);
+    }
+
+    void OnSelectWeapon2()
+    {
+        weaponSystem.ChangeWeapon(1);
+    }
+
+    void OnSelectWeapon3()
+    {
+        weaponSystem.ChangeWeapon(2);
+    }
+
     #endregion
+
+
     void Start()
     {
         currentLookVector = transform.forward;
@@ -126,17 +154,6 @@ public class PlayerController : MonoBehaviour
         Vector3 verV = new Vector3(-camRight.z, 0f, camRight.x) * ver;
         movementVector = horV + verV;
 
-        //agent.SetDestination(transform.position + movementVector.normalized*0.5f);
-
-        //get rotation
-
-        //Vector2 direction = cam.WorldToScreenPoint(transform.position) - Input.mousePosition;
-
-        //Vector2 direction = new Vector3(0.5f,0.5f,0) - Input.mousePosition;
-
-        //Vector2 direction = new Vector3(Screen.width / 2, Screen.height / 2, 0f) - Input.mousePosition;
-        //currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y + 180, 0) * new Vector3(direction.x, 0f, direction.y);
-
         //rotate towards
 
         if (playerInput.controlScheme == "Gamepad")
@@ -148,16 +165,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // Vector2 direction = new Vector3(Screen.width / 2, Screen.height / 2, 0f) - new Vector3(currentMousePosition.x,0, currentMousePosition.y);
-            Vector2 playerPos = new Vector3(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
-            
+           Vector2 playerPos = new Vector3(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
            Vector2 direction = playerPos -  currentMousePosition;
-          // Debug.Log("player pos: " + playerPos);
-           //Debug.Log("mouse pox: " + new Vector3(currentMousePosition.x, 0, currentMousePosition.y));
-           //Debug.Log("direction: " + direction);
            currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y + 180, 0) * new Vector3(direction.x, 0f, direction.y);
         }
-
 
         //weapon
         if (weaponPressed)
@@ -170,9 +181,6 @@ public class PlayerController : MonoBehaviour
             interactableShower.HoldInteract();
 
         }
-
-
-
     }
 
     private void FixedUpdate()

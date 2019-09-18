@@ -7,7 +7,7 @@ public class UAI_MeleeFighter : Ab_UnitAI
     public B_MeleeFighter meleeBehaviour;
 
     public EC_Movement movement;
-    public EC_ScanForEnemyUnits sensing;
+    public EC_Sensing sensing;
     public MeleeWeapon weapon;
 
     // Start is called before the first frame update

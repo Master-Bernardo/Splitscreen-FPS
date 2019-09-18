@@ -4,11 +4,19 @@ using UnityEngine;
 
 
 //maybe change this to sensing with scanning obptions or let all the scanning options derive from snesing later
-public class EC_ScanForEnemyUnits : EntityComponent
+public class EC_Sensing : EntityComponent
 {
+    public enum SensingType
+    {
+        RadiusSensing,
+        HordeSensing //radiusSensing + get player form hordemanager
+    }
+
+    public SensingType type;
+
     public HashSet<GameEntity> enemiesInRange = new HashSet<GameEntity>();
     public GameEntity nearestEnemy;
-    
+    public LayerMask layerMask;
 
     public float scanInterval;
     public float scanRadius;
@@ -33,7 +41,6 @@ public class EC_ScanForEnemyUnits : EntityComponent
 
     void Scan()
     {
-        int layerMask = 1 << Settings.Instance.unitsLayer;
 
         Collider[] visibleColliders = Physics.OverlapSphere(transform.position, scanRadius, layerMask);
         enemiesInRange.Clear();
@@ -57,6 +64,15 @@ public class EC_ScanForEnemyUnits : EntityComponent
             {
                 nearestDistance = currentDistance;
                 nearestEnemy = enemy;
+            }
+        }
+
+        if(type == SensingType.HordeSensing)
+        {
+            //if theres no nemey in range, go for the player
+            if (nearestEnemy == null)
+            {
+                nearestEnemy = HordeModeManager.Instance.GetNearestPlayer(transform.position);
             }
         }
 

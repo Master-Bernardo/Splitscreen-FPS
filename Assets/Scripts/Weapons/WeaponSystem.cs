@@ -116,65 +116,10 @@ public class WeaponSystem : MonoBehaviour
     {
         currentSelectedWeapon = inventory[currentSelectedWeaponID];
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeWeapon(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ChangeWeapon(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeWeapon(2);
-        }
-
-
         switch (state)
-        {
-           /* case WeaponSystemState.Default:
-
-                if (currentSelectedWeapon != null)
-                {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        currentSelectedWeapon.HandleWeaponKey(0);
-
-                    }
-                    else
-                    {
-                        if (Input.GetMouseButton(0))
-                        {
-                            if (currentSelectedWeapon.automaticTrigger)
-                            {
-                                currentSelectedWeapon.HandleWeaponKey(0);
-                            }
-                        }
-
-                    }
-
-                    if (Input.GetKeyDown(KeyCode.R))
-                    {
-                        MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
-                        if (mw != null)
-                        {
-                            if (!mw.infiniteMagazine)
-                            {
-                                if (!mw.IsMagazineFull())
-                                {
-                                    StartReload();
-                                }
-                            }
-                        }
-
-                    }
-                }
-               
-                break;*/
-
+        {        
             case WeaponSystemState.Reloading:
 
-                //Debug.Log("Reloading");
                 if (Time.time > reloadingEndTime)
                 {
                     EndReload();
@@ -183,22 +128,6 @@ public class WeaponSystem : MonoBehaviour
                 break;
         }
 
-        //point the weapon to aim correctly
-        /*if (currentSelectedWeapon is MissileWeapon)
-        {
-            //raycast
-            Ray ray = rayCastCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                //print("I'm looking at " + hit.transform.name);
-                currentSelectedWeapon.transform.forward = hit.point - currentSelectedWeapon.transform.position;
-            }
-            else
-            {
-                currentSelectedWeapon.transform.forward = ray.direction;
-            }
-        }*/
 
         if (weaponHUD != null)
         {
@@ -209,7 +138,7 @@ public class WeaponSystem : MonoBehaviour
         }
     }
 
-    void ChangeWeapon(int inventorySlot)
+    public void ChangeWeapon(int inventorySlot)
     {
         
         //animator.SetTrigger("changeWeapon");
@@ -233,6 +162,30 @@ public class WeaponSystem : MonoBehaviour
         {
             currentSelectedWeapon.gameObject.SetActive(true);
             currentSelectedWeapon.OnWeaponSelect();
+        }
+    }
+
+    public void SelectNextWeapon()
+    {
+        if (currentSelectedWeaponID == inventory.Length-1)
+        {
+            ChangeWeapon(0);
+        }
+        else
+        {
+            ChangeWeapon(currentSelectedWeaponID + 1);
+        }
+    }
+
+    public void SelectPreviousWeapon()
+    {
+        if(currentSelectedWeaponID == 0)
+        {
+            ChangeWeapon(inventory.Length - 1);
+        }
+        else
+        {
+            ChangeWeapon(currentSelectedWeaponID - 1);
         }
     }
 

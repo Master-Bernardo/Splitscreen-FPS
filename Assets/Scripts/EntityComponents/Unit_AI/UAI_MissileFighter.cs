@@ -7,7 +7,7 @@ public class UAI_MissileFighter : Ab_UnitAI
     public B_MissileFighter missileBehaviour;
 
     public EC_Movement movement;
-    public EC_ScanForEnemyUnits sensing;
+    public EC_Sensing sensing;
     public EC_MissileWeaponController weapon;
 
     // Start is called before the first frame update

@@ -139,9 +139,4 @@ public class SpiltscreenManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

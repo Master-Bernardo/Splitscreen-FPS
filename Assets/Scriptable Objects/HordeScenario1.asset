@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69b81308c638ed14ab87ee921672fcd8, type: 3}
+  m_Name: HordeScenario1
+  m_EditorClassIdentifier: 
+  waves:
+  - bossUnits: []
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1
+  - bossUnits: []
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1
+  - bossUnits: []
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1
+  - bossUnits: []
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1

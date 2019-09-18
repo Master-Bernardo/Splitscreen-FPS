@@ -98,10 +98,10 @@ public class B_WanderAroundPosition: Behaviour
 [System.Serializable]
 public class B_Flee: Behaviour
 {
-    EC_ScanForEnemyUnits sensing;
+    EC_Sensing sensing;
     EC_Movement movement;
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_ScanForEnemyUnits sensing)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing sensing)
     {
         this.entity = entity;
         this.movement = movement;
@@ -126,7 +126,7 @@ public class B_Flee: Behaviour
 [System.Serializable]
 public class B_MeleeFighter : Behaviour
 {
-    EC_ScanForEnemyUnits enemySensing;
+    EC_Sensing enemySensing;
     EC_Movement movement;
 
     public float distanceCheckingInterval;
@@ -145,7 +145,7 @@ public class B_MeleeFighter : Behaviour
     [SerializeField]
     bool inRange;
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_ScanForEnemyUnits enemySensing, MeleeWeapon weapon)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, MeleeWeapon weapon)
     {
         this.entity = entity;
         this.movement = movement;
@@ -251,7 +251,7 @@ public class B_MissileFighter : Behaviour
     //refactor and add distance checking with width
 
     EC_Movement movement;
-    EC_ScanForEnemyUnits enemySensing;
+    EC_Sensing enemySensing;
     EC_MissileWeaponController weapon;
     //goes to nearest enemy, shoots  and looks at them when in range, tries not to get too close
 
@@ -266,7 +266,7 @@ public class B_MissileFighter : Behaviour
     public float distanceCheckingInterval;
     float nextDistanceCheckTime;
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_ScanForEnemyUnits enemySensing, EC_MissileWeaponController weapon)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_MissileWeaponController weapon)
     {
         this.enemySensing = enemySensing;
         this.entity = entity;
