@@ -62,8 +62,9 @@ public class MeleeWeapon : Weapon
     {
     }*/
 
-    public override void OnWeaponSelect()
+    public override void OnWeaponSelect(GameEntity selectingEntity)
     {
+        base.OnWeaponSelect(selectingEntity);
         nextPrepareMeleeAttackTime = 0;
         nextMeleeAttackTime = 0;
         attack = false;
@@ -103,7 +104,7 @@ public class MeleeWeapon : Weapon
 
         for (int i = 0; i < visibleColliders.Length; i++)
         {
-            IDamageable<float> damageable = visibleColliders[i].gameObject.GetComponent<IDamageable<float>>();
+            IDamageable<DamageInfo> damageable = visibleColliders[i].gameObject.GetComponent<IDamageable<DamageInfo>>();
 
             // Debug.Log("collider " + visibleColliders[i]);
             if (damageable != null)
@@ -165,22 +166,24 @@ public class MeleeWeapon : Weapon
 
     }
 
-    void GiveDamage(IDamageable<float> damageable, GameObject enemyTransform)
+    void GiveDamage(IDamageable<DamageInfo> damageable, GameObject enemyTransform)
     {
         if (currentAttack.pushes)
         {
             if (currentAttack.defaultDirection)
             {
-                damageable.TakeDamage(currentAttack.damage, (enemyTransform.transform.position - transform.position).normalized * currentAttack.pushKillForce);
+                //damageable.TakeDamage(currentAttack.damage, (enemyTransform.transform.position - transform.position).normalized * currentAttack.pushKillForce);
+                damageable.TakeDamage(new DamageInfo(currentAttack.damage, (enemyTransform.transform.position - transform.position).normalized * currentAttack.pushKillForce, weaponWieldingEntity));
             }
             else
             {
-                damageable.TakeDamage(currentAttack.damage, transform.TransformDirection(currentAttack.pushDirection) * currentAttack.pushKillForce);
+                //damageable.TakeDamage(currentAttack.damage, transform.TransformDirection(currentAttack.pushDirection) * currentAttack.pushKillForce);
+                damageable.TakeDamage(new DamageInfo(currentAttack.damage, transform.TransformDirection(currentAttack.pushDirection) * currentAttack.pushKillForce, weaponWieldingEntity));
             }         
         }
         else
         {
-            damageable.TakeDamage(damage);
+            damageable.TakeDamage(new DamageInfo(damage));
         }
     }
 

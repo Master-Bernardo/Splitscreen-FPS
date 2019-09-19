@@ -9,7 +9,7 @@ public class Int_WeaponPickup : MonoBehaviour
 
     public void OnPickup(Interactable interactable)
     {
-        Weapon currentWeapon = interactable.goInteracting.GetComponent<WeaponSystem>().SwapWeapon(pickUpWeapon);
+        Weapon currentWeapon = interactable.goInteracting.GetComponent<EC_WeaponSystem>().SwapWeapon(pickUpWeapon);
 
         if(currentWeapon != null)
         {

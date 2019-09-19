@@ -65,7 +65,7 @@ public class Interactable : MonoBehaviour
 
     VisibilityState visibilityState;
 
-    public void StartInteract(GameObject goInteracting)
+    public virtual void StartInteract(GameObject goInteracting)
     {
         this.goInteracting = goInteracting;
 
@@ -108,6 +108,11 @@ public class Interactable : MonoBehaviour
         }
 
         OnHoldInteract.Invoke();
+    }
+
+    public void SucessfullyEndInteract()
+    {
+
     }
 
     public void StopInteract()

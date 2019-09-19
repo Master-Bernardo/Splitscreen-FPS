@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour
     public float damage;
     public float startVelocity;
     public int projectileTeamID; //who shoot this projectile
+    public GameEntity shooterEntity;
 
     //public float radius;
     [SerializeField]
@@ -43,7 +44,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        IDamageable<float> damageable = collision.gameObject.GetComponent<IDamageable<float>>();
+        IDamageable<DamageInfo> damageable = collision.gameObject.GetComponent<IDamageable<DamageInfo>>();
         IPusheable<Vector3> pusheable = collision.gameObject.GetComponent<IPusheable<Vector3>>();
 
         if (damageable != null)
@@ -90,15 +91,16 @@ public class Projectile : MonoBehaviour
 
     }
 
-    void GiveDamage(IDamageable<float> damageable)
+    void GiveDamage(IDamageable<DamageInfo> damageable)
     {
         if (pushes)
         {
-            damageable.TakeDamage(damage, velocityLastFrame.normalized * killPushForce);
+            //damageable.TakeDamage(damage, velocityLastFrame.normalized * killPushForce);
+            damageable.TakeDamage(new DamageInfo(damage, velocityLastFrame.normalized * killPushForce, shooterEntity));
         }
         else
         {
-            damageable.TakeDamage(damage);
+            damageable.TakeDamage(new DamageInfo(damage, shooterEntity));
         }                    
     }
 

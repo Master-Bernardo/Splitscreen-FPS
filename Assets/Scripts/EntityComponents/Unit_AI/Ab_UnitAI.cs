@@ -46,10 +46,10 @@ public class Ab_UnitAI : EntityComponent
         }
     }
 
-    public override void OnDie()
+    /*public override void OnDie()
     {
         
-    }
+    }*/
 }
 
 

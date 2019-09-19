@@ -2,30 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : GameEntity, IDamageable<float>
+public class Unit : GameEntity, IDamageable<DamageInfo>
 {
     public UnitData unitData;
     [SerializeField]
-    //float currentHealth;
+    public DamageManager damageManager;
 
-    //public virtual void Awake()
-    //{
-        //currentHealth = unitData.healthPoints;
-    //}
-
-    public void TakeDamage(float damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
-        foreach (EntityComponent ability in components)
+        foreach (EntityComponent component in components)
         {
-            ability.OnTakeDamage(damage);
+            component.OnTakeDamage(damageInfo);
+        }
+    }
+
+
+    /*
+     * public void TakeDamage(float damage)
+    {
+        foreach (EntityComponent component in components)
+        {
+            component.OnTakeDamage(damage);
         }
     }
 
     public void TakeDamage(float damage, Vector3 force)
     {
-        foreach (EntityComponent ability in components)
+        foreach (EntityComponent component in components)
         {
-            ability.OnTakeDamage(damage, force);
+            component.OnTakeDamage(damage, force);
         }
     }
+
+    public void TakeDamage(float damage, GameEntity damageGiver)
+    {
+        foreach (EntityComponent component in components)
+        {
+            component.OnTakeDamage(damage);
+            component.OnTakeDamageFrom(damage, damageGiver);
+        }
+    }
+
+    public void TakeDamage(float damage, Vector3 force, GameEntity damageGiver)
+    {
+        foreach (EntityComponent component in components)
+        {
+            component.OnTakeDamage(damage, force);
+            component.OnTakeDamageFrom(damage, damageGiver);
+        }
+    }
+    */
 }

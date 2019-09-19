@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MissileWeapon : Weapon
 {
-    
     [SerializeField]
     protected Transform shootPoint; //point from which the projectiles are being shot
     [Tooltip("in rounds per second")]
@@ -43,6 +42,7 @@ public class MissileWeapon : Weapon
         projectile.SetVelocity(initialLaunchSpeed);
         projectile.projectileTeamID = teamID;
         projectile.damage = damage;
+        projectile.shooterEntity = weaponWieldingEntity;
         if(!infiniteMagazine)currentMagazineAmmo--;
     }
 

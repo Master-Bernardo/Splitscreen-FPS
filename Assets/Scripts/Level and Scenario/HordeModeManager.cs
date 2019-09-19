@@ -9,7 +9,7 @@ public class HordeModeManager : MonoBehaviour
 
     public GameEntity[] players;
     public HordeUI[] hordeUI;
-    public int[] playerPoints;
+    public float[] playerPoints;
     
 
     List<GameEntity> activePlayers = new List<GameEntity>();
@@ -26,6 +26,11 @@ public class HordeModeManager : MonoBehaviour
 
     float nextWaveTime;
     int waveNumber = 0;
+
+    public int startingScore;
+    public float pointsForFirstWave = 10;
+    float pointsForLastWave = 0;
+    public float pointsMultiplier = 1.5f;
 
     enum HordeModeState
     {
@@ -49,12 +54,15 @@ public class HordeModeManager : MonoBehaviour
 
     private void Start()
     {
+        playerPoints = new float[4];
+
         for (int i = 0; i < players.Length; i++)
         {
             if (players[i].isActiveAndEnabled) activePlayers.Add(players[i]);
+            hordeUI[i].UpdatePlayerScore(startingScore);
         }
         //Debug.Log("debug.log( count): " + activePlayers.Count);
-
+        
         nextWaveTime = prepTime;
     }
 
@@ -103,7 +111,7 @@ public class HordeModeManager : MonoBehaviour
                 {
                     for (int i = 0; i < hordeUI.Length; i++)
                     {
-                        hordeUI[i].UpdatePauseTimeLeft(nextWaveTime - Time.time);
+                        hordeUI[i].UpdatePauseTimeLeft((int)(nextWaveTime - Time.time));
                     }
                 }
 
@@ -119,6 +127,9 @@ public class HordeModeManager : MonoBehaviour
                     for (int i = 0; i < hordeUI.Length; i++)
                     {
                         hordeUI[i].StartPause();
+                        playerPoints[i] += pointsForFirstWave * Mathf.Pow(pointsMultiplier, waveNumber-1);
+                        hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
+                        //Debug.Log("add: " + pointsForFirstWave * Mathf.Pow(pointsMultiplier, waveNumber-1));
                     }
 
                 }
@@ -203,11 +214,37 @@ public class HordeModeManager : MonoBehaviour
             entity.onDieEvent.AddListener(delegate { OnEnemyFromThisWaveDies(entity); });
             spawnPointsLeft -= unitToSpawn.recruitmentCost;
         }
-
-
-
-
     }
+
+    public void AddPlayerPoints(GameEntity damagerEntity, float points)
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if(players[i] == damagerEntity)
+            {
+                playerPoints[i] += points;
+            }
+            hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
+        }
+    }
+
+    public bool DoesPlayerHaveEnoughPoints(GameEntity player, float points)
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (playerPoints[i] >= points)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
 
     HordeSpawner SelectRandomSpawner(int unitSize)
     {

@@ -10,16 +10,17 @@ public class Weapon : MonoBehaviour
     //public bool isEquipped = true;
     //public float ammoMultiplier=1;
     public int teamID;
-    protected WeaponSystem weaponSystem;
+    protected EC_WeaponSystem weaponSystem;
+    public GameEntity weaponWieldingEntity;
 
-    public void SetUp(WeaponSystem weaponSystem)
+    public void SetUp(EC_WeaponSystem weaponSystem)
     {
         this.weaponSystem = weaponSystem;
     }
 
-    public virtual void OnWeaponSelect()
+    public virtual void OnWeaponSelect(GameEntity selectingEntity)
     {
-
+        weaponWieldingEntity = selectingEntity;
     }
 
     public virtual void OnWeaponDeselect()

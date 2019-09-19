@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     public PlayerMovement playerMovement;
     public PlayerInput playerInput;
-    public WeaponSystem weaponSystem;
+    public EC_WeaponSystem weaponSystem;
     public InteractableShower interactableShower;
 
     public Vector3 currentLookVector;

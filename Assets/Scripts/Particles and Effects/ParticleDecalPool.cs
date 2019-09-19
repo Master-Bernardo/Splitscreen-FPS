@@ -12,6 +12,7 @@ public class ParticleDecalPool : MonoBehaviour
     public float decalSizeMin = 0.5f;
     public float decalSizeMax = 1.5f;
     public ParticleSystem decalParticleSystem;
+    public Color bloodColor;
 
     public static ParticleDecalPool Instance;
 
@@ -69,7 +70,7 @@ public class ParticleDecalPool : MonoBehaviour
             particles[i].position = particleData[i].position;
             particles[i].rotation3D = particleData[i].rotation;
             particles[i].startSize = particleData[i].size;
-           // particles[i]
+            particles[i].startColor = bloodColor;
         }
 
         decalParticleSystem.SetParticles(particles, particles.Length);

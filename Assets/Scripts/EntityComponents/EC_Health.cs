@@ -34,45 +34,26 @@ public class EC_Health : EntityComponent
         }
     }
 
-    public override void OnTakeDamage(float damage)
+    public override void OnTakeDamage(DamageInfo damageInfo)
     {
-        base.OnTakeDamage(damage);
+        currentHealth -= damageInfo.damage;
 
-        currentHealth -= damage;
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            if (deathEffect != null) deathEffect.OnDie();
-            myEntity.Die();
-        }
-
-        if (healthBarFill != null)
-        {
-            healthBarFill.fillAmount = currentHealth / maxHealth;
-        }
-
-        if (changeColorOnDamage)
-        {
-            nextGoBackToNormalColorTime = Time.time + changeColorTime;
-
-            colorChanged = true;
-            for (int i = 0; i < renderersToTint.Length; i++)
+            if (deathEffect != null)
             {
-                renderersToTint[i].material = damageMaterial;
+                if (damageInfo.appliesForce)
+                {
+                    deathEffect.OnDie(damageInfo.damageForce);
+                }
+                else
+                {
+                    deathEffect.OnDie();
+                }
             }
-        }
-    }
 
-    public override void OnTakeDamage(float damage, Vector3 force)
-    {
-        base.OnTakeDamage(damage);
-
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-            if (deathEffect != null) deathEffect.OnDie(force);
-            myEntity.Die();
+            myEntity.Die(damageInfo.damageGiver);
 
         }
 
@@ -97,7 +78,7 @@ public class EC_Health : EntityComponent
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            OnTakeDamage(500);
+            OnTakeDamage(new DamageInfo(50));
         }
 
         base.UpdateComponent();

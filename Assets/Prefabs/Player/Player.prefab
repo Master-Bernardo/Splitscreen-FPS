@@ -200,6 +200,7 @@ MonoBehaviour:
   components:
   - {fileID: 695186444330799899}
   - {fileID: 7992794992404175054}
+  - {fileID: 8595038264206013268}
   aimingCorrector: {x: 0, y: 1, z: 0}
   onDieEvent:
     m_PersistentCalls:
@@ -217,6 +218,7 @@ MonoBehaviour:
         m_CallState: 2
   width: 1
   unitData: {fileID: 0}
+  damageManager: {fileID: 0}
 --- !u!114 &6388773188798961129
 MonoBehaviour:
   m_ObjectHideFlags: 0

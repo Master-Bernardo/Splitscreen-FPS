@@ -17,17 +17,27 @@ public class EntityComponent : MonoBehaviour
 
     }
 
-    public virtual void OnDie()
+    public virtual void OnDie(GameEntity killer)
     {
 
     }
 
-    public virtual void OnTakeDamage(float damage)
+    /*public virtual void OnTakeDamage(float damage)
     {
 
     }
 
     public virtual void OnTakeDamage(float damage, Vector3  force)
+    {
+
+    }
+
+    public virtual void OnTakeDamageFrom(float damage, GameEntity damageGiver)
+    {
+
+    }*/
+
+    public virtual void OnTakeDamage(DamageInfo damageInfo)
     {
 
     }

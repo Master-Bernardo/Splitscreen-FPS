@@ -28,7 +28,7 @@ public class HordeUI : MonoBehaviour
         playerPoints.text = playerScore.ToString();
     }
 
-    public void UpdatePauseTimeLeft(float pauseTimeLeft)
+    public void UpdatePauseTimeLeft(int pauseTimeLeft)
     {
         this.pauseTimeLeft.text = pauseTimeLeft.ToString(); ;
     }

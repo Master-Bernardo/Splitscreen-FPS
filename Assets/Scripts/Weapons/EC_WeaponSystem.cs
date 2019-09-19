@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponSystem : MonoBehaviour
+public class EC_WeaponSystem : EntityComponent
 {
     [Header("Weapons")]
     [SerializeField]
@@ -40,30 +40,26 @@ public class WeaponSystem : MonoBehaviour
 
     float reloadingEndTime;
 
-    void Awake()
+    public override void SetUpComponent(GameEntity entity)
     {
-        ammo = new Dictionary<AmmoType, int>();
-    }
+        base.SetUpComponent(entity);
 
-    void Start()
-    {
+        ammo = new Dictionary<AmmoType, int>();
+
         foreach (Weapon weapon in inventory)
         {
             if (weapon != null)
             {
                 weapon.gameObject.SetActive(false);
                 weapon.SetUp(this);
-            }
-            
+            }          
         }
         if(weaponHUD!=null)weaponHUD.SetUp(this);
         ChangeWeapon(0);
 
-
         ammo[AmmoType.Rocket] = startRocketAmmo;
         ammo[AmmoType.Grenade] = startGrenadeAmmo;
         ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;
-
     }
 
     public void UseWeaponStart(int actionID)
@@ -111,8 +107,7 @@ public class WeaponSystem : MonoBehaviour
           
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void UpdateComponent()
     {
         currentSelectedWeapon = inventory[currentSelectedWeaponID];
 
@@ -161,7 +156,7 @@ public class WeaponSystem : MonoBehaviour
         if (currentSelectedWeapon != null)
         {
             currentSelectedWeapon.gameObject.SetActive(true);
-            currentSelectedWeapon.OnWeaponSelect();
+            currentSelectedWeapon.OnWeaponSelect(myEntity);
         }
     }
 
@@ -199,7 +194,7 @@ public class WeaponSystem : MonoBehaviour
         if(oldWeapon != null)oldWeapon.OnWeaponDeselect();
 
         currentSelectedWeapon = newWeapon;
-        currentSelectedWeapon.OnWeaponSelect();
+        currentSelectedWeapon.OnWeaponSelect(myEntity);
         inventory[currentSelectedWeaponID] = currentSelectedWeapon;
 
         currentSelectedWeapon.transform.SetParent(weaponHolder.transform);

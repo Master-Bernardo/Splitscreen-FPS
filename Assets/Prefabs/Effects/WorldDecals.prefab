@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2105704636107923601}
   m_Layer: 0
-  m_Name: ---------------------WorldDecals-----------------
+  m_Name: WorldDecals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,6 +79,7 @@ MonoBehaviour:
   decalSizeMin: 0.3
   decalSizeMax: 0.9
   decalParticleSystem: {fileID: 2105704637059110610}
+  bloodColor: {r: 0.764151, g: 0, b: 0, a: 0}
 --- !u!1 &2105704637059110613
 GameObject:
   m_ObjectHideFlags: 0
