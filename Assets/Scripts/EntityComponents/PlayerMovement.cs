@@ -10,14 +10,18 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     public float moveAcceleration;
 
     [Tooltip("after changing  maxRotationSpeed or angularDrag, we need to recallibrate PID")]
-    public float maxRotationSpeed;
+    public float rotationSpeed;
 
     //public Vector3 currentLookVector;
 
     //Vector3 movementVector;
 
-    bool jump;
+    bool jump = false;
     public float jumpForce;
+
+    bool dash = false;
+    public float dashForce;
+    Vector3 dashDirection;
 
     public float gravityMultiplier;
 
@@ -26,7 +30,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     public float groundedCheckRaycastDistance;
     public LayerMask groundedCheckLayermask;
 
-    [Header("PID Controller")]
+    /*[Header("PID Controller")]
     //for PID Controller
     public float pGain = 1f;
     public float iGain = 1f;
@@ -74,7 +78,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         //rotation
         //Quaternion desiredRotation = Quaternion.LookRotation(currentLookVector);
 
-        float deltaTime = Time.deltaTime;
+        /*float deltaTime = Time.deltaTime;
         //PID Code
         float pError = Vector3.SignedAngle(transform.forward, currentLookVector, transform.up);
         float iError = pError * deltaTime;
@@ -88,7 +92,8 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         if (torque > maxRotationSpeed) torque = maxRotationSpeed;
         else if (torque < -maxRotationSpeed) torque = -maxRotationSpeed;
 
-        rb.AddTorque(transform.up * torque);
+        rb.AddTorque(transform.up * torque);*/
+        transform.forward = Vector3.Lerp(transform.forward, currentLookVector, rotationSpeed * Time.deltaTime);
 
         //check if gorunded
         RaycastHit hit;
@@ -112,12 +117,30 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
             jump = false;
         }
 
+        if (dash)
+        {
+            if (grounded)
+            {
+                Debug.Log("dash3");
+                rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
+            }
+
+            dash = false;
+
+        }
+
     }
 
 
     public void Jump()
     {
         jump = true;
+    }
+
+    public void Dash(Vector3 direction)
+    {
+        dash = true;
+        dashDirection = direction;
     }
 
     public override void Push(Vector3 force)

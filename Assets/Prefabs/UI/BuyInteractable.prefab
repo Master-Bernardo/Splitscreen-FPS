@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6539607019033645686}
+  - component: {fileID: 3082272070393813000}
   m_Layer: 0
-  m_Name: InteractableHolder
+  m_Name: BuyInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,6 +35,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3082272070393813000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4330297645942981621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2167f1737276ac845a51a9bcec74a168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canBeUsedByMultiplePlayersAtOnce: 1
+  OnStartInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoldInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStopInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSucessfullyInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  interactingPlayer: {fileID: 0}
+  cost: 0
 --- !u!1001 &3395700711680324662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: m_Name
-      value: Interactable Player3
+      value: Interactable UI Player3
       objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
@@ -110,6 +138,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: interactable
+      value: 
+      objectReference: {fileID: 3082272070393813000}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: fillSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: defillSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: hideForASecondOnSucessfulInteract
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: hideOnSucessfulInteract
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428495042702893991, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
@@ -194,7 +247,7 @@ PrefabInstance:
     - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: m_Name
-      value: Interactable Player2
+      value: Interactable UI Player2
       objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
@@ -205,6 +258,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: interactable
+      value: 
+      objectReference: {fileID: 3082272070393813000}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: fillSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: defillSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: hideForASecondOnSucessfulInteract
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: hideOnSucessfulInteract
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428495042702893991, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
@@ -289,7 +367,7 @@ PrefabInstance:
     - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: m_Name
-      value: Interactable Player1
+      value: Interactable UI Player1
       objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
@@ -300,6 +378,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: interactable
+      value: 
+      objectReference: {fileID: 3082272070393813000}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: fillSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: defillSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: hideForASecondOnSucessfulInteract
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: hideOnSucessfulInteract
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428495042702893991, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
@@ -384,7 +487,7 @@ PrefabInstance:
     - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: m_Name
-      value: Interactable Player4
+      value: Interactable UI Player4
       objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
@@ -395,6 +498,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: interactable
+      value: 
+      objectReference: {fileID: 3082272070393813000}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: fillSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: defillSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: hideForASecondOnSucessfulInteract
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: hideOnSucessfulInteract
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428495042702893991, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}

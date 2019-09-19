@@ -256,30 +256,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Sword
   damage: 10
-  automaticTrigger: 1
+  automaticTrigger: 0
   teamID: 0
+  weaponWieldingEntity: {fileID: 0}
   weaponAnimator: {fileID: 290857813310168982}
   drawDamageGizmo: 0
   attacks:
-  - damage: 10
+  - attackName: Attack 1
+    damage: 10
     meleeAttackInterval: 0.5
-    attackDuration: 0.35
+    attackDuration: 0.175
     hitPosition: {x: 0, y: 0.6, z: 1.3}
     hitSphereRadius: 0.7
     pushes: 1
-    pushForce: 3000
-    pushKillForce: 500
+    pushForce: 50000
+    pushKillForce: 1000
     pushDirection: {x: 0, y: 0, z: 0}
     defaultDirection: 1
     animationName: Attack1
-  - damage: 10
+  - attackName: Attack 2
+    damage: 10
     meleeAttackInterval: 0.5
-    attackDuration: 0.35
+    attackDuration: 0.175
     hitPosition: {x: 0, y: 0.6, z: 1.3}
     hitSphereRadius: 0.7
     pushes: 1
-    pushForce: 3000
-    pushKillForce: 500
+    pushForce: 30000
+    pushKillForce: 1000
     pushDirection: {x: -1, y: 0, z: 0}
     defaultDirection: 0
     animationName: Attack2

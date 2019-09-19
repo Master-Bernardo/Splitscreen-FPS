@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InteractableCannon : MonoBehaviour
 {
-    public Interactable reloadInteractible;
-    public Interactable shootInteractable;
+    public InteractableUI reloadInteractible;
+    public InteractableUI shootInteractable;
 
     public GameObject projectilePrefab;
     public float projectileLaunchSpeed;

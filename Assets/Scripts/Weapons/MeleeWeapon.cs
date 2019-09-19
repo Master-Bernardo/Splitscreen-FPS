@@ -147,10 +147,9 @@ public class MeleeWeapon : Weapon
                         }
                         else
                         {
-                            direction = currentAttack.pushDirection;
+                            direction = transform.TransformDirection(currentAttack.pushDirection.normalized);
                         }
                         
-                        // Debug.Log("push: " + pusheable);
                         pusheable.Push(direction * currentAttack.pushForce);
                     }
                 }
@@ -172,6 +171,7 @@ public class MeleeWeapon : Weapon
         {
             if (currentAttack.defaultDirection)
             {
+                //the push force here will only be applied to the corpse
                 //damageable.TakeDamage(currentAttack.damage, (enemyTransform.transform.position - transform.position).normalized * currentAttack.pushKillForce);
                 damageable.TakeDamage(new DamageInfo(currentAttack.damage, (enemyTransform.transform.position - transform.position).normalized * currentAttack.pushKillForce, weaponWieldingEntity));
             }

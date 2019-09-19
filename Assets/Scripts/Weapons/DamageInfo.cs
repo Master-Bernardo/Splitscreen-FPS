@@ -6,7 +6,7 @@ public class DamageInfo
 {
     public float damage;
     public bool appliesForce;
-    public Vector3 damageForce;
+    public Vector3 killPushForce; // ges only aplied to corpse
     public GameEntity damageGiver;
     public DamageType type;
 
@@ -22,7 +22,7 @@ public class DamageInfo
     {
         this.damage = damage;
         appliesForce = true;
-        this.damageForce = damageForce;
+        this.killPushForce = damageForce;
         this.damageGiver = damageGiver;
         type = DamageType.Default;
     }

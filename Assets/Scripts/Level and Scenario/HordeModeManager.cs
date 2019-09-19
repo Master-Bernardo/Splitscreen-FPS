@@ -59,7 +59,8 @@ public class HordeModeManager : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             if (players[i].isActiveAndEnabled) activePlayers.Add(players[i]);
-            hordeUI[i].UpdatePlayerScore(startingScore);
+            playerPoints[i] = startingScore;
+            hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
         }
         //Debug.Log("debug.log( count): " + activePlayers.Count);
         
@@ -223,6 +224,18 @@ public class HordeModeManager : MonoBehaviour
             if(players[i] == damagerEntity)
             {
                 playerPoints[i] += points;
+            }
+            hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
+        }
+    }
+
+    public void RemovePlayerPoints(GameEntity playerEntity, float points)
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i] == playerEntity)
+            {
+                playerPoints[i] -= points;
             }
             hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
         }

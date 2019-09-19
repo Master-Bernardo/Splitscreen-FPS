@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
 
     Vector3 movementInputVector;
     Vector2 lookInputVector; // for controller
-    Vector2 lookInputVectorLastFrame; //for better controls
+    Vector2 lookInputVectorUsed;
+    //Vector2 lookInputVectorLastFrame; //for better controls
     Vector2 currentMousePosition; //for keyboard & mouse
 
     bool weaponPressed = false;
@@ -63,9 +64,28 @@ public class PlayerController : MonoBehaviour
         interactableShower.StopInteract();
     }
 
-    void OnJump()
+    public void OnJump()
     {
         playerMovement.Jump();
+    }
+
+    //we dash in the direction our wasd or left stick is facing, if their diection is null, we dash in the current look direction
+    public void OnDash()
+    {
+        Debug.Log("dash1");
+
+        if (movementVector != new Vector3(0, 0, 0))
+        {
+            playerMovement.Dash(movementVector.normalized);
+            Debug.Log("dash no move");
+
+        }
+        else
+        {
+            playerMovement.Dash(currentLookVector.normalized);
+            Debug.Log("dash MMove");
+
+        }
     }
 
     void OnRotateTowards(InputValue value)
@@ -73,11 +93,14 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("control sheme: " + playerInput.controlScheme);
         if(playerInput.controlScheme == "Gamepad")
         {
+
+
             lookInputVector = value.Get<Vector2>();
             //Debug.Log("gamepad");
-            if(lookInputVector == new Vector2(0,0))
+            if(lookInputVector != new Vector2(0,0))
             {
-                lookInputVector = lookInputVectorLastFrame;
+                lookInputVectorUsed = lookInputVector;
+                //lookInputVector = lookInputVectorLastFrame;
             }
         }
         else
@@ -156,12 +179,23 @@ public class PlayerController : MonoBehaviour
 
         //rotate towards
 
+        //Debug.Log("look InputVector: " + lookInputVector);
         if (playerInput.controlScheme == "Gamepad")
         {
-            //Debug.Log("look InputVector: " + lookInputVector);
-            currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVector.x, 0f, lookInputVector.y);
+           if(lookInputVector != new Vector2(0, 0))
+           {
+                currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
+           }
+           else
+           {
+                if(movementVector != new Vector3(0, 0, 0))
+                {
+                    currentLookVector = movementVector;
+                }
+            }
+                
 
-            lookInputVectorLastFrame = lookInputVector;
+            //lookInputVectorLastFrame = lookInputVector;
         }
         else
         {

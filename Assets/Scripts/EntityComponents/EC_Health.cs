@@ -45,7 +45,7 @@ public class EC_Health : EntityComponent
             {
                 if (damageInfo.appliesForce)
                 {
-                    deathEffect.OnDie(damageInfo.damageForce);
+                    deathEffect.OnDie(damageInfo.killPushForce);
                 }
                 else
                 {
@@ -54,7 +54,6 @@ public class EC_Health : EntityComponent
             }
 
             myEntity.Die(damageInfo.damageGiver);
-
         }
 
         if (healthBarFill != null)
@@ -72,6 +71,17 @@ public class EC_Health : EntityComponent
                 renderersToTint[i].material = damageMaterial;
             }
         }
+
+        /*if (damageInfo.appliesForce)
+        {
+            IPusheable<Vector3> pusheable = GetComponent<IPusheable<Vector3>>();
+
+            if (pusheable != null)
+            {
+                pusheable.Push(damageInfo.damageForce);
+            }
+           
+        }*/
     }
 
     public override void UpdateComponent()

@@ -8,6 +8,8 @@ using System;
 [System.Serializable]
 public class MeleeAttack
 {
+    [Header("Attack")]
+    public string attackName;
     public float damage;
     public float meleeAttackInterval;
 

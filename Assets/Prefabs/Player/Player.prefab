@@ -182,7 +182,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1482742041147023733
 MonoBehaviour:
@@ -255,17 +255,15 @@ MonoBehaviour:
   pushTreshold: 0
   maxMovementSpeed: 1
   moveAcceleration: 25000
-  maxRotationSpeed: 500
+  rotationSpeed: 10
   jumpForce: 3000
+  dashForce: 10000
   gravityMultiplier: 800
   rayCastStartPosition: {fileID: 8213330777773023752}
   groundedCheckRaycastDistance: 0.2
   groundedCheckLayermask:
     serializedVersion: 2
     m_Bits: 7425
-  pGain: 50
-  iGain: 1
-  dGain: 3
 --- !u!114 &695186444330799899
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Int_Pickup : MonoBehaviour
 {
-    Interactable interactable;
+    InteractableUI interactable;
 
     public enum PickupType
     {
@@ -23,13 +23,13 @@ public class Int_Pickup : MonoBehaviour
     {
         if(pickupType == PickupType.Health)
         {
-            EC_Health health = interactable.goInteracting.GetComponent<EC_Health>();
+            EC_Health health = interactable.interactingPlayer.GetComponent<EC_Health>();
 
             health.AddHealth(amount);
         }
         else if(pickupType == PickupType.Ammo)
         {
-            EC_WeaponSystem weaponSystem = interactable.goInteracting.GetComponent<EC_WeaponSystem>();
+            EC_WeaponSystem weaponSystem = interactable.interactingPlayer.GetComponent<EC_WeaponSystem>();
             weaponSystem.AddAmmo(ammoType, amount);
         }
 

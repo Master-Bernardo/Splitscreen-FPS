@@ -10,7 +10,7 @@ public class InteractableShower : MonoBehaviour
     public float scanInterval;
     float nextScanTime;
 
-    Interactable interactableLastFrame;
+    InteractableUI interactableLastFrame;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,11 +40,11 @@ public class InteractableShower : MonoBehaviour
                 }
 
             }
-            Interactable interactableThisFrame = null;
+            InteractableUI interactableThisFrame = null;
 
             if (nearestInteractible != null)
             {
-                interactableThisFrame = nearestInteractible.GetComponent<Interactable>();
+                interactableThisFrame = nearestInteractible.GetComponent<InteractableUI>();
             }
             else
             {
