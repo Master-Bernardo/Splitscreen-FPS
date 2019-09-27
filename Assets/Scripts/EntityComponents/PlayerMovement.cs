@@ -19,10 +19,6 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     bool jump = false;
     public float jumpForce;
 
-    bool dash = false;
-    public float dashForce;
-    Vector3 dashDirection;
-
     public float gravityMultiplier;
 
     bool grounded = false; //do we touch the earth?
@@ -30,34 +26,21 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     public float groundedCheckRaycastDistance;
     public LayerMask groundedCheckLayermask;
 
-    /*[Header("PID Controller")]
-    //for PID Controller
-    public float pGain = 1f;
-    public float iGain = 1f;
-    public float dGain = 0.4f;
-    float lastPError = 0;
-
-    /* https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops
-    * 
-    * 1. Set all gains to zero.
-      2. Increase the P gain until the response to a disturbance is steady oscillation.
-      3. Increase the D gain until the the oscillations go away (i.e. it's critically damped).
-      4. Repeat steps 2 and 3 until increasing the D gain does not stop the oscillations.
-      5. Set P and D to the last stable values.
-      6.Increase the I gain until it brings you to the setpoint with the number of oscillations desired (normally zero but a quicker response can be had if you don't mind a couple oscillations of overshoot)
-    */
+    [Tooltip("like stamina - replenishes itself after time, only for player because of performance optimisation")]
+    public float maxDashPoints;
+    float currentDashPoints;
+    public float dashPointReplenishmentSpeed;
 
 
 
 
-   public override void SetUpComponent(GameEntity entity)
+    public override void SetUpComponent(GameEntity entity)
     {
         rb = GetComponent<Rigidbody>();
+        currentDashPoints = maxDashPoints;
     }
 
-    public override void UpdateComponent()
-    {
-    }
+    
 
     public void UpdateMovement(Vector3 currentLookVector, Vector3 movementVector)
     {
@@ -75,24 +58,6 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
             rb.velocity = new Vector3(velocityToCheck.x, rb.velocity.y, velocityToCheck.z);
         }
 
-        //rotation
-        //Quaternion desiredRotation = Quaternion.LookRotation(currentLookVector);
-
-        /*float deltaTime = Time.deltaTime;
-        //PID Code
-        float pError = Vector3.SignedAngle(transform.forward, currentLookVector, transform.up);
-        float iError = pError * deltaTime;
-        float dError = (pError - lastPError) / deltaTime;
-        lastPError = pError;
-
-        float torque = (pGain * pError + iGain * iError + dGain * dError);// * rotationAcceleration;
-        //we do nod necessary ned to multiply with rotationAcceleration - but it would be nice if this also makes a difference
-
-        //cklamp - set a max rotation velocity
-        if (torque > maxRotationSpeed) torque = maxRotationSpeed;
-        else if (torque < -maxRotationSpeed) torque = -maxRotationSpeed;
-
-        rb.AddTorque(transform.up * torque);*/
         transform.forward = Vector3.Lerp(transform.forward, currentLookVector, rotationSpeed * Time.deltaTime);
 
         //check if gorunded
@@ -117,17 +82,9 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
             jump = false;
         }
 
-        if (dash)
-        {
-            if (grounded)
-            {
-                Debug.Log("dash3");
-                rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
-            }
-
-            dash = false;
-
-        }
+       
+        currentDashPoints += dashPointReplenishmentSpeed * Time.deltaTime;
+        if (currentDashPoints > maxDashPoints) currentDashPoints = maxDashPoints;
 
     }
 
@@ -137,10 +94,13 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         jump = true;
     }
 
-    public void Dash(Vector3 direction)
+    public override void Dash(Vector3 direction)
     {
-        dash = true;
-        dashDirection = direction;
+        if (currentDashPoints >= 1)
+        {
+            base.Dash(direction);
+            currentDashPoints--;
+        }
     }
 
     public override void Push(Vector3 force)

@@ -27,16 +27,34 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     bool lookAt = false;
     float lastRotationTime; // if we rotate only once every x frames, we need to calculate our own deltaTIme
 
+    //TODO Add dashing 
+    protected enum MovementState
+    {
+        Default,
+        BeingPushed,
+        Dashing
+    }
+    protected MovementState movementState;
+
     //pushing with rb
     protected Rigidbody rb;
+
     public bool canBePushed;
-    bool isBeingPushed = false;
+    //bool isBeingPushed = false;
     [Tooltip("under which velocity is the pushed agent not considered pushed anymore")]
     [SerializeField]
     float pushTreshold;
     float velocityLastTime;
     bool movementOrderIssuedWhileBeingPushed = false;
     Vector3 targetMovePositionNotYetOrdered;
+
+    //dashing with rb
+    public float dashForce;
+    public float dashTime;//how long does the dash takes place?
+
+
+    float nextDashEndTime;
+    Vector3 dashDirection;
 
     public override void SetUpComponent(GameEntity entity)
     {
@@ -75,9 +93,9 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             }
        }
 
-        if (isBeingPushed)
+        if (movementState == MovementState.BeingPushed)
         {
-           // Debug.Log("current veloity: " + rb.velocity.sqrMagnitude);
+            // Debug.Log("current veloity: " + rb.velocity.sqrMagnitude);
             //Debug.Log("pushTreshold: " + pushTreshold);
             float velocityThisTime = rb.velocity.sqrMagnitude;
 
@@ -86,7 +104,8 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             {
                 if (velocityThisTime < pushTreshold)
                 {
-                    isBeingPushed = false;
+                    //isBeingPushed = false;
+                    movementState = MovementState.Default;
                     agent.enabled = true;
                     rb.isKinematic = true;
 
@@ -96,12 +115,31 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
                     }
                 }
             }
-           
+
 
             velocityLastTime = rb.velocity.sqrMagnitude;
         }
+        else if (movementState == MovementState.Dashing)
+        {
 
-        
+            if (Time.time > nextDashEndTime)
+            {
+                movementState = MovementState.Default;
+
+                if (agent != null)
+                {
+                    agent.enabled = true;
+                    rb.isKinematic = true;
+                }
+            }
+            else
+            {
+                rb.AddForce(dashDirection * dashForce);
+            }
+
+        }
+
+
     }
 
     public virtual void Push(Vector3 force)
@@ -115,7 +153,8 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
                 targetMovePositionNotYetOrdered = agent.destination;
             }
 
-            isBeingPushed = true;
+            //isBeingPushed = true;
+            movementState = MovementState.BeingPushed;
             agent.enabled = false;
             rb.isKinematic = false;
            // StopLookAt();
@@ -125,6 +164,14 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
             
         }
+    }
+
+    //works similar to push
+    public virtual void Dash(Vector3 direction)
+    {
+        dashDirection = direction;
+        nextDashEndTime = Time.time + dashTime;
+        movementState = MovementState.Dashing;
     }
 
 
@@ -142,7 +189,8 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //for now simple moveTo without surface ship or flying
     public void MoveTo(Vector3 destination)
     {
-        if (!isBeingPushed)
+        //TODO
+        /*if (!isBeingPushed )
         {
             agent.SetDestination(destination);
         }
@@ -150,7 +198,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         {
             movementOrderIssuedWhileBeingPushed = true;
             targetMovePositionNotYetOrdered = destination;
-        }
+        }*/
     }
 
 

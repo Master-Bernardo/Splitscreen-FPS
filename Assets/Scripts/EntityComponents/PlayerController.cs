@@ -72,19 +72,16 @@ public class PlayerController : MonoBehaviour
     //we dash in the direction our wasd or left stick is facing, if their diection is null, we dash in the current look direction
     public void OnDash()
     {
-        Debug.Log("dash1");
 
         if (movementVector != new Vector3(0, 0, 0))
         {
             playerMovement.Dash(movementVector.normalized);
-            Debug.Log("dash no move");
-
+            //Debug.Log("dash no move");
         }
         else
         {
             playerMovement.Dash(currentLookVector.normalized);
-            Debug.Log("dash MMove");
-
+            //Debug.Log("dash MMove");
         }
     }
 
