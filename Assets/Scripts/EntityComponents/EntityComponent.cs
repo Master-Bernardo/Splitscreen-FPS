@@ -17,6 +17,11 @@ public class EntityComponent : MonoBehaviour
 
     }
 
+    public virtual void FixedUpdateComponent()
+    {
+
+    }
+
     public virtual void OnDie(GameEntity killer)
     {
 

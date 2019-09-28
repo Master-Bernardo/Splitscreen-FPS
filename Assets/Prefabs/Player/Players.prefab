@@ -390,11 +390,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6183753401972804381, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 13623
-      objectReference: {fileID: 0}
-    - target: {fileID: 6183753401972804381, guid: 2e3f464a818f22d48ab60f4990a76446,
-        type: 3}
       propertyPath: m_TargetDisplay
       value: 0
       objectReference: {fileID: 0}
@@ -411,7 +406,7 @@ PrefabInstance:
     - target: {fileID: 5838393016416261013, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: dashTime
-      value: 0.25
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 4605563049055598836, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}

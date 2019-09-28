@@ -721,7 +721,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16183
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1407,6 +1407,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1082248141088299295, guid: 6797ae0942162db4d9ab34ea12e4d261,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 6183753401972804381}
     - target: {fileID: 1082248140543214505, guid: 6797ae0942162db4d9ab34ea12e4d261,
         type: 3}
       propertyPath: m_Name
@@ -1418,11 +1423,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 38d83e7c14eb1e94d948dc1191b8b8e7,
         type: 3}
-    - target: {fileID: 1082248141088299295, guid: 6797ae0942162db4d9ab34ea12e4d261,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 6183753401972804381}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6797ae0942162db4d9ab34ea12e4d261, type: 3}
 --- !u!114 &3525990588412598820 stripped

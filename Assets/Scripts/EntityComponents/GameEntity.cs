@@ -38,6 +38,14 @@ public class GameEntity : MonoBehaviour
         }
     }
 
+    protected void FixedUpdate()
+    {
+        foreach (EntityComponent ability in components)
+        {
+            ability.FixedUpdateComponent();
+        }
+    }
+
     public Vector3 GetPositionForAiming()
     {
         return (transform.position + aimingCorrector);

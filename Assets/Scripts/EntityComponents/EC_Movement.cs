@@ -11,7 +11,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     NavMeshAgent agent;
 
     //for rotation independent of navmeshAgent;
-    float angularSpeed;
+    protected float angularSpeed;
 
     [SerializeField]
     bool showGizmo;
@@ -71,14 +71,17 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //update is only for looks- the rotation is important for logic but it can be a bit jaggy if far away or not on screen - lod this script, only call it every x seconds
     public override void UpdateComponent()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log("move");
             MoveTo(transform.position + new Vector3(-5, 0 - 5));
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Push(new Vector3(50000f, 5000f, 0));
+            Push(new Vector3(10000f, 0f, 0));
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Dash(Vector3.right);
         }
 
         if (lookAt)
@@ -93,6 +96,13 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             }
        }
 
+        
+
+
+    }
+
+    public override void FixedUpdateComponent()
+    {
         if (movementState == MovementState.BeingPushed)
         {
             // Debug.Log("current veloity: " + rb.velocity.sqrMagnitude);
@@ -106,8 +116,11 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
                 {
                     //isBeingPushed = false;
                     movementState = MovementState.Default;
-                    agent.enabled = true;
-                    rb.isKinematic = true;
+                    if (agent != null)
+                    {
+                        agent.enabled = true;
+                        rb.isKinematic = true;
+                    }
 
                     if (movementOrderIssuedWhileBeingPushed)
                     {
@@ -131,6 +144,10 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
                     agent.enabled = true;
                     rb.isKinematic = true;
                 }
+                if (movementOrderIssuedWhileBeingPushed)
+                {
+                    MoveTo(targetMovePositionNotYetOrdered);
+                }
             }
             else
             {
@@ -138,8 +155,6 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             }
 
         }
-
-
     }
 
     public virtual void Push(Vector3 force)
@@ -169,6 +184,20 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //works similar to push
     public virtual void Dash(Vector3 direction)
     {
+        if (agent != null)
+        {
+            if (agent.destination != null)
+            {
+                movementOrderIssuedWhileBeingPushed = true;
+                targetMovePositionNotYetOrdered = agent.destination;
+            }
+
+            agent.enabled = false;
+            rb.isKinematic = false;
+
+            
+        }
+      
         dashDirection = direction;
         nextDashEndTime = Time.time + dashTime;
         movementState = MovementState.Dashing;
@@ -186,11 +215,20 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         lastRotationTime = Time.time;
     }
 
+    public void SmoothRotateTo(Vector3 direction)
+    {
+        float deltaTime = Time.time - lastRotationTime;
+        direction.y = 0;
+        Quaternion desiredLookRotation = Quaternion.LookRotation(direction);
+        //because we want the same speed as the agent, which has its angular speed saved as degrees per second we use the rotaate towards function
+        transform.rotation = Quaternion.Lerp(transform.rotation, desiredLookRotation, angularSpeed * deltaTime);
+        lastRotationTime = Time.time;
+    }
+
     //for now simple moveTo without surface ship or flying
     public void MoveTo(Vector3 destination)
     {
-        //TODO
-        /*if (!isBeingPushed )
+        if (movementState == MovementState.Default)
         {
             agent.SetDestination(destination);
         }
@@ -198,7 +236,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         {
             movementOrderIssuedWhileBeingPushed = true;
             targetMovePositionNotYetOrdered = destination;
-        }*/
+        }
     }
 
 

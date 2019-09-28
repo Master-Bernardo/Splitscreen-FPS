@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6456612390234682421}
   - component: {fileID: 2573830092429471737}
   - component: {fileID: 1809936027123352432}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
   damage: 0
   startVelocity: 0
   projectileTeamID: 0
+  shooterEntity: {fileID: 0}
   rb: {fileID: 2573830092429471737}
   pushes: 1
   pushForce: 10000

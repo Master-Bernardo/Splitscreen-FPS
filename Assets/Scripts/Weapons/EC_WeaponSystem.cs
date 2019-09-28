@@ -28,6 +28,10 @@ public class EC_WeaponSystem : EntityComponent
     //[Header("Animation")]
     //public Animator animator;
 
+    [Tooltip("select only one UI layer here")]
+    //public GameObject playerUILayerGO;
+    public int playerUILayer;
+
 
     enum WeaponSystemState
     {
@@ -43,6 +47,7 @@ public class EC_WeaponSystem : EntityComponent
     public override void SetUpComponent(GameEntity entity)
     {
         base.SetUpComponent(entity);
+
 
         ammo = new Dictionary<AmmoType, int>();
 
@@ -60,6 +65,10 @@ public class EC_WeaponSystem : EntityComponent
         ammo[AmmoType.Rocket] = startRocketAmmo;
         ammo[AmmoType.Grenade] = startGrenadeAmmo;
         ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;
+
+        //Debug.Log("len: " + SortingLayer.layers.Length);
+        //playerUILayer = playerUILayerGO.layer
+        //playerUILayer = SortingLayer.layers[playerUILayerID];
     }
 
     public void UseWeaponStart(int actionID)
@@ -111,6 +120,12 @@ public class EC_WeaponSystem : EntityComponent
     {
         currentSelectedWeapon = inventory[currentSelectedWeaponID];
 
+
+        if(currentSelectedWeapon!=null)currentSelectedWeapon.UpdateAimingLine();
+
+
+
+
         switch (state)
         {        
             case WeaponSystemState.Reloading:
@@ -147,6 +162,8 @@ public class EC_WeaponSystem : EntityComponent
         {
             currentSelectedWeapon.gameObject.SetActive(false);
             currentSelectedWeapon.OnWeaponDeselect();
+            currentSelectedWeapon.HideAimingLine();
+
         }
 
         currentSelectedWeaponID = inventorySlot;
@@ -157,7 +174,11 @@ public class EC_WeaponSystem : EntityComponent
         {
             currentSelectedWeapon.gameObject.SetActive(true);
             currentSelectedWeapon.OnWeaponSelect(myEntity);
+            currentSelectedWeapon.ShowAimingLine(playerUILayer);
+
+
         }
+
     }
 
     public void SelectNextWeapon()
@@ -191,10 +212,16 @@ public class EC_WeaponSystem : EntityComponent
         AbortReloading();
 
         Weapon oldWeapon = currentSelectedWeapon;
-        if(oldWeapon != null)oldWeapon.OnWeaponDeselect();
+        if (oldWeapon != null)
+        {
+            oldWeapon.OnWeaponDeselect();
+            oldWeapon.HideAimingLine();
+        }
 
         currentSelectedWeapon = newWeapon;
         currentSelectedWeapon.OnWeaponSelect(myEntity);
+        currentSelectedWeapon.ShowAimingLine(playerUILayer);
+
         inventory[currentSelectedWeaponID] = currentSelectedWeapon;
 
         currentSelectedWeapon.transform.SetParent(weaponHolder.transform);

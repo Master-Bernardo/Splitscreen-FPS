@@ -38,6 +38,8 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     {
         rb = GetComponent<Rigidbody>();
         currentDashPoints = maxDashPoints;
+
+        angularSpeed = rotationSpeed;
     }
 
     
@@ -58,7 +60,8 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
             rb.velocity = new Vector3(velocityToCheck.x, rb.velocity.y, velocityToCheck.z);
         }
 
-        transform.forward = Vector3.Lerp(transform.forward, currentLookVector, rotationSpeed * Time.deltaTime);
+        SmoothRotateTo(currentLookVector);
+        //transform.forward = Vector3.Lerp(transform.forward, currentLookVector.normalized, rotationSpeed * Time.deltaTime);
 
         //check if gorunded
         RaycastHit hit;
@@ -107,6 +110,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     {
         if (canBePushed)
         {
+            // rb.AddForce(force, ForceMode.Impulse);
             rb.AddForce(force);
         }
     }

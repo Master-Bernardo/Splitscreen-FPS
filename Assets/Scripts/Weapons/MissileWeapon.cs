@@ -4,25 +4,29 @@ using UnityEngine;
 
 public class MissileWeapon : Weapon
 {
+    [Header("Missile Wapon")]
     [SerializeField]
     protected Transform shootPoint; //point from which the projectiles are being shot
     [Tooltip("in rounds per second")]
     public float fireRate;
+    public float bloom;
     public float reloadTime;
+    public float initialLaunchSpeed;
+    [Header("Ammo")]
+    [SerializeField]
+    public AmmoType ammoType;
+    public string projectileTag;
     public int magazineSize;
     public bool infiniteMagazine;
-    public float bloom;
     [SerializeField]
     public int currentMagazineAmmo;
 
     float nextShootTime;
     float shootingInterval;
 
-    [SerializeField]
-    public string projectileTag;
-    public float initialLaunchSpeed;
 
-    public AmmoType ammoType;
+   
+
 
     private void Start()
     {
@@ -98,5 +102,10 @@ public class MissileWeapon : Weapon
     {
         if (currentMagazineAmmo == magazineSize) return true;
         else return false;
+    }
+
+    public override void UpdateAimingLine()
+    {
+        aimingLine.DrawLine();
     }
 }
