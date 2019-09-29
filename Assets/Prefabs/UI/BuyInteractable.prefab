@@ -62,6 +62,11 @@ MonoBehaviour:
       m_Calls: []
   interactingPlayer: {fileID: 0}
   cost: 0
+  costText:
+  - {fileID: 470143413854985518}
+  - {fileID: 1410828110244844473}
+  - {fileID: 8716371867034388229}
+  - {fileID: 2562333923182731811}
 --- !u!1001 &3395700711680324662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69,16 +74,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6539607019033645686}
     m_Modifications:
-    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
-        type: 3}
-      propertyPath: m_Name
-      value: Interactable UI Player3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
-        type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992180, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -134,6 +129,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: m_Name
+      value: Interactable UI Player3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: interactable
@@ -182,6 +187,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3395700711680324662}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8716371867034388229 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6334653477472711475, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 3395700711680324662}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4935225520531153034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -189,16 +206,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6539607019033645686}
     m_Modifications:
-    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
-        type: 3}
-      propertyPath: m_Name
-      value: Interactable UI Player2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992180, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -253,6 +260,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: m_Name
+      value: Interactable UI Player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
@@ -302,6 +319,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4935225520531153034}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1410828110244844473 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6334653477472711475, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 4935225520531153034}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5868046518214520349
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -309,16 +338,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6539607019033645686}
     m_Modifications:
-    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
-        type: 3}
-      propertyPath: m_Name
-      value: Interactable UI Player1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
-        type: 3}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992180, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -374,6 +393,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: m_Name
+      value: Interactable UI Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: interactable
@@ -422,6 +451,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5868046518214520349}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &470143413854985518 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6334653477472711475, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5868046518214520349}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8387401143932244240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -429,16 +470,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6539607019033645686}
     m_Modifications:
-    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
-        type: 3}
-      propertyPath: m_Name
-      value: Interactable UI Player4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
-        type: 3}
-      propertyPath: m_Layer
-      value: 16
-      objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992180, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -494,6 +525,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: m_Name
+      value: Interactable UI Player4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428495044551992182, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6428495044551992183, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
         type: 3}
       propertyPath: interactable
@@ -542,3 +583,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8387401143932244240}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2562333923182731811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6334653477472711475, guid: 8c6cb9624ffdd3840b6756409b16e9bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 8387401143932244240}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

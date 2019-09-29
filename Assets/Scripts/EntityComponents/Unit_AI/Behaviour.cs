@@ -72,8 +72,6 @@ public class B_WanderAroundPosition: Behaviour
     public void SetPositionToWanderAround(Transform newPositionToWanderAround)
     {
         positionToWanderAround = newPositionToWanderAround;
-        Debug.Log("Sette 3");
-        Debug.Log("pos: " + newPositionToWanderAround);
     }
 
     protected override void Update()
