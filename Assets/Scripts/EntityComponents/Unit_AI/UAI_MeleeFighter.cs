@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UAI_MeleeFighter : Ab_UnitAI
+public class UAI_MeleeFighter : EC_UnitAI
 {
     public B_MeleeFighter meleeBehaviour;
 

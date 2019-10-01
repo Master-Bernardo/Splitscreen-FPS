@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UAI_MissileFighter : Ab_UnitAI
+public class UAI_MissileFighter : EC_UnitAI
 {
     public B_MissileFighter missileBehaviour;
 

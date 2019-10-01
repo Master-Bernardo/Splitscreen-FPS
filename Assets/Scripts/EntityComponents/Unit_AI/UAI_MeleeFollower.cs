@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UAI_MeleeFollower : Ab_UnitAI
+public class UAI_MeleeFollower : EC_UnitAI
 {
     public B_MeleeFighter meleeBehaviour;
     public B_WanderAroundPosition wanderBehaviour;

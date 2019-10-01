@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PickupType
+{
+    Health,
+    Ammo
+}
+
 public class Int_Pickup : MonoBehaviour
 {
     InteractableUI interactable;
+    public bool infinite;
 
-    public enum PickupType
-    {
-        Health,
-        Ammo
-    }
+    
     [Header("Pickup")]
     public PickupType pickupType;
 
-    [Tooltip("only if we choosen ammo")]
+    [HideInInspector]
     public AmmoType ammoType;
 
     public int amount;
@@ -33,7 +36,10 @@ public class Int_Pickup : MonoBehaviour
             weaponSystem.AddAmmo(ammoType, amount);
         }
 
-        Destroy(gameObject,0.03f);
+        if (!infinite)
+        {
+            Destroy(gameObject, 0.03f);
+        }
     }
        
 

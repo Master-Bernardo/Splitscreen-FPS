@@ -5,14 +5,14 @@ using System;
 
 
 /* todo not yet imlemented*/
-public class Ab_UnitAI : EntityComponent
+public class EC_UnitAI : EntityComponent
 {
     //switches between different behaviours 
 
     //public Behaviour[] behaviours;
-    [SerializeField]
+
+    //[SerializeField]
     protected Behaviour currentBehaviour;
- 
 
     public override void SetUpComponent(GameEntity entity)
     {
