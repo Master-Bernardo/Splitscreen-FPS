@@ -19,7 +19,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     bool jump = false;
     public float jumpForce;
 
-    public float gravityMultiplier;
+    //public float gravityMultiplier;
 
     bool grounded = false; //do we touch the earth?
     public Transform rayCastStartPosition;
@@ -43,22 +43,49 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     }
 
     
-
+    //gets called in fixed update
     public void UpdateMovement(Vector3 currentLookVector, Vector3 movementVector)
     {
-        rb.AddForce(-transform.up * (Physics.gravity.magnitude * gravityMultiplier));
+        Debug.Log("actualVelcoity This frame: " + new Vector3(rb.velocity.x, 0, rb.velocity.z));
+        //gravity
+        rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
 
-        rb.AddForce(movementVector * moveAcceleration * Time.deltaTime, ForceMode.Impulse);
+        //movement
 
+        //how to cap the force correctly? - do not cap the velocity, instead cap the velocity we add
+        Vector3 forceToAddThisFrame = movementVector * moveAcceleration * Time.deltaTime;
+        Vector3 cappedForce = forceToAddThisFrame;
 
-        Vector3 velocityToCheck = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        Vector3 rbHorizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
+        Vector3 resultingVelocity = rbHorizontalVelocity + forceToAddThisFrame;
+        Debug.Log("predicted velocity next frame: " + resultingVelocity);
+        Debug.Log("resulting magnitude: " + resultingVelocity.magnitude);
+        if (resultingVelocity.magnitude > maxMovementSpeed)
+        {
+            //check if our current moveemtn would raise or lower magnitude, if it lowers it- tan we allow it
+            if (resultingVelocity.magnitude > rbHorizontalVelocity.magnitude)
+            {
+                Debug.Log("cap");
+                //cappedForce = new Vector3(0, 0, 0);
+            }
+        }
+        Debug.Log("curr force: "+ cappedForce);
+        rb.AddForce(cappedForce, ForceMode.Acceleration);
+
+       // rb.MovePosition(transform.position + movementVector * moveAcceleration * Time.deltaTime);
+
+        //rb.AddForce(movementVector * moveAcceleration * Time.deltaTime, ForceMode.Impulse);
+
+        //Vector3 velocityToCheck = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        /*
         if (velocityToCheck.magnitude > maxMovementSpeed)
         {
             velocityToCheck = velocityToCheck.normalized * maxMovementSpeed;
             //Debug.Log("too fast");
             rb.velocity = new Vector3(velocityToCheck.x, rb.velocity.y, velocityToCheck.z);
-        }
+        }*/
 
         SmoothRotateTo(currentLookVector);
         //transform.forward = Vector3.Lerp(transform.forward, currentLookVector.normalized, rotationSpeed * Time.deltaTime);
@@ -88,7 +115,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
        
         currentDashPoints += dashPointReplenishmentSpeed * Time.deltaTime;
         if (currentDashPoints > maxDashPoints) currentDashPoints = maxDashPoints;
-
+        
     }
 
 
@@ -110,8 +137,11 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     {
         if (canBePushed)
         {
-            // rb.AddForce(force, ForceMode.Impulse);
-            rb.AddForce(force);
+            Debug.Log("player push; " + force.magnitude);
+            Debug.Log("force: " + force);
+
+            rb.AddForce(force, ForceMode.Impulse);
+            //rb.AddForce(force);
         }
     }
 

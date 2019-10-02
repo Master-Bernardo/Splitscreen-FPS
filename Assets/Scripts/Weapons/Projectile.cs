@@ -42,7 +42,7 @@ public class Projectile : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         IDamageable<DamageInfo> damageable = collision.gameObject.GetComponent<IDamageable<DamageInfo>>();
         IPusheable<Vector3> pusheable = collision.gameObject.GetComponent<IPusheable<Vector3>>();
@@ -83,7 +83,7 @@ public class Projectile : MonoBehaviour
             }
             else
             {
-                pusheable.Push(velocityLastFrame.normalized* pushForce);              
+                pusheable.Push(velocityLastFrame.normalized* pushForce * Settings.Instance.forceMultiplier);              
             }
         }
 
@@ -91,7 +91,7 @@ public class Projectile : MonoBehaviour
 
     }
 
-    void GiveDamage(IDamageable<DamageInfo> damageable)
+    protected virtual void GiveDamage(IDamageable<DamageInfo> damageable)
     {
         if (pushes)
         {

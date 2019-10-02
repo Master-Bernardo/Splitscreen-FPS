@@ -22,6 +22,12 @@ public class EC_HordePointsGiver : EntityComponent
 
     public override void OnDie(GameEntity killer)
     {
-        hordeModeManager.AddPlayerPoints(killer, pointsPerDeath);
+        if (killer != null)
+        {
+            if(killer.tag == "Player")
+            {
+                hordeModeManager.AddPlayerPoints(killer, pointsPerDeath);
+            }
+        }
     }
 }

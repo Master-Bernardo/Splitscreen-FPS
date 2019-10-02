@@ -15,6 +15,11 @@ public class Settings : MonoBehaviour
     public bool friendlyFire;
     public bool showAimingLine;
     //public int unitsLayer;
+    [Header("Physics")]
+    [Tooltip("Only applies to units with ecMovement or PlayerMovement")]
+    public float gravityMultiplier;
+    [Tooltip("Because with changing the gravityMultiplier we would need to change all forces - we do it here . If gravityMult is 1, this should also be one , if gravity is 8 ,this hsoulkd be 2,6667 or 1/3 of 8")]
+    public float forceMultiplier;
 
     //how to handle who is enemy with who
    

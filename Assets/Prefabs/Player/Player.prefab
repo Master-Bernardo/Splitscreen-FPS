@@ -177,8 +177,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2366190835090200063}
   serializedVersion: 2
-  m_Mass: 75
-  m_Drag: 5
+  m_Mass: 70
+  m_Drag: 0
   m_AngularDrag: 2
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -259,8 +259,7 @@ MonoBehaviour:
   maxMovementSpeed: 1
   moveAcceleration: 25000
   rotationSpeed: 10
-  jumpForce: 3000
-  gravityMultiplier: 800
+  jumpForce: 2500
   rayCastStartPosition: {fileID: 8213330777773023752}
   groundedCheckRaycastDistance: 0.2
   groundedCheckLayermask:
@@ -312,7 +311,7 @@ MonoBehaviour:
   startGrenadeAmmo: 0
   startShockGrenadeAmmo: 0
   weaponHUD: {fileID: 0}
-  playerUILayer: {fileID: 4283678314675313979}
+  playerUILayer: 0
 --- !u!114 &7619780001613938120
 MonoBehaviour:
   m_ObjectHideFlags: 0

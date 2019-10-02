@@ -331,7 +331,7 @@
                 {
                     "name": "",
                     "id": "ef47a5c9-94b0-4994-b40b-33fb0540e013",
-                    "path": "<Keyboard>/leftAlt",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
@@ -474,7 +474,7 @@
                 {
                     "name": "",
                     "id": "1e40914d-fa0f-4a84-8d14-62173ec3bde8",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/leftAlt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad;Keyboard and Mouse",

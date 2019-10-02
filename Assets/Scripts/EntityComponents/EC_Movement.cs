@@ -38,6 +38,8 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
     //pushing with rb
     protected Rigidbody rb;
+    //public float gravityMultiplier;
+
 
     public bool canBePushed;
     //bool isBeingPushed = false;
@@ -77,7 +79,12 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Push(new Vector3(10000f, 0f, 0));
+            Push(new Vector3(3000f, 0f, 0));
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Push(new Vector3(0f, 3000f, 0));
+
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -105,6 +112,8 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     {
         if (movementState == MovementState.BeingPushed)
         {
+            rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
+
             // Debug.Log("current veloity: " + rb.velocity.sqrMagnitude);
             //Debug.Log("pushTreshold: " + pushTreshold);
             float velocityThisTime = rb.velocity.sqrMagnitude;
@@ -114,18 +123,25 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             {
                 if (velocityThisTime < pushTreshold)
                 {
-                    //isBeingPushed = false;
-                    movementState = MovementState.Default;
-                    if (agent != null)
+                    //the unit can only move back to normal movement - if it is grounded -> raycast against navmesh
+                    
+                    //check if gorunded
+                    RaycastHit hit;
+                    // Does the ray intersect any objects excluding the player layer
+                    if (Physics.Raycast(transform.position + transform.up*0.1f, -Vector3.up, out hit, 0.2f))
                     {
-                        agent.enabled = true;
-                        rb.isKinematic = true;
-                    }
+                        movementState = MovementState.Default;
+                        if (agent != null)
+                        {
+                            agent.enabled = true;
+                            rb.isKinematic = true;
+                        }
 
-                    if (movementOrderIssuedWhileBeingPushed)
-                    {
-                        MoveTo(targetMovePositionNotYetOrdered);
-                    }
+                        if (movementOrderIssuedWhileBeingPushed)
+                        {
+                            MoveTo(targetMovePositionNotYetOrdered);
+                        }
+                    }               
                 }
             }
 
@@ -134,6 +150,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         }
         else if (movementState == MovementState.Dashing)
         {
+            rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
 
             if (Time.time > nextDashEndTime)
             {
@@ -172,9 +189,11 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             movementState = MovementState.BeingPushed;
             agent.enabled = false;
             rb.isKinematic = false;
-           // StopLookAt();
+            // StopLookAt();
+            Debug.Log("unit push; " + force.magnitude);
+            Debug.Log("force: " + force);
 
-            rb.AddForce(force);
+            rb.AddForce(force, ForceMode.Impulse);
             velocityLastTime = 0;
 
             

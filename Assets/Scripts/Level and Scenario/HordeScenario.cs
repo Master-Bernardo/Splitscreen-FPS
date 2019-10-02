@@ -38,3 +38,24 @@ public class HordeScenario : ScriptableObject
     public HordeWave[] waves;
 
 }
+
+//events can occus specified by wave number
+[System.Serializable]
+public class ScenarioEventEnableDisable
+{
+    public GameObject[] objectsToDisable;
+    public GameObject[] objectsToEnable;
+
+    public void CallEvent()
+    {
+        for (int i = 0; i < objectsToDisable.Length; i++)
+        {
+            objectsToDisable[i].SetActive(false);
+        }
+
+        for (int i = 0; i < objectsToDisable.Length; i++)
+        {
+            objectsToEnable[i].SetActive(true);
+        }
+    }
+}

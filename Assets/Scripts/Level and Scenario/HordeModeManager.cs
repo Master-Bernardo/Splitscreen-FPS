@@ -17,6 +17,7 @@ public class HordeModeManager : MonoBehaviour
     HashSet<GameEntity> currentWaveEnemies = new HashSet<GameEntity>();
 
     public HordeScenario hordeScenario;
+    public HordeEvents events;
 
     public float currentWaveRecruitmentPoints; // more expensive units will cost more - random
     public float unitsMultiplier; //how many units? general hardness
@@ -25,7 +26,7 @@ public class HordeModeManager : MonoBehaviour
     public float prepTime;
 
     float nextWaveTime;
-    int waveNumber = 0;
+    int currentWaveNumber = 0;
 
     public int startingScore;
     public float pointsForFirstWave = 10;
@@ -35,7 +36,9 @@ public class HordeModeManager : MonoBehaviour
     enum HordeModeState
     {
         Pause,
-        Wave
+        Wave,
+        Victory,
+        Defeat
     }
 
     HordeModeState state;
@@ -93,12 +96,12 @@ public class HordeModeManager : MonoBehaviour
 
                 if (Time.time > nextWaveTime)
                 {
-                    waveNumber++;
+                    currentWaveNumber++;
 
                     state = HordeModeState.Wave;
                     for (int i = 0; i < hordeUI.Length; i++)
                     {
-                        hordeUI[i].StartWave(waveNumber);
+                        hordeUI[i].StartWave(currentWaveNumber);
                     }
                     //spawn enemies:
                    
@@ -122,16 +125,28 @@ public class HordeModeManager : MonoBehaviour
 
                 if (currentWaveEnemies.Count == 0)
                 {
-                    state = HordeModeState.Pause;
-                    nextWaveTime = Time.time + pauseTime;
-
-                    for (int i = 0; i < hordeUI.Length; i++)
+                    if (currentWaveNumber == hordeScenario.waves.Length)
                     {
-                        hordeUI[i].StartPause();
-                        playerPoints[i] += pointsForFirstWave * Mathf.Pow(pointsMultiplier, waveNumber-1);
-                        hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
-                        //Debug.Log("add: " + pointsForFirstWave * Mathf.Pow(pointsMultiplier, waveNumber-1));
+                        state = HordeModeState.Victory;
+                        for (int i = 0; i < hordeUI.Length; i++)
+                        {
+                            hordeUI[i].ShowWinPanel();
+                        }
                     }
+                    else
+                    {
+                        state = HordeModeState.Pause;
+                        nextWaveTime = Time.time + pauseTime;
+
+                        for (int i = 0; i < hordeUI.Length; i++)
+                        {
+                            hordeUI[i].StartPause();
+                            playerPoints[i] += pointsForFirstWave * Mathf.Pow(pointsMultiplier, currentWaveNumber - 1);
+                            hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
+                            //Debug.Log("add: " + pointsForFirstWave * Mathf.Pow(pointsMultiplier, waveNumber-1));
+                        }
+                    }
+                    
 
                 }
                 else
@@ -173,10 +188,14 @@ public class HordeModeManager : MonoBehaviour
 
     void SpawnWave()
     {
-        HordeWave currentWave = hordeScenario.waves[waveNumber-1];
+        HordeWave currentWave = hordeScenario.waves[currentWaveNumber-1];
+
+        //if this wave has events - call them:
+        events.disableEnableEvents[currentWaveNumber - 1].CallEvent();
+
 
         //first spawn the boss units according to their number
-        foreach(HordeUnitBoss bossUnit in currentWave.bossUnits)
+        foreach (HordeUnitBoss bossUnit in currentWave.bossUnits)
         {
             for (int i = 0; i < bossUnit.number; i++)
             {
@@ -188,7 +207,7 @@ public class HordeModeManager : MonoBehaviour
         }
 
         //next spawn the hleper minions as long s there are points
-        int spawnPointsLeft = (int)currentWaveRecruitmentPoints;
+        int spawnPointsLeft = (int)(currentWaveRecruitmentPoints * currentWave.unitsPointsMultiplier);
         List<HordeUnit> unitsWeCanAfford = new List<HordeUnit>();
 
         while (spawnPointsLeft > 0)

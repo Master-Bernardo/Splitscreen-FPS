@@ -65,3 +65,103 @@ MonoBehaviour:
       recruitmentCost: 2
       size: 1
     unitsPointsMultiplier: 1
+  - bossUnits: []
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1
+  - bossUnits: []
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1
+  - bossUnits:
+    - unitPrefab: {fileID: 8376393433211878140, guid: 9e04b41ac50c49144bf1424e834cd34a,
+        type: 3}
+      number: 1
+      size: 1
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 0.5
+  - bossUnits: []
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1
+  - bossUnits: []
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1
+  - bossUnits: []
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1
+  - bossUnits:
+    - unitPrefab: {fileID: 8376393433211878140, guid: 9e04b41ac50c49144bf1424e834cd34a,
+        type: 3}
+      number: 3
+      size: 1
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 0.5
+  - bossUnits:
+    - unitPrefab: {fileID: 8376393433211878140, guid: 9e04b41ac50c49144bf1424e834cd34a,
+        type: 3}
+      number: 1
+      size: 1
+    units:
+    - unitPrefab: {fileID: 3203492726274557016, guid: 310c47c191742db429dbe8f2cd6b74e6,
+        type: 3}
+      recruitmentCost: 1
+      size: 1
+    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
+        type: 3}
+      recruitmentCost: 2
+      size: 1
+    unitsPointsMultiplier: 1

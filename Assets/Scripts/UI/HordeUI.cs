@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class HordeUI : MonoBehaviour
 {
     public GameObject pausePanel;
-    public Text pauseTimeLeft;
+    public TextMeshProUGUI pauseTimeLeft;
     public GameObject wavePanel;
-    public Text waveEnemiesLeft;
-    public Text waveNumberUI;
-    public Text playerPoints;
+    public TextMeshProUGUI waveEnemiesLeft;
+    public TextMeshProUGUI waveNumberUI;
+    public TextMeshProUGUI playerPoints;
+    public GameObject winPanel;
 
 
     void Start()
@@ -49,5 +52,10 @@ public class HordeUI : MonoBehaviour
         pausePanel.SetActive(false);
         wavePanel.SetActive(true);
         waveNumberUI.text = waveNumber.ToString();
+    }
+
+    public void ShowWinPanel()
+    {
+        winPanel.SetActive(true);
     }
 }

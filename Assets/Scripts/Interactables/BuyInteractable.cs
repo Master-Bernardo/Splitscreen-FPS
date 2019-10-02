@@ -14,6 +14,7 @@ public class BuyInteractable : Interactable
     private void Awake()
     {
         hordeModeManager = HordeModeManager.Instance;
+
         for (int i = 0; i < costText.Length; i++)
         {
             costText[i].gameObject.SetActive(true);
@@ -26,7 +27,7 @@ public class BuyInteractable : Interactable
     {
         //Debug.Log("the overriden start");
         this.interactingPlayer = interactingPlayer;
-
+        Debug.Log("Horde manager2: " + hordeModeManager);
         if (hordeModeManager.DoesPlayerHaveEnoughPoints(interactingPlayer, cost))
         {
            // Debug.Log("enough");

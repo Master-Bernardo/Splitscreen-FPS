@@ -143,14 +143,21 @@ public class MeleeWeapon : Weapon
                         Vector3 direction;
                         if (currentAttack.defaultDirection)
                         {
-                            direction = (visibleColliders[i].gameObject.transform.position - transform.position).normalized;
+                            if (entity != null)
+                            {
+                                direction = (entity.transform.position + entity.aimingCorrector - transform.position).normalized;
+                            }
+                            else
+                            {
+                                direction = (visibleColliders[i].gameObject.transform.position - transform.position).normalized;
+                            }
                         }
                         else
                         {
                             direction = transform.TransformDirection(currentAttack.pushDirection.normalized);
                         }
                         
-                        pusheable.Push(direction * currentAttack.pushForce);
+                        pusheable.Push(direction * currentAttack.pushForce * Settings.Instance.forceMultiplier);
                     }
                 }
 
