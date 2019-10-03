@@ -254,10 +254,11 @@ MonoBehaviour:
   movementUpdateIntervall: 0
   canBePushed: 1
   pushTreshold: 0
-  dashForce: 10000
+  dashForce: 200
   dashTime: 1
-  maxMovementSpeed: 1
-  moveAcceleration: 25000
+  targetMovementSpeed: 12
+  maxAcceleration: 200
+  maxDecceleration: 50
   rotationSpeed: 10
   jumpForce: 2500
   rayCastStartPosition: {fileID: 8213330777773023752}
@@ -1186,11 +1187,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366190835090200056}
     m_Modifications:
-    - target: {fileID: 3082245522138485886, guid: 83d591f793407114883b120b4c8a1a6f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 191a9e575e67bb04ab8512cc93d15d3d, type: 2}
     - target: {fileID: 162194869008924412, guid: 83d591f793407114883b120b4c8a1a6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1256,6 +1252,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3082245522138485886, guid: 83d591f793407114883b120b4c8a1a6f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 191a9e575e67bb04ab8512cc93d15d3d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83d591f793407114883b120b4c8a1a6f, type: 3}
 --- !u!23 &3602149101854982465 stripped

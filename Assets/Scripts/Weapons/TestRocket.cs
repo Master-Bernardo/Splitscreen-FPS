@@ -69,7 +69,7 @@ public class TestRocket : MonoBehaviour
 
             if (pusheable != null)
             {
-                Debug.Log(collidersInRange[i].gameObject + "dist: " + distanceSquared + " mod: " + distanceModifier + "force: " + pushForce * distanceModifier);
+                //Debug.Log(collidersInRange[i].gameObject + "dist: " + distanceSquared + " mod: " + distanceModifier + "force: " + pushForce * distanceModifier);
                 pusheable.Push((pushDirection.normalized * pushForce  + Vector3.up*upwardsLifter)*distanceModifier * Settings.Instance.forceMultiplier);
 
             }

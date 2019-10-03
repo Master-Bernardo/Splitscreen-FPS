@@ -6,8 +6,10 @@ using UnityEngine;
 public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 {
     [Header("Player Movement")]
-    public float maxMovementSpeed;
-    public float moveAcceleration;
+    public float targetMovementSpeed;
+    public float maxAcceleration;
+    [Tooltip("make desseleration slower than acceleration for better explosioneffects")]
+    public float maxDecceleration;
 
     [Tooltip("after changing  maxRotationSpeed or angularDrag, we need to recallibrate PID")]
     public float rotationSpeed;
@@ -30,6 +32,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     public float maxDashPoints;
     float currentDashPoints;
     public float dashPointReplenishmentSpeed;
+  
 
 
 
@@ -46,46 +49,39 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     //gets called in fixed update
     public void UpdateMovement(Vector3 currentLookVector, Vector3 movementVector)
     {
-        Debug.Log("actualVelcoity This frame: " + new Vector3(rb.velocity.x, 0, rb.velocity.z));
+        //Debug.Log("actualVelcoity This frame: " + new Vector3(rb.velocity.x, 0, rb.velocity.z));
         //gravity
         rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
 
-        //movement
-
-        //how to cap the force correctly? - do not cap the velocity, instead cap the velocity we add
-        Vector3 forceToAddThisFrame = movementVector * moveAcceleration * Time.deltaTime;
-        Vector3 cappedForce = forceToAddThisFrame;
-
-        Vector3 rbHorizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-
-        Vector3 resultingVelocity = rbHorizontalVelocity + forceToAddThisFrame;
-        Debug.Log("predicted velocity next frame: " + resultingVelocity);
-        Debug.Log("resulting magnitude: " + resultingVelocity.magnitude);
-        if (resultingVelocity.magnitude > maxMovementSpeed)
+        if(movementVector!=new Vector3(0, 0, 0))
         {
-            //check if our current moveemtn would raise or lower magnitude, if it lowers it- tan we allow it
-            if (resultingVelocity.magnitude > rbHorizontalVelocity.magnitude)
+            //movement
+            Vector3 rbHorizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            Vector3 targetVelocity = movementVector * targetMovementSpeed;
+
+            Vector3 deltaV = targetVelocity - rbHorizontalVelocity;
+
+            Vector3 accel = deltaV / Time.deltaTime;
+
+            if((rbHorizontalVelocity + accel.normalized).sqrMagnitude > rbHorizontalVelocity.sqrMagnitude)
             {
-                Debug.Log("cap");
-                //cappedForce = new Vector3(0, 0, 0);
+                //Debug.Log("accelerate");
+                if (accel.sqrMagnitude > maxAcceleration * maxAcceleration)
+                    accel = accel.normalized * maxAcceleration;
             }
+            else
+            {
+                //Debug.Log("deccelerate");
+                if (accel.sqrMagnitude > maxDecceleration * maxDecceleration)
+                    accel = accel.normalized * maxDecceleration;
+            }
+
+
+           
+
+            rb.AddForce(accel, ForceMode.Acceleration);
         }
-        Debug.Log("curr force: "+ cappedForce);
-        rb.AddForce(cappedForce, ForceMode.Acceleration);
 
-       // rb.MovePosition(transform.position + movementVector * moveAcceleration * Time.deltaTime);
-
-        //rb.AddForce(movementVector * moveAcceleration * Time.deltaTime, ForceMode.Impulse);
-
-        //Vector3 velocityToCheck = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        /*
-        if (velocityToCheck.magnitude > maxMovementSpeed)
-        {
-            velocityToCheck = velocityToCheck.normalized * maxMovementSpeed;
-            //Debug.Log("too fast");
-            rb.velocity = new Vector3(velocityToCheck.x, rb.velocity.y, velocityToCheck.z);
-        }*/
 
         SmoothRotateTo(currentLookVector);
         //transform.forward = Vector3.Lerp(transform.forward, currentLookVector.normalized, rotationSpeed * Time.deltaTime);
@@ -137,9 +133,6 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     {
         if (canBePushed)
         {
-            Debug.Log("player push; " + force.magnitude);
-            Debug.Log("force: " + force);
-
             rb.AddForce(force, ForceMode.Impulse);
             //rb.AddForce(force);
         }

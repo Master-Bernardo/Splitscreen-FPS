@@ -168,7 +168,8 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             }
             else
             {
-                rb.AddForce(dashDirection * dashForce);
+                Debug.Log("force added: " + dashDirection * dashForce * Settings.Instance.forceMultiplier);
+                rb.AddForce(dashDirection * dashForce * Settings.Instance.forceMultiplier, ForceMode.Acceleration);
             }
 
         }
@@ -190,8 +191,6 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             agent.enabled = false;
             rb.isKinematic = false;
             // StopLookAt();
-            Debug.Log("unit push; " + force.magnitude);
-            Debug.Log("force: " + force);
 
             rb.AddForce(force, ForceMode.Impulse);
             velocityLastTime = 0;

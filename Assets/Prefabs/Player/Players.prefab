@@ -400,11 +400,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5838393016416261013, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
-      propertyPath: dashForce
-      value: 125000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5838393016416261013, guid: 2e3f464a818f22d48ab60f4990a76446,
-        type: 3}
       propertyPath: dashTime
       value: 0.125
       objectReference: {fileID: 0}
