@@ -43,9 +43,13 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         currentDashPoints = maxDashPoints;
 
         angularSpeed = rotationSpeed;
+        maxAcceleration *= Settings.Instance.forceMultiplier;
+        maxDecceleration *= Settings.Instance.forceMultiplier;
+        jumpForce *= Settings.Instance.forceMultiplier;
+
     }
 
-    
+
     //gets called in fixed update
     public void UpdateMovement(Vector3 currentLookVector, Vector3 movementVector)
     {

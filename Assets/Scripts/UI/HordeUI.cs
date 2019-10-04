@@ -14,6 +14,7 @@ public class HordeUI : MonoBehaviour
     public TextMeshProUGUI waveNumberUI;
     public TextMeshProUGUI playerPoints;
     public GameObject winPanel;
+    public GameObject defeatPanel;
 
 
     void Start()
@@ -57,5 +58,10 @@ public class HordeUI : MonoBehaviour
     public void ShowWinPanel()
     {
         winPanel.SetActive(true);
+    }
+
+    public void ShowDefeatPanel()
+    {
+        defeatPanel.SetActive(true);
     }
 }

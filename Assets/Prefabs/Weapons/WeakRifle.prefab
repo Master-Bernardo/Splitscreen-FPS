@@ -103,8 +103,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186426686374872184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.48499966, y: 0, z: 1.46}
-  m_LocalScale: {x: 0.17510557, y: 0.20842335, z: 2.0383}
+  m_LocalPosition: {x: 0, y: 0.366, z: 1.747}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4945291708861343405}
   m_RootOrder: 1
@@ -135,7 +135,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4204844011557427023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.48499966, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.317, z: 0.287}
   m_LocalScale: {x: 0.17510557, y: 0.20842335, z: 2.0383}
   m_Children:
   - {fileID: 1689724798034375263}
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 4945291708861343405}
   - component: {fileID: 6610183411803625457}
   m_Layer: 11
-  m_Name: UnlimitedAmmoRifle
+  m_Name: WeakRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

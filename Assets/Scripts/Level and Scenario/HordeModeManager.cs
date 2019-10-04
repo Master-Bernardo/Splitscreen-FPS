@@ -7,12 +7,18 @@ public class HordeModeManager : MonoBehaviour
     public static HordeModeManager Instance;
     List<HordeSpawner> spawners = new List<HordeSpawner>();
 
-    public GameEntity[] players;
+    //public GameEntity[] players;
+    public PlayerController[] playerControllers;
     public HordeUI[] hordeUI;
     public float[] playerPoints;
     
 
-    List<GameEntity> activePlayers = new List<GameEntity>();
+    //List<GameEntity> activePlayers = new List<GameEntity>();
+    List<PlayerController> activePlayerControllers = new List<PlayerController>();
+    List<PlayerController> playersAlive = new List<PlayerController>();
+    List<PlayerController> playersDead = new List<PlayerController>();
+
+    public Transform playerSpawnPoint;
 
     HashSet<GameEntity> currentWaveEnemies = new HashSet<GameEntity>();
 
@@ -59,14 +65,21 @@ public class HordeModeManager : MonoBehaviour
     {
         playerPoints = new float[4];
 
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < playerControllers.Length; i++)
         {
-            if (players[i].isActiveAndEnabled) activePlayers.Add(players[i]);
+            if (playerControllers[i].isActiveAndEnabled) activePlayerControllers.Add(playerControllers[i]);
             playerPoints[i] = startingScore;
             hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
         }
+
+        for (int i = 0; i < activePlayerControllers.Count; i++)
+        {
+            playersAlive.Add(activePlayerControllers[i]);
+            hordeUI[i].StartPause();
+        }
+
         //Debug.Log("debug.log( count): " + activePlayers.Count);
-        
+
         nextWaveTime = prepTime;
     }
 
@@ -84,11 +97,10 @@ public class HordeModeManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            foreach(HordeSpawner spawner in spawners)
-            {
-                //spawner.Spawn(5);
-            }
+            RespawnPlayers();
         }
+
+
 
         switch (state)
         {
@@ -127,14 +139,11 @@ public class HordeModeManager : MonoBehaviour
                 {
                     if (currentWaveNumber == hordeScenario.waves.Length)
                     {
-                        state = HordeModeState.Victory;
-                        for (int i = 0; i < hordeUI.Length; i++)
-                        {
-                            hordeUI[i].ShowWinPanel();
-                        }
+                        Victory();
                     }
                     else
                     {
+                        RespawnPlayers();
                         state = HordeModeState.Pause;
                         nextWaveTime = Time.time + pauseTime;
 
@@ -164,7 +173,12 @@ public class HordeModeManager : MonoBehaviour
 
     public void OnEnemyFromThisWaveDies(GameEntity entity)
     {
-        currentWaveEnemies.Remove(entity);
+        Debug.Log("enemy dies");
+        for (int i = 0; i < hordeUI.Length; i++)
+        {
+            hordeUI[i].UpdateEnemiesLeft(currentWaveEnemies.Count);
+        }
+            currentWaveEnemies.Remove(entity);
     }
 
     public GameEntity GetNearestPlayer(Vector3 position)
@@ -172,13 +186,13 @@ public class HordeModeManager : MonoBehaviour
         GameEntity nearestPlayer = null;
         float nearestDistance = Mathf.Infinity;
 
-        foreach(GameEntity player in activePlayers)
+        foreach(PlayerController player in playersAlive)
         {
-            float currentDistance = (player.transform.position - position).sqrMagnitude;
+            float currentDistance = (player.playerEntity.transform.position - position).sqrMagnitude;
             if (currentDistance < nearestDistance)
             {
                 nearestDistance = currentDistance;
-                nearestPlayer = player;
+                nearestPlayer = player.playerEntity;
             }
         }
 
@@ -189,7 +203,7 @@ public class HordeModeManager : MonoBehaviour
     void SpawnWave()
     {
         HordeWave currentWave = hordeScenario.waves[currentWaveNumber-1];
-
+        Debug.Log("current wave: " + currentWave);
         //if this wave has events - call them:
         events.disableEnableEvents[currentWaveNumber - 1].CallEvent();
 
@@ -197,6 +211,8 @@ public class HordeModeManager : MonoBehaviour
         //first spawn the boss units according to their number
         foreach (HordeUnitBoss bossUnit in currentWave.bossUnits)
         {
+            if (!bossUnit.fixedNumber) bossUnit.number = (int)(bossUnit.number*unitsMultiplier);
+
             for (int i = 0; i < bossUnit.number; i++)
             {
                 //spawn
@@ -229,18 +245,28 @@ public class HordeModeManager : MonoBehaviour
 
             //2.  choose on of them randomly
             HordeUnit unitToSpawn = unitsWeCanAfford[Random.Range(0, unitsWeCanAfford.Count)];
+            Debug.Log(unitToSpawn + " .unitToSpawn");
             GameEntity entity = SelectRandomSpawner(unitToSpawn.size).Spawn(unitToSpawn.unitPrefab);
+            Debug.Log(entity + " .entity");
+
             currentWaveEnemies.Add(entity);
             entity.onDieEvent.AddListener(delegate { OnEnemyFromThisWaveDies(entity); });
             spawnPointsLeft -= unitToSpawn.recruitmentCost;
         }
     }
 
+    //allows us to add enemies to the current wave from elsewhere - level events or special bosses spawning only in one area
+    public void RegisterEnemyIntoWave(GameEntity enemy)
+    {
+        currentWaveEnemies.Add(enemy);
+        enemy.onDieEvent.AddListener(delegate { OnEnemyFromThisWaveDies(enemy); });
+    }
+
     public void AddPlayerPoints(GameEntity damagerEntity, float points)
     {
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < playerControllers.Length; i++)
         {
-            if(players[i] == damagerEntity)
+            if(playerControllers[i].playerEntity == damagerEntity)
             {
                 playerPoints[i] += points;
             }
@@ -250,9 +276,9 @@ public class HordeModeManager : MonoBehaviour
 
     public void RemovePlayerPoints(GameEntity playerEntity, float points)
     {
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < playerControllers.Length; i++)
         {
-            if (players[i] == playerEntity)
+            if (playerControllers[i].playerEntity == playerEntity)
             {
                 playerPoints[i] -= points;
             }
@@ -262,7 +288,7 @@ public class HordeModeManager : MonoBehaviour
 
     public bool DoesPlayerHaveEnoughPoints(GameEntity player, float points)
     {
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < playerControllers.Length; i++)
         {
             if (playerPoints[i] >= points)
             {
@@ -299,5 +325,50 @@ public class HordeModeManager : MonoBehaviour
             return null;
         }
     }
+
+    #region playerSpawn and Death
+
+    public void OnPlayerDies(PlayerController player)
+    {
+        playersAlive.Remove(player);
+        playersDead.Add(player);
+        if(playersAlive.Count == 0)
+        {
+            Defeat();
+        }
+    }
+
+    public void RespawnPlayers()
+    {
+        Debug.Log("Respawn");
+        foreach(PlayerController player in playersDead)
+        {
+            player.TeleportPlayer(playerSpawnPoint.position + new Vector3(Random.Range(-1,1),0, Random.Range(-1, 1)));
+            playersAlive.Add(player);
+            player.ActivatePlayer();
+        }
+        playersDead.Clear();
+
+    }
+
+    void Victory()
+    {
+        state = HordeModeState.Victory;
+        for (int i = 0; i < hordeUI.Length; i++)
+        {
+            hordeUI[i].ShowWinPanel();
+        }
+    }
+
+    void Defeat()
+    {
+        state = HordeModeState.Defeat;
+        for (int i = 0; i < hordeUI.Length; i++)
+        {
+            hordeUI[i].ShowDefeatPanel();
+        }
+    }
+
+    #endregion
 
 }

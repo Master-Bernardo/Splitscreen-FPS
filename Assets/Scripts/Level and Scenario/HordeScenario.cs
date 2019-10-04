@@ -7,6 +7,8 @@ public class HordeUnitBoss
 {
     //boss units get spawned no matter what
     public GameObject unitPrefab;
+    [Tooltip("if this is true, the number will not be affected by the units multiplier")]
+    public bool fixedNumber;
     [Tooltip("How many of them will be spawned")]
     public int number;
     public int size;

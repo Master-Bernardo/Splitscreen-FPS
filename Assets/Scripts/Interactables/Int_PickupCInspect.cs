@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(Int_Pickup))]
 public class Int_PickupCInspect : Editor
 {
@@ -18,3 +19,5 @@ public class Int_PickupCInspect : Editor
         }
     }
 }
+#endif
+

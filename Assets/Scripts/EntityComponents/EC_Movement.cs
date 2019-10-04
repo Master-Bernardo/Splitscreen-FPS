@@ -52,11 +52,13 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
     //dashing with rb
     public float dashForce;
-    public float dashTime;//how long does the dash takes place?
+    public float dashTime;//how long does the dash force gets applied?
 
 
     float nextDashEndTime;
     Vector3 dashDirection;
+    public float dashMultiplier; // when an agents gets his rb activated and dashes, he does not have the same gravity forces applied to it as the player so we modify his dash push force value
+    //bool dashBrake = false; //are we giving force in the opposite direction?
 
     public override void SetUpComponent(GameEntity entity)
     {
@@ -75,11 +77,11 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            MoveTo(transform.position + new Vector3(-5, 0 - 5));
+            if(agent!=null)MoveTo(transform.position + new Vector3(0, 0, 15));
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Push(new Vector3(3000f, 0f, 0));
+            Push(new Vector3(1000f, 0f, 0));
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
@@ -103,15 +105,17 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             }
        }
 
-        
+        //Debug.Log(gameObject.name + " rb speed: " + new Vector3(rb.velocity.x, 0 ,rb.velocity.z).magnitude);
 
 
     }
 
     public override void FixedUpdateComponent()
     {
+
         if (movementState == MovementState.BeingPushed)
         {
+
             rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
 
             // Debug.Log("current veloity: " + rb.velocity.sqrMagnitude);
@@ -150,26 +154,44 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         }
         else if (movementState == MovementState.Dashing)
         {
-            rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
+           rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
+
 
             if (Time.time > nextDashEndTime)
             {
-                movementState = MovementState.Default;
-
+                //dashBrake = true;
                 if (agent != null)
                 {
-                    agent.enabled = true;
-                    rb.isKinematic = true;
+                    if (rb.velocity.sqrMagnitude < pushTreshold)
+                    {
+                        movementState = MovementState.Default;
+
+                        agent.enabled = true;
+                        rb.isKinematic = true;
+
+                        if (movementOrderIssuedWhileBeingPushed)
+                        {
+                            MoveTo(targetMovePositionNotYetOrdered);
+                        }
+                    }
                 }
-                if (movementOrderIssuedWhileBeingPushed)
+                else
                 {
-                    MoveTo(targetMovePositionNotYetOrdered);
+                    movementState = MovementState.Default;
                 }
+
             }
             else
             {
-                Debug.Log("force added: " + dashDirection * dashForce * Settings.Instance.forceMultiplier);
-                rb.AddForce(dashDirection * dashForce * Settings.Instance.forceMultiplier, ForceMode.Acceleration);
+                //Debug.Log(gameObject.name + " force added: " + dashDirection * dashForce * Settings.Instance.forceMultiplier);
+                if (agent != null)
+                {
+                    rb.AddForce(dashDirection * dashForce * Settings.Instance.forceMultiplier * dashMultiplier, ForceMode.Acceleration);
+                }
+                else
+                {
+                    rb.AddForce(dashDirection * dashForce * Settings.Instance.forceMultiplier, ForceMode.Acceleration);
+                }
             }
 
         }
@@ -188,8 +210,10 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
             //isBeingPushed = true;
             movementState = MovementState.BeingPushed;
+            Vector3 agentVelocity = agent.velocity;
             agent.enabled = false;
             rb.isKinematic = false;
+            rb.velocity = agentVelocity;
             // StopLookAt();
 
             rb.AddForce(force, ForceMode.Impulse);
@@ -202,18 +226,23 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //works similar to push
     public virtual void Dash(Vector3 direction)
     {
+        //Push(direction * dashForce);
         if (agent != null)
         {
+
+
             if (agent.destination != null)
             {
                 movementOrderIssuedWhileBeingPushed = true;
                 targetMovePositionNotYetOrdered = agent.destination;
             }
 
+            Vector3 agentVelocity = agent.velocity;
             agent.enabled = false;
             rb.isKinematic = false;
+            rb.velocity = agentVelocity;
 
-            
+
         }
       
         dashDirection = direction;

@@ -64,11 +64,11 @@ public class EC_MissileWeaponController : EntityComponent
                         //now calculate again, but with speed of the target added
                         timeInAir = ((currentTarget.GetPositionForAiming() + currentEnemyMovement.GetCurrentVelocity() * timeInAir) - weapon.GetProjectileSpawnPoint()).magnitude / weapon.initialLaunchSpeed;
 
-                        desiredAimVector = (currentTarget.GetPositionForAiming()+currentEnemyMovement.GetCurrentVelocity()*timeInAir) - transform.position;
+                        desiredAimVector = (currentTarget.GetPositionForAiming()+currentEnemyMovement.GetCurrentVelocity()*timeInAir) - weapon.transform.position;
                     }
                     else
                     {
-                        desiredAimVector = currentTarget.GetPositionForAiming() - transform.position;
+                        desiredAimVector = currentTarget.GetPositionForAiming() - weapon.transform.position;
                     }
                 }
                 else
@@ -76,7 +76,7 @@ public class EC_MissileWeaponController : EntityComponent
 
                     Vector3 enemyPosition = currentTarget.GetPositionForAiming();
                     Vector3 launchPointPosition = weapon.GetProjectileSpawnPoint();
-                    Vector3 weaponPosition = transform.position;
+                    Vector3 weaponPosition = weapon.transform.position;//transform.position;
 
                     //refactor positions - get the m only once
                     

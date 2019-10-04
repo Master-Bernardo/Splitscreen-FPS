@@ -2,14 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
+
 
 public class PlayerController : MonoBehaviour
 {
     public Camera cam;
 
-   
+    enum PlayerControlMode
+    {
+        Default,
+        Dead //we can move around the world as a dead ghost
+    }
+
+    PlayerControlMode controlMode;
+
+    public UnityEvent onDieEvent;
 
     public PlayerMovement playerMovement;
+    public GameEntity playerEntity;
+    public Transform deadPlayerGhostTransform;
+    public PlayerMovementRTS deadPlayerMovement;
     public PlayerInput playerInput;
     public EC_WeaponSystem weaponSystem;
     public InteractableShower interactableShower;
@@ -28,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
     bool interacting = false;
 
+
+
     #region controls
 
     public void OnMovement(InputValue value)
@@ -37,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnW1Press()
     {
-        weaponSystem.UseWeaponStart(0);
+        if(controlMode == PlayerControlMode.Default) weaponSystem.UseWeaponStart(0);
         pressedWeaponID = 0;
         weaponPressed = true;
     }
@@ -157,7 +172,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        currentLookVector = transform.forward;
+        currentLookVector = playerEntity.transform.forward;
     }
 
 
@@ -174,48 +189,97 @@ public class PlayerController : MonoBehaviour
         Vector3 verV = new Vector3(-camRight.z, 0f, camRight.x) * ver;
         movementVector = horV + verV;
 
-        //rotate towards
-
-        //Debug.Log("look InputVector: " + lookInputVector);
-        if (playerInput.controlScheme == "Gamepad")
+        
+        if(controlMode == PlayerControlMode.Default)
         {
-           if(lookInputVector != new Vector2(0, 0))
-           {
-                currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
-           }
-           else
-           {
-                if(movementVector != new Vector3(0, 0, 0))
+            //rotate towards
+
+            if (playerInput.controlScheme == "Gamepad")
+            {
+                if (lookInputVector != new Vector2(0, 0))
                 {
-                    currentLookVector = movementVector;
+                    currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
                 }
+                else
+                {
+                    if (movementVector != new Vector3(0, 0, 0))
+                    {
+                        currentLookVector = movementVector;
+                    }
+                }
+
+
             }
-                
+            else
+            {
+                //Vector2 playerPos = new Vector3(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
+                //Vector2 direction = playerPos -  currentMousePosition;
+                //Debug.Log("playerPos: " + playerPos);
+                Vector2 direction = new Vector2(Screen.width / 2, Screen.height / 2) - currentMousePosition;
+                currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y + 180, 0) * new Vector3(direction.x, 0f, direction.y);
+            }
 
-            //lookInputVectorLastFrame = lookInputVector;
+            //weapon
+            if (weaponPressed)
+            {
+                weaponSystem.UseWeaponHold(pressedWeaponID);
+            }
+
+            if (interacting)
+            {
+                interactableShower.HoldInteract();
+
+            }
         }
-        else
+        else if( controlMode == PlayerControlMode.Dead)
         {
-           Vector2 playerPos = new Vector3(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
-           Vector2 direction = playerPos -  currentMousePosition;
-           currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y + 180, 0) * new Vector3(direction.x, 0f, direction.y);
-        }
-
-        //weapon
-        if (weaponPressed)
-        {
-            weaponSystem.UseWeaponHold(pressedWeaponID);
-        }
-
-        if (interacting)
-        {
-            interactableShower.HoldInteract();
-
-        }
+            deadPlayerMovement.UpdateMovement(movementVector);
+        }  
     }
 
     private void FixedUpdate()
     {
-        playerMovement.UpdateMovement(currentLookVector, movementVector);
+        if (controlMode == PlayerControlMode.Default)
+        {
+            playerMovement.UpdateMovement(currentLookVector, movementVector);
+        }
+    }
+
+    public void TeleportPlayer(Vector3 position)
+    {
+        playerEntity.transform.position = position;
+        cam.GetComponent<SmoothCameraFollow>().TeleportToDesiredPosition();
+
+    }
+
+    public void OnDie()
+    {
+        DeactivatePlayer();
+        onDieEvent.Invoke();
+    }
+
+    public void ActivatePlayer()
+    {
+        playerEntity.GetComponent<EC_Health>().ResetHealth();
+        deadPlayerGhostTransform.gameObject.SetActive(false);
+        playerEntity.gameObject.SetActive(true);
+        cam.GetComponent<SmoothCameraFollow>().target = playerEntity.transform;
+
+        controlMode = PlayerControlMode.Default;
+
+    }
+
+    public void DeactivatePlayer()
+    {
+        playerEntity.gameObject.SetActive(false);
+        Vector3 rtsCamPosition = playerEntity.transform.position;
+        rtsCamPosition.y = 0;
+        deadPlayerGhostTransform.position = rtsCamPosition;
+        deadPlayerGhostTransform.gameObject.SetActive(true);
+        cam.GetComponent<SmoothCameraFollow>().target = deadPlayerGhostTransform;
+
+
+        controlMode = PlayerControlMode.Dead;
+
     }
 }

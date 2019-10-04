@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
     public bool spawnOnEnable;
     public int numberToSpawn;
     public GameObject unitToSpawn;
+    public bool registerInHordeManager;
 
     private void Start()
     {
@@ -14,7 +15,11 @@ public class Spawner : MonoBehaviour
         {
             for (int i = 0; i < numberToSpawn; i++)
             {
-                Spawn(unitToSpawn);
+                GameEntity unit = Spawn(unitToSpawn);
+                if (registerInHordeManager)
+                {
+                    HordeModeManager.Instance.RegisterEnemyIntoWave(unit);
+                }
             }
         }
     }

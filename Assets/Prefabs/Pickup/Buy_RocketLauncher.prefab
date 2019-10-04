@@ -88,11 +88,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2810191130278506963}
     m_Modifications:
-    - target: {fileID: 7771058485830626116, guid: 7bae8d8159ba20f4b82986caeef17993,
-        type: 3}
-      propertyPath: m_Name
-      value: RocketLauncher
-      objectReference: {fileID: 0}
     - target: {fileID: 4945291708861343405, guid: 7bae8d8159ba20f4b82986caeef17993,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -147,6 +142,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7771058485830626116, guid: 7bae8d8159ba20f4b82986caeef17993,
+        type: 3}
+      propertyPath: m_Name
+      value: RocketLauncher
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bae8d8159ba20f4b82986caeef17993, type: 3}
@@ -273,7 +273,7 @@ PrefabInstance:
     - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
         type: 3}
       propertyPath: cost
-      value: 1
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 8514452984164144961, guid: 9309be58de3ac8545895d692b90a4a96,
         type: 3}

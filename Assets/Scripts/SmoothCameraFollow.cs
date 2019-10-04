@@ -22,4 +22,11 @@ public class SmoothCameraFollow : MonoBehaviour
 
         //transform.LookAt(target);
     }
+
+    public void TeleportToDesiredPosition()
+    {
+        Vector3 desiredPosition = target.position + offset;
+        
+        transform.position = desiredPosition;
+    }
 }

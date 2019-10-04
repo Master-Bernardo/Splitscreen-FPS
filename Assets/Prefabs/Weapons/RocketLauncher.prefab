@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71632660797407423}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.478, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.129, z: 0.307}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8155681036261642139}
@@ -59,8 +59,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186426686374872184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.48499966, y: 0, z: 1.46}
-  m_LocalScale: {x: 0.17510557, y: 0.20842335, z: 2.0383}
+  m_LocalPosition: {x: 0, y: 0.144, z: 1.811}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4945291708861343405}
   m_RootOrder: 1
@@ -360,7 +360,7 @@ MonoBehaviour:
   bloom: 0.5
   reloadTime: 1
   initialLaunchSpeed: 20
-  ammoType: 3
+  ammoType: 0
   projectileTag: Rocket
   magazineSize: 1
   infiniteMagazine: 0
