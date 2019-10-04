@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     public UnityEvent onDieEvent;
 
+
     public PlayerMovement playerMovement;
     public GameEntity playerEntity;
     public Transform deadPlayerGhostTransform;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     int pressedWeaponID;
 
     bool interacting = false;
+    public bool looseWeaponOnDeactivate = true;
 
 
 
@@ -271,6 +273,8 @@ public class PlayerController : MonoBehaviour
 
     public void DeactivatePlayer()
     {
+        if (looseWeaponOnDeactivate) playerEntity.GetComponent<EC_WeaponSystem>().ResetWeapons();
+
         playerEntity.gameObject.SetActive(false);
         Vector3 rtsCamPosition = playerEntity.transform.position;
         rtsCamPosition.y = 0;

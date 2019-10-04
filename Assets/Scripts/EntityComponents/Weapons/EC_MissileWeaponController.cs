@@ -116,7 +116,7 @@ public class EC_MissileWeaponController : EntityComponent
 
                         desiredAimVector = (enemyPosition + currentEnemyMovement.GetCurrentVelocity() * timeInAir)- weaponPosition;
                         desiredAimVector.y = 0;
-                        desiredAimVector = Quaternion.AngleAxis(-launchAngle, transform.right) * desiredAimVector;
+                        desiredAimVector = Quaternion.AngleAxis(-launchAngle, weapon.transform.right) * desiredAimVector;
                         //Debug.Log("has movement: " + launchAngle);
 
                     }
@@ -135,7 +135,7 @@ public class EC_MissileWeaponController : EntityComponent
                         //desiredAimVector = Quaternion.AngleAxis(-launchAngle, projectileSpawnPoint.right) * desiredAimVector;
                         desiredAimVector = enemyPosition - weaponPosition;
                         desiredAimVector.y = 0;
-                        desiredAimVector = Quaternion.AngleAxis(-launchAngle, transform.right) * desiredAimVector;
+                        desiredAimVector = Quaternion.AngleAxis(-launchAngle, weapon.transform.right) * desiredAimVector;
                         //Debug.Log("no movement: " + launchAngle);
 
                     }
@@ -227,7 +227,7 @@ public class EC_MissileWeaponController : EntityComponent
     {
         //Quaternion desiredLookRotation = Quaternion.LookRotation(position - turrenRotatingBarrel.transform.position);
         Quaternion desiredLookRotation = Quaternion.LookRotation(desiredLookVector);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredLookRotation, turningSpeed*Time.deltaTime);
+        weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, desiredLookRotation, turningSpeed*Time.deltaTime);
 
     }
 

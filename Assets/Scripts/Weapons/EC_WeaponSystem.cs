@@ -12,7 +12,7 @@ public class EC_WeaponSystem : EntityComponent
     int currentSelectedWeaponID;
     //public Text weaponInfo; //shows weapon name and ammo
 
-    public Transform weaponHolder;
+    public Transform rightHand;
 
     [Header("Ammo")]
     //ammo in pockets - not in magazines
@@ -31,6 +31,11 @@ public class EC_WeaponSystem : EntityComponent
     [Tooltip("select only one UI layer here")]
     //public GameObject playerUILayerGO;
     public int playerUILayer;
+
+    [Header("Starting Weapons")]
+    public GameObject startingWeapon1;
+    public GameObject startingWeapon2;
+    public GameObject startingWeapon3;
 
 
     enum WeaponSystemState
@@ -51,7 +56,9 @@ public class EC_WeaponSystem : EntityComponent
 
         ammo = new Dictionary<AmmoType, int>();
 
-        foreach (Weapon weapon in inventory)
+        ResetWeapons();
+
+       /* foreach (Weapon weapon in inventory)
         {
             if (weapon != null)
             {
@@ -64,7 +71,7 @@ public class EC_WeaponSystem : EntityComponent
 
         ammo[AmmoType.Rocket] = startRocketAmmo;
         ammo[AmmoType.Grenade] = startGrenadeAmmo;
-        ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;
+        ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;*/
 
         //Debug.Log("len: " + SortingLayer.layers.Length);
         //playerUILayer = playerUILayerGO.layer
@@ -224,9 +231,9 @@ public class EC_WeaponSystem : EntityComponent
 
         inventory[currentSelectedWeaponID] = currentSelectedWeapon;
 
-        currentSelectedWeapon.transform.SetParent(weaponHolder.transform);
+        currentSelectedWeapon.transform.SetParent(rightHand.transform);
         currentSelectedWeapon.transform.localPosition = new Vector3(0, 0, 0);
-        currentSelectedWeapon.transform.forward = weaponHolder.transform.forward;
+        currentSelectedWeapon.transform.forward = rightHand.transform.forward;
         currentSelectedWeapon.SetUp(this);
 
         return oldWeapon;
@@ -296,5 +303,54 @@ public class EC_WeaponSystem : EntityComponent
         {
             return false;
         }
+    }
+
+    //resetWeaponsBackToStartingWeapons
+    public void ResetWeapons()
+    {
+        //first delete all weapons currently there
+        foreach(Transform transform in rightHand)
+        {
+            Destroy(transform.gameObject);
+        }
+
+
+        GameObject weapon1;
+        GameObject weapon2;
+        GameObject weapon3;
+
+
+        if (startingWeapon1 != null)
+        {
+            weapon1 = Instantiate(startingWeapon1, rightHand);
+            inventory[0] = weapon1.GetComponent<Weapon>();
+        }
+        if (startingWeapon2 != null)
+        {
+            weapon2 = Instantiate(startingWeapon2, rightHand);
+            inventory[1] = weapon2.GetComponent<Weapon>();
+        }
+        if (startingWeapon3 != null)
+        {
+            weapon3 = Instantiate(startingWeapon3, rightHand);
+            inventory[2] = weapon3.GetComponent<Weapon>();
+        }
+
+
+
+        foreach (Weapon weapon in inventory)
+        {
+            if (weapon != null)
+            {
+                weapon.gameObject.SetActive(false);
+                weapon.SetUp(this);
+            }
+        }
+        if (weaponHUD != null) weaponHUD.SetUp(this);
+        ChangeWeapon(0);
+
+        ammo[AmmoType.Rocket] = startRocketAmmo;
+        ammo[AmmoType.Grenade] = startGrenadeAmmo;
+        ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;
     }
 }
