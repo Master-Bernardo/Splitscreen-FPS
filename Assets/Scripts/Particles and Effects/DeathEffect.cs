@@ -21,6 +21,8 @@ public class DeathEffect : MonoBehaviour
     public float descendSpeed;
     float dissapearTimeEnd;
 
+ 
+
 
 
     public void OnDie() //if no force is given as parameter the body gets pushed backwards

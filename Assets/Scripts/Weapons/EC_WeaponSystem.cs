@@ -235,6 +235,7 @@ public class EC_WeaponSystem : EntityComponent
         currentSelectedWeapon.transform.localPosition = new Vector3(0, 0, 0);
         currentSelectedWeapon.transform.forward = rightHand.transform.forward;
         currentSelectedWeapon.SetUp(this);
+        currentSelectedWeapon.teamID = myEntity.teamID;
 
         return oldWeapon;
 
@@ -342,6 +343,7 @@ public class EC_WeaponSystem : EntityComponent
         {
             if (weapon != null)
             {
+                weapon.teamID = myEntity.teamID;
                 weapon.gameObject.SetActive(false);
                 weapon.SetUp(this);
             }

@@ -9,7 +9,7 @@ public class SmoothCameraFollow : MonoBehaviour
     public float smoothSpeed = 4f;
     Vector3 offset;
 
-    private void Start()
+    private void Awake()
     {
         offset = transform.position - target.position ;
     }

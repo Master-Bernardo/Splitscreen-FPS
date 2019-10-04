@@ -16,6 +16,11 @@ public class EC_Health : EntityComponent
     public float changeColorTime = 0.2f;
     float nextGoBackToNormalColorTime;
 
+    //performance wise better not, but is used by players for example
+    public bool instantateDeathEffect;
+
+
+
     public DeathEffect deathEffect;
 
     public override void SetUpComponent(GameEntity entity)
@@ -41,17 +46,36 @@ public class EC_Health : EntityComponent
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            if (deathEffect != null)
+
+            if (!instantateDeathEffect)
             {
+                if (deathEffect != null)
+                {
+                    if (damageInfo.appliesForce)
+                    {
+                        deathEffect.OnDie(damageInfo.killPushForce);
+                    }
+                    else
+                    {
+                        deathEffect.OnDie();
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("instantiate");
+                DeathEffect instantiatedDeathEffect = Instantiate(deathEffect,transform.position,transform.rotation).GetComponent<DeathEffect>();
+
                 if (damageInfo.appliesForce)
                 {
-                    deathEffect.OnDie(damageInfo.killPushForce);
+                    instantiatedDeathEffect.OnDie(damageInfo.killPushForce);
                 }
                 else
                 {
-                    deathEffect.OnDie();
+                    instantiatedDeathEffect.OnDie();
                 }
             }
+           
 
             myEntity.Die(damageInfo.damageGiver);
         }

@@ -24,6 +24,7 @@ public class Int_Pickup : MonoBehaviour
 
     public void OnPickup(Interactable interactable)
     {
+        Debug.Log("Pick up");
         if(pickupType == PickupType.Health)
         {
             EC_Health health = interactable.interactingPlayer.GetComponent<EC_Health>();
