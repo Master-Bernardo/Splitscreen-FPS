@@ -97,7 +97,8 @@ public class HordeModeManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            RespawnPlayers();
+            // RespawnPlayers();
+            AddPlayerPoints(activePlayerControllers[1].playerEntity, 200);
         }
 
 
@@ -290,14 +291,18 @@ public class HordeModeManager : MonoBehaviour
     {
         for (int i = 0; i < playerControllers.Length; i++)
         {
-            if (playerPoints[i] >= points)
+            if(playerControllers[i].playerEntity == player)
             {
-                return true;
+                if (playerPoints[i] >= points)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return false;
-            }
+            
         }
 
         return false;

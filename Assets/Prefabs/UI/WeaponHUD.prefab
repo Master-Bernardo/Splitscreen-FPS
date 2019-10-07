@@ -568,6 +568,7 @@ MonoBehaviour:
   infinityPoach: {fileID: 1082248140556908189}
   infinityPoachAndMagazine: {fileID: 1082248141384182782}
   line: {fileID: 1082248141737856974}
+  weaponInfoPanel: {fileID: 1082248141110007739}
   reloadingPanel: {fileID: 1082248140543214505}
 --- !u!114 &63303408171940688
 MonoBehaviour:

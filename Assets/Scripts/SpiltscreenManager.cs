@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
+using UnityEngine.InputSystem.Controls;
 
 public class SpiltscreenManager : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class SpiltscreenManager : MonoBehaviour
 
     public PlayerInput[] playerInputs;
     //public PlayerInputManager playerInputManager;
+
+    bool p1UsesKeyboard = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -134,9 +138,136 @@ public class SpiltscreenManager : MonoBehaviour
                 }
 
                 break;
+        }
+        
+    }
+
+    private void Update()
+    {
+        if (p1UsesKeyboard)
+        {
+            //check if there is a gamepad free, which we could use
+
+            bool isThereAFreeGamepadLeft = true;
+            foreach (InputDevice device in playerContainers[playerNumber - 1].GetComponent<PlayerInput>().user.pairedDevices)
+            {
+                //Debug.Log("device");
+                if (device == InputSystem.devices[InputSystem.devices.Count - 1]) isThereAFreeGamepadLeft = false; ;
+            }
+
+            if (isThereAFreeGamepadLeft)
+            {
+                //check if a button was pressed on the last, free controller
+                foreach (InputControl control in InputSystem.devices[InputSystem.devices.Count - 1].allControls)
+                {
+                    if (control is ButtonControl)
+                    {
+                        if ((control as ButtonControl).wasPressedThisFrame)
+                        {
+                            Debug.Log("player 1 changed to gamepad");
+                            InputUser user = playerContainers[0].GetComponent<PlayerInput>().user;
+                            InputUser.PerformPairingWithDevice(InputSystem.devices[InputSystem.devices.Count - 1], user);
+                            //InputUser.PerformPairingWithDevice(InputSystem.devices[1], user);
+                            user.ActivateControlScheme("Gamepad");
+                            p1UsesKeyboard = false;
+                        }
+                    }
+
+                }
+            }
+
 
 
         }
+        else
+        {
+            //if we are currently using this gamepad, we chekc if we pressed something on the keyboard or mouse
+
+            bool keyOnKeyboardOrMouseWerePressed = false;
+
+            foreach (InputControl control in InputSystem.devices[0].allControls)
+            {
+                if (control is ButtonControl)
+                {
+                    if ((control as ButtonControl).wasPressedThisFrame)
+                    {
+                        keyOnKeyboardOrMouseWerePressed = true;
+                    }
+                }
+            }
+
+
+            foreach (InputControl control in InputSystem.devices[1].allControls)
+            {
+                if (control is ButtonControl)
+                {
+                    if ((control as ButtonControl).wasPressedThisFrame)
+                    {
+                        keyOnKeyboardOrMouseWerePressed = true;
+                    }
+                }
+            }
+
+            if (keyOnKeyboardOrMouseWerePressed)
+            {
+                Debug.Log("player 1 changed to keyboard");
+                InputUser user = playerContainers[0].GetComponent<PlayerInput>().user;
+                InputUser.PerformPairingWithDevice(InputSystem.devices[0], user);
+                InputUser.PerformPairingWithDevice(InputSystem.devices[1], user);
+                user.ActivateControlScheme("Keyboard and Mouse");
+                p1UsesKeyboard = true;
+            }
+        }
+
+
+
+
+           
+
+        //Gamepad.current.aButton
+      
+
+
+
+
+        /*if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (!p1UsesKeyboard)
+            {
+                Debug.Log("player 1 changed to keyboard");
+                InputUser user = playerContainers[0].GetComponent<PlayerInput>().user;
+                InputUser.PerformPairingWithDevice(InputSystem.devices[0], user);
+                InputUser.PerformPairingWithDevice(InputSystem.devices[1], user);
+                user.ActivateControlScheme("Keyboard and Mouse");
+                p1UsesKeyboard = true;
+            }
+            else
+            {
+                bool isThereAFreeGamepadLeft = true;
+                foreach (InputDevice device in playerContainers[playerNumber - 1].GetComponent<PlayerInput>().user.pairedDevices)
+                {
+                    Debug.Log("device");
+                    if (device == InputSystem.devices[InputSystem.devices.Count - 1]) isThereAFreeGamepadLeft = false; ;
+                }
+
+
+                if (isThereAFreeGamepadLeft)
+                {
+                    //if(InputSystem.devices[InputSystem.devices.Count])
+                    Debug.Log("player 1 changed to gamepad");
+                    InputUser user = playerContainers[0].GetComponent<PlayerInput>().user;
+                    InputUser.PerformPairingWithDevice(InputSystem.devices[InputSystem.devices.Count-1], user);
+                    //InputUser.PerformPairingWithDevice(InputSystem.devices[1], user);
+                    user.ActivateControlScheme("Gamepad");
+                    p1UsesKeyboard = false;
+                }
+         
+               
+            }
+        }*/
+           
     }
+
+
 
 }

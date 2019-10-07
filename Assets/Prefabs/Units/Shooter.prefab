@@ -168,6 +168,7 @@ MonoBehaviour:
   - {fileID: 7784719811065085507}
   - {fileID: 4833457907693621127}
   changeColorTime: 0.2
+  instantateDeathEffect: 0
   deathEffect: {fileID: 6300934294058530171}
 --- !u!195 &1362219360397472213
 NavMeshAgent:
@@ -499,6 +500,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathEffect
       objectReference: {fileID: 0}
+    - target: {fileID: 425685759070711666, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6604589183905111465, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -507,11 +513,6 @@ PrefabInstance:
     - target: {fileID: 6604589183905111465, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 425685759070711666, guid: df929418312630c41bb6aa5be091ddb3,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,

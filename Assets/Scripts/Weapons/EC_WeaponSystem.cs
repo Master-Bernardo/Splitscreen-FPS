@@ -148,10 +148,7 @@ public class EC_WeaponSystem : EntityComponent
 
         if (weaponHUD != null)
         {
-            if (currentSelectedWeapon != null)
-            {
-                weaponHUD.UpdateHUD(currentSelectedWeapon);
-            }
+            weaponHUD.UpdateHUD(currentSelectedWeapon);
         }
     }
 
