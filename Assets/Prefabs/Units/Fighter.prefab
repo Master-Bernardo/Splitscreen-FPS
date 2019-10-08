@@ -116,7 +116,7 @@ MonoBehaviour:
   movementUpdateIntervall: 0
   canBePushed: 1
   pushTreshold: 5
-  dashForce: 200
+  dashForce: 100
   dashTime: 0.125
   dashMultiplier: 0.75
 --- !u!114 &-7568736579957523176

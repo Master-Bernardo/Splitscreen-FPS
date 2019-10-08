@@ -882,6 +882,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2250772003886685859}
+  baseOffset: {x: 1, y: 1.5, z: 1}
+  distanceToTarget: 25
+  splitscreenDistanceModifier: 1.5
   smoothSpeed: 4
 --- !u!114 &6183753401972804577
 MonoBehaviour:
@@ -937,6 +940,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6183753402557740780}
     m_Modifications:
+    - target: {fileID: 8386224221121732104, guid: c1dfbd76364f6b249bfb58bcd5e65101,
+        type: 3}
+      propertyPath: m_Name
+      value: VersusModeUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8386224221121732104, guid: c1dfbd76364f6b249bfb58bcd5e65101,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8386224221121732105, guid: c1dfbd76364f6b249bfb58bcd5e65101,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1042,16 +1055,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8386224221121732104, guid: c1dfbd76364f6b249bfb58bcd5e65101,
-        type: 3}
-      propertyPath: m_Name
-      value: VersusModeUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8386224221121732104, guid: c1dfbd76364f6b249bfb58bcd5e65101,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8386224221121732108, guid: c1dfbd76364f6b249bfb58bcd5e65101,
         type: 3}
       propertyPath: m_Camera
@@ -1072,6 +1075,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6183753402557740780}
     m_Modifications:
+    - target: {fileID: 8320176229945117803, guid: 7c2e2e22e60e024489a8ad1eaa5590d1,
+        type: 3}
+      propertyPath: m_Name
+      value: HordeModeUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320176229945117803, guid: 7c2e2e22e60e024489a8ad1eaa5590d1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8320176229945117802, guid: 7c2e2e22e60e024489a8ad1eaa5590d1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1191,16 +1204,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -60.44922
-      objectReference: {fileID: 0}
-    - target: {fileID: 8320176229945117803, guid: 7c2e2e22e60e024489a8ad1eaa5590d1,
-        type: 3}
-      propertyPath: m_Name
-      value: HordeModeUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8320176229945117803, guid: 7c2e2e22e60e024489a8ad1eaa5590d1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2133164097509721112, guid: 7c2e2e22e60e024489a8ad1eaa5590d1,
         type: 3}
@@ -1585,6 +1588,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6183753402557740780}
     m_Modifications:
+    - target: {fileID: 1082248141088299363, guid: 6797ae0942162db4d9ab34ea12e4d261,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponHUD
+      objectReference: {fileID: 0}
     - target: {fileID: 1082248141088299292, guid: 6797ae0942162db4d9ab34ea12e4d261,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1689,11 +1697,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1082248141088299363, guid: 6797ae0942162db4d9ab34ea12e4d261,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponHUD
       objectReference: {fileID: 0}
     - target: {fileID: 1082248141384182720, guid: 6797ae0942162db4d9ab34ea12e4d261,
         type: 3}

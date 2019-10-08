@@ -54,6 +54,11 @@ public class SpiltscreenManager : MonoBehaviour
                 cameras[0].rect = new Rect(0, 0, 0.5f, 1);
                 cameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
 
+                cameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+
+                cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+
+
                 playerInputs[0].enabled = true;
                 playerInputs[1].enabled = true;
 
@@ -83,6 +88,12 @@ public class SpiltscreenManager : MonoBehaviour
                 cameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
                 cameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
 
+                cameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                cameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+
+
+
                 playerInputs[0].enabled = true;
                 playerInputs[1].enabled = true;
                 playerInputs[2].enabled = true;
@@ -99,6 +110,9 @@ public class SpiltscreenManager : MonoBehaviour
                         cameras[0].rect = new Rect(0, 0, 1, 1);
                         cameras[1].rect = new Rect(0, 0, 0.5f, 1);
                         cameras[2].rect = new Rect(0.5f, 0, 0.5f, 1);
+
+                        cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        cameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
                     }
                 }
 
@@ -115,6 +129,12 @@ public class SpiltscreenManager : MonoBehaviour
                 cameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
                 cameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
                 cameras[3].rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+
+                cameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                cameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                cameras[3].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+
 
                 playerInputs[0].enabled = true;
                 playerInputs[1].enabled = true;
@@ -134,6 +154,11 @@ public class SpiltscreenManager : MonoBehaviour
                         cameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
                         cameras[2].rect = new Rect(0, 0, 0.5f, 1);
                         cameras[3].rect = new Rect(0.5f, 0, 0.5f, 1);
+
+                        cameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        cameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        cameras[3].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
                     }
                 }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : EC_Movement, IPusheable<Vector3>
@@ -27,12 +28,14 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     public Transform rayCastStartPosition;
     public float groundedCheckRaycastDistance;
     public LayerMask groundedCheckLayermask;
+    public float groundedCheckCapsuleHeight;
+    public bool drawRaycastGizmo;
+
 
     [Tooltip("like stamina - replenishes itself after time, only for player because of performance optimisation")]
     public float maxDashPoints;
     float currentDashPoints;
     public float dashPointReplenishmentSpeed;
-  
 
 
 
@@ -53,11 +56,31 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     //gets called in fixed update
     public void UpdateMovement(Vector3 currentLookVector, Vector3 movementVector)
     {
+
+
         //Debug.Log("actualVelcoity This frame: " + new Vector3(rb.velocity.x, 0, rb.velocity.z));
         //gravity
         rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
 
-        if(movementVector!=new Vector3(0, 0, 0))
+        bool move = false;
+
+        if (!grounded)
+        {
+            if (movementVector != new Vector3(0, 0, 0))
+            {
+                move = true;
+            }
+        }
+        else
+        {
+            //if we are being pushed or dashing, and there is no input from the player, we should not deccelerate
+            if (movementVector != new Vector3(0, 0, 0) || movementVector == new Vector3(0,0,0) && (movementState == MovementState.Default))
+            {
+                move = true;
+            }
+        }
+
+        if (move)
         {
             //movement
             Vector3 rbHorizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -67,7 +90,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
             Vector3 accel = deltaV / Time.deltaTime;
 
-            if((rbHorizontalVelocity + accel.normalized).sqrMagnitude > rbHorizontalVelocity.sqrMagnitude)
+            if ((rbHorizontalVelocity + accel.normalized).sqrMagnitude > rbHorizontalVelocity.sqrMagnitude)
             {
                 //Debug.Log("accelerate");
                 if (accel.sqrMagnitude > maxAcceleration * maxAcceleration)
@@ -80,20 +103,40 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
                     accel = accel.normalized * maxDecceleration;
             }
 
-
-           
-
             rb.AddForce(accel, ForceMode.Acceleration);
+
         }
+
+
+
+
+        /*if (grounded)
+        {
+            //apply drag
+            rb.velocity = rb.velocity * (1 - Time.deltaTime * drag);
+        }*/
 
 
         SmoothRotateTo(currentLookVector);
         //transform.forward = Vector3.Lerp(transform.forward, currentLookVector.normalized, rotationSpeed * Time.deltaTime);
 
         //check if gorunded
+
+        /*
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(rayCastStartPosition.position, -Vector3.up, out hit, groundedCheckRaycastDistance))
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }*/
+
+        Collider[] colliders = Physics.OverlapCapsule(rayCastStartPosition.position, rayCastStartPosition.position + new Vector3(0,groundedCheckCapsuleHeight,0), groundedCheckRaycastDistance, groundedCheckLayermask);
+
+        if (colliders.Length > 1)
         {
             grounded = true;
         }
@@ -138,7 +181,6 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         if (canBePushed)
         {
             rb.AddForce(force, ForceMode.Impulse);
-            //rb.AddForce(force);
         }
     }
 
@@ -150,5 +192,16 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     public override Vector3 GetCurrentVelocity()
     {
         return rb.velocity;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (drawRaycastGizmo)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(rayCastStartPosition.position, groundedCheckRaycastDistance);
+            Gizmos.DrawWireSphere(rayCastStartPosition.position + new Vector3(0, groundedCheckCapsuleHeight, 0), groundedCheckRaycastDistance);
+
+        }
     }
 }
