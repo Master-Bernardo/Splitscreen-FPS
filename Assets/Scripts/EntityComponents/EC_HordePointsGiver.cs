@@ -7,17 +7,22 @@ public class EC_HordePointsGiver : EntityComponent
     public float pointsPerDamage;
     public float pointsPerDeath;
 
-    HordeModeManager hordeModeManager;
+    PlayerRessources playerRessources;
 
     public override void SetUpComponent(GameEntity entity)
     {
         base.SetUpComponent(entity);
-        hordeModeManager = HordeModeManager.Instance;
+        playerRessources = PlayerRessources.Instance;
     }
 
     public override void OnTakeDamage(DamageInfo damageInfo)
     {
-        hordeModeManager.AddPlayerPoints(damageInfo.damageGiver, damageInfo.damage * pointsPerDamage);
+        if(damageInfo.damageGiver is PlayerEntity)
+        {
+            
+                playerRessources.AddPlayerPoints((damageInfo.damageGiver as PlayerEntity).playerID, damageInfo.damage * pointsPerDamage);
+        }
+        
     }
 
     public override void OnDie(GameEntity killer)
@@ -26,7 +31,7 @@ public class EC_HordePointsGiver : EntityComponent
         {
             if(killer.tag == "Player")
             {
-                hordeModeManager.AddPlayerPoints(killer, pointsPerDeath);
+                playerRessources.AddPlayerPoints((killer as PlayerEntity).playerID, pointsPerDeath);
             }
         }
     }

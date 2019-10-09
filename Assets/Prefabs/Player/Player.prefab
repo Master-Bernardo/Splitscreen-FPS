@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 2366190835090200056}
   - component: {fileID: 2366190835090200058}
   - component: {fileID: 2366190835090200061}
-  - component: {fileID: 1482742041147023733}
+  - component: {fileID: 3848495773967573341}
   - component: {fileID: 7992794992404175054}
   - component: {fileID: 695186444330799899}
   - component: {fileID: 8595038264206013268}
@@ -181,7 +181,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1482742041147023733
+--- !u!114 &3848495773967573341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2366190835090200063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98e560188d5b5934f8b563bc366325b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ed896f59638aba4bab4dd7016629570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   teamID: 0
@@ -201,22 +201,12 @@ MonoBehaviour:
   aimingCorrector: {x: 0, y: 1, z: 0}
   onDieEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OnDie
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   destroyOnDie: 0
   width: 1
   unitData: {fileID: 0}
   damageManager: {fileID: 0}
+  playerID: 0
 --- !u!114 &7992794992404175054
 MonoBehaviour:
   m_ObjectHideFlags: 0

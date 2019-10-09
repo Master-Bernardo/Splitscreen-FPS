@@ -12,7 +12,7 @@ public class HordeUI : MonoBehaviour
     public GameObject wavePanel;
     public TextMeshProUGUI waveEnemiesLeft;
     public TextMeshProUGUI waveNumberUI;
-    public TextMeshProUGUI playerPoints;
+    //public TextMeshProUGUI playerPoints;
     public GameObject winPanel;
     public GameObject defeatPanel;
 
@@ -27,10 +27,10 @@ public class HordeUI : MonoBehaviour
         
     }
 
-    public void UpdatePlayerScore(int playerScore)
+    /*public void UpdatePlayerScore(int playerScore)
     {
         playerPoints.text = playerScore.ToString();
-    }
+    }*/
 
     public void UpdatePauseTimeLeft(int pauseTimeLeft)
     {

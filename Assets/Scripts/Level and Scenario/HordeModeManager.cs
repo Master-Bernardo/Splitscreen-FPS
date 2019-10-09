@@ -10,8 +10,8 @@ public class HordeModeManager : MonoBehaviour
     //public GameEntity[] players;
     public PlayerController[] playerControllers;
     public HordeUI[] hordeUI;
-    public float[] playerPoints;
-    
+    // public float[] playerPoints;
+    public PlayerRessources playerRessources;
 
     //List<GameEntity> activePlayers = new List<GameEntity>();
     List<PlayerController> activePlayerControllers = new List<PlayerController>();
@@ -34,7 +34,7 @@ public class HordeModeManager : MonoBehaviour
     float nextWaveTime;
     int currentWaveNumber = 0;
 
-    public int startingScore;
+   // public int startingScore;
     public float pointsForFirstWave = 10;
     float pointsForLastWave = 0;
     public float pointsMultiplier = 1.5f;
@@ -63,13 +63,13 @@ public class HordeModeManager : MonoBehaviour
 
     private void Start()
     {
-        playerPoints = new float[4];
+        //playerPoints = new float[4];
 
         for (int i = 0; i < playerControllers.Length; i++)
         {
             if (playerControllers[i].isActiveAndEnabled) activePlayerControllers.Add(playerControllers[i]);
-            playerPoints[i] = startingScore;
-            hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
+            //playerPoints[i] = startingScore;
+            //hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
         }
 
         for (int i = 0; i < activePlayerControllers.Count; i++)
@@ -98,7 +98,7 @@ public class HordeModeManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             // RespawnPlayers();
-            AddPlayerPoints(activePlayerControllers[1].playerEntity, 200);
+            //AddPlayerPoints(activePlayerControllers[1].playerEntity, 200);
         }
 
 
@@ -151,8 +151,8 @@ public class HordeModeManager : MonoBehaviour
                         for (int i = 0; i < hordeUI.Length; i++)
                         {
                             hordeUI[i].StartPause();
-                            playerPoints[i] += pointsForFirstWave * Mathf.Pow(pointsMultiplier, currentWaveNumber - 1);
-                            hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
+                            playerRessources.AddPlayerPoints(i,pointsForFirstWave * Mathf.Pow(pointsMultiplier, currentWaveNumber - 1));
+                           // hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
                             //Debug.Log("add: " + pointsForFirstWave * Mathf.Pow(pointsMultiplier, waveNumber-1));
                         }
                     }
@@ -263,7 +263,7 @@ public class HordeModeManager : MonoBehaviour
         enemy.onDieEvent.AddListener(delegate { OnEnemyFromThisWaveDies(enemy); });
     }
 
-    public void AddPlayerPoints(GameEntity damagerEntity, float points)
+   /* public void AddPlayerPoints(GameEntity damagerEntity, float points)
     {
         for (int i = 0; i < playerControllers.Length; i++)
         {
@@ -306,7 +306,7 @@ public class HordeModeManager : MonoBehaviour
         }
 
         return false;
-    }
+    }*/
 
 
     HordeSpawner SelectRandomSpawner(int unitSize)

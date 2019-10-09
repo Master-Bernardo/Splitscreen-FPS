@@ -9,11 +9,11 @@ public class BuyInteractable : Interactable
     [Header("Buy")]
     public float cost;
     public TextMeshProUGUI[] costText;
-    HordeModeManager hordeModeManager;
+    PlayerRessources playerRessources;
 
     private void Awake()
     {
-        hordeModeManager = HordeModeManager.Instance;
+        playerRessources = PlayerRessources.Instance;
 
         for (int i = 0; i < costText.Length; i++)
         {
@@ -29,7 +29,7 @@ public class BuyInteractable : Interactable
         this.interactingPlayer = interactingPlayer;
         // Debug.Log("Horde manager2: " + hordeModeManager);
         Debug.Log("interact: " + interactingPlayer);
-        if (hordeModeManager.DoesPlayerHaveEnoughPoints(interactingPlayer, cost))
+        if (playerRessources.DoesPlayerHaveEnoughPoints((interactingPlayer as PlayerEntity).playerID, cost))
         {
            // Debug.Log("enough");
 
@@ -45,7 +45,7 @@ public class BuyInteractable : Interactable
 
     public override void SucessfullyInteract()
     {
-        hordeModeManager.RemovePlayerPoints(interactingPlayer, cost);
+        playerRessources.RemovePlayerPoints((interactingPlayer as PlayerEntity).playerID, cost);
         OnSucessfullyInteract.Invoke();
     }
 }
