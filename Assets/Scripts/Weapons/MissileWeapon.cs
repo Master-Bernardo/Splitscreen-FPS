@@ -10,6 +10,8 @@ public class MissileWeapon : Weapon
     [Tooltip("in rounds per second")]
     public float fireRate;
     public float bloom;
+    [Tooltip("how many bullets will be spawned on one shot - usefull for shotguns")]
+    public float bulletNumber = 1;
     public float reloadTime;
     public float initialLaunchSpeed;
     [Header("Ammo")]
@@ -42,11 +44,15 @@ public class MissileWeapon : Weapon
         //Debug.Log("piu piu");
 
         //Projectile projectile = Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation * Quaternion.Euler(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0f)).GetComponent<Projectile>();
-        Projectile projectile = ProjectilePooler.Instance.SpawnFromPool(projectileTag, shootPoint.position, shootPoint.rotation * Quaternion.Euler(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0f)).GetComponent<Projectile>();
-        projectile.SetVelocity(initialLaunchSpeed);
-        projectile.projectileTeamID = teamID;
-        projectile.damage = damage;
-        projectile.shooterEntity = weaponWieldingEntity;
+        for (int i = 0; i < bulletNumber; i++)
+        {
+            Projectile projectile = ProjectilePooler.Instance.SpawnFromPool(projectileTag, shootPoint.position, shootPoint.rotation * Quaternion.Euler(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0f)).GetComponent<Projectile>();
+            projectile.SetVelocity(initialLaunchSpeed);
+            projectile.projectileTeamID = teamID;
+            projectile.damage = damage;
+            projectile.shooterEntity = weaponWieldingEntity;
+        }
+        
         if(!infiniteMagazine)currentMagazineAmmo--;
     }
 

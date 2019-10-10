@@ -246,9 +246,9 @@ public class HordeModeManager : MonoBehaviour
 
             //2.  choose on of them randomly
             HordeUnit unitToSpawn = unitsWeCanAfford[Random.Range(0, unitsWeCanAfford.Count)];
-            Debug.Log(unitToSpawn + " .unitToSpawn");
+            //Debug.Log(unitToSpawn + " .unitToSpawn");
             GameEntity entity = SelectRandomSpawner(unitToSpawn.size).Spawn(unitToSpawn.unitPrefab);
-            Debug.Log(entity + " .entity");
+            //Debug.Log(entity + " .entity");
 
             currentWaveEnemies.Add(entity);
             entity.onDieEvent.AddListener(delegate { OnEnemyFromThisWaveDies(entity); });

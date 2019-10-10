@@ -17,6 +17,12 @@ public class AimVisualiser : MonoBehaviour
     public float lineStartWidth;
     //works together with weaponSystem to visualise where the player is aiming with guns/grenades or where he wants to build a barricade
 
+    private void Start()
+    {
+        
+    }
+
+
     #region line
 
     public void ShowLine()
@@ -32,7 +38,7 @@ public class AimVisualiser : MonoBehaviour
 
     }
 
-    public void DrawLine(Vector3 start, float maxDistance, float spread)
+    public void DrawLine(Vector3 start, Vector3 direction, float maxDistance, float spread)
     {
         //spread is bloom, distance depends on wepon, shotgunhas shorter distance than sniper
 
@@ -41,20 +47,20 @@ public class AimVisualiser : MonoBehaviour
         lineRenderer.SetPosition(0, start);
         lineRenderer.startWidth = lineStartWidth; 
 
-        RaycastHit hit;
+        /*RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(start, transform.TransformDirection(Vector3.forward), out hit, maxDistance, layerMask))
+        if (Physics.Raycast(start, direction, out hit, maxDistance, layerMask))
         {
             lineRenderer.SetPosition(1, hit.point);
             lineLength = (hit.point- start).magnitude;
         }
         else
-        {
-            lineRenderer.SetPosition(1, transform.position + transform.forward * maxDistance);
+        {*/
+            lineRenderer.SetPosition(1, start + direction * maxDistance);
             lineLength = maxDistance;
-        }
+        //}
 
-        lineRenderer.endWidth = (Mathf.Tan(spread)*lineLength)*2;
+        lineRenderer.endWidth = (Mathf.Tan(spread * Mathf.Deg2Rad) *lineLength)*2;
 
     }
 

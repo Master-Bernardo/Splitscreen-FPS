@@ -23,14 +23,6 @@ MonoBehaviour:
         type: 3}
       recruitmentCost: 2
       size: 1
-    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
-        type: 3}
-      recruitmentCost: 2
-      size: 1
-    - unitPrefab: {fileID: 9206284369007245280, guid: ee848f69ac601174cafa32a7f738cd49,
-        type: 3}
-      recruitmentCost: 2
-      size: 1
     unitsPointsMultiplier: 1
   - bossUnits: []
     units:

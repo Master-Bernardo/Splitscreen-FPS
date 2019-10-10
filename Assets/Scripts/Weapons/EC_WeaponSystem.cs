@@ -137,7 +137,7 @@ public class EC_WeaponSystem : EntityComponent
             if (currentSelectedWeapon.usesAimingLine)
             {
                 MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
-                aimVisualiser.DrawLine(mw.GetProjectileSpawnPoint(), 15, mw.bloom);
+                aimVisualiser.DrawLine(mw.GetProjectileSpawnPoint(), mw.transform.forward, 15, mw.bloom);
             }
         }
 
