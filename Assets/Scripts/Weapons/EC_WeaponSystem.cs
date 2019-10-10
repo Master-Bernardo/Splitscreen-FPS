@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class EC_WeaponSystem : EntityComponent
 {
+    [Header("Visualisation")]
+    public AimVisualiser aimVisualiser;
+
     [Header("Weapons")]
     [SerializeField]
     Weapon[] inventory; //will be set up in inspector
@@ -28,9 +31,9 @@ public class EC_WeaponSystem : EntityComponent
     //[Header("Animation")]
     //public Animator animator;
 
-    [Tooltip("select only one UI layer here")]
+    //[Tooltip("select only one UI layer here")]
     //public GameObject playerUILayerGO;
-    public int playerUILayer;
+    //public int playerUILayer;
 
     [Header("Starting Weapons")]
     public GameObject startingWeapon1;
@@ -128,12 +131,19 @@ public class EC_WeaponSystem : EntityComponent
         currentSelectedWeapon = inventory[currentSelectedWeaponID];
 
 
-        if(currentSelectedWeapon!=null)currentSelectedWeapon.UpdateAimingLine();
+        //if(currentSelectedWeapon!=null)currentSelectedWeapon.UpdateAimingLine();
+        if (currentSelectedWeapon != null)
+        {
+            if (currentSelectedWeapon.usesAimingLine)
+            {
+                MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
+                aimVisualiser.DrawLine(mw.GetProjectileSpawnPoint(), 15, mw.bloom);
+            }
+        }
 
 
 
-
-        switch (state)
+            switch (state)
         {        
             case WeaponSystemState.Reloading:
 
@@ -166,7 +176,7 @@ public class EC_WeaponSystem : EntityComponent
         {
             currentSelectedWeapon.gameObject.SetActive(false);
             currentSelectedWeapon.OnWeaponDeselect();
-            currentSelectedWeapon.HideAimingLine();
+            aimVisualiser.HideLine();
 
         }
 
@@ -178,7 +188,7 @@ public class EC_WeaponSystem : EntityComponent
         {
             currentSelectedWeapon.gameObject.SetActive(true);
             currentSelectedWeapon.OnWeaponSelect(myEntity);
-            currentSelectedWeapon.ShowAimingLine(playerUILayer);
+            aimVisualiser.ShowLine();
 
 
         }
@@ -219,12 +229,12 @@ public class EC_WeaponSystem : EntityComponent
         if (oldWeapon != null)
         {
             oldWeapon.OnWeaponDeselect();
-            oldWeapon.HideAimingLine();
+            aimVisualiser.HideLine();
         }
 
         currentSelectedWeapon = newWeapon;
         currentSelectedWeapon.OnWeaponSelect(myEntity);
-        currentSelectedWeapon.ShowAimingLine(playerUILayer);
+        aimVisualiser.ShowLine();
 
         inventory[currentSelectedWeaponID] = currentSelectedWeapon;
 

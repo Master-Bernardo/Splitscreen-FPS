@@ -12,7 +12,7 @@ public class Weapon : MonoBehaviour
     public float damage; //could be expanded later to diffeent damages  
     public bool automaticTrigger;
     public bool usesAimingLine;
-    public AimingLine aimingLine;
+    //public AimingLine aimingLine;
 
     public void SetUp(EC_WeaponSystem weaponSystem)
     {
@@ -34,7 +34,7 @@ public class Weapon : MonoBehaviour
 
     }
 
-    #region for aiming
+    /*#region for aiming
     public virtual void ShowAimingLine(int playerUILayer)
     {
         if (Settings.Instance.showAimingLine)
@@ -56,7 +56,7 @@ public class Weapon : MonoBehaviour
     {
         if(usesAimingLine) aimingLine.gameObject.SetActive(false);
     }
-    #endregion
+    #endregion*/
 
     /*public virtual void HandleLMBHold()
     {

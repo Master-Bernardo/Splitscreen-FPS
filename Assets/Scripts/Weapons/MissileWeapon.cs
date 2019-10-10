@@ -104,8 +104,8 @@ public class MissileWeapon : Weapon
         else return false;
     }
 
-    public override void UpdateAimingLine()
+    /*public override void UpdateAimingLine()
     {
         aimingLine.DrawLine();
-    }
+    }*/
 }

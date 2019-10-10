@@ -6,6 +6,7 @@ using UnityEngine;
 //later on there will be several representations - for niow only line
 public class AimingLine : MonoBehaviour
 {
+    /*
     public LineRenderer lineRenderer;
     public int maxDistance;
     public LayerMask layerMask;
@@ -30,5 +31,5 @@ public class AimingLine : MonoBehaviour
         {
             lineRenderer.SetPosition(1, transform.position + transform.forward * maxDistance);
         }
-    }
+    }*/
 }
