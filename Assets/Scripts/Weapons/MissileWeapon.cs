@@ -26,8 +26,25 @@ public class MissileWeapon : Weapon
     float nextShootTime;
     float shootingInterval;
 
+    [Header("Sound")]
+    public AudioSourceCustom customAudioSource;
+    public AudioClip shootSound;
+    public AudioClip reloadSound;
+    [Tooltip("the reload sound is a bit delayed to allow the shooting sound to be heared decay more naturally")]
+    public float reloadSoundDelay;
 
-   
+    //if we have a machine gun - how to do the logic where the start loop middle and end start
+    [Tooltip("Splitting sounds is essential for a machine gun, it will sound strange without it")]
+    public bool splitSounds; //hmm how to do this
+    bool loppingMiddleSound = false; // is the miidle sound currently being looped
+    public AudioClip shootSoundStart;
+    public AudioClip shootSoundMid;
+    public AudioClip shootSoundEnd;
+
+    
+
+
+
 
 
     private void Start()
@@ -41,37 +58,125 @@ public class MissileWeapon : Weapon
 
     protected virtual void Shoot()
     {
-        //Debug.Log("piu piu");
-
-        //Projectile projectile = Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation * Quaternion.Euler(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0f)).GetComponent<Projectile>();
+            //Projectile projectile = Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation * Quaternion.Euler(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0f)).GetComponent<Projectile>();
         for (int i = 0; i < bulletNumber; i++)
         {
             Projectile projectile = ProjectilePooler.Instance.SpawnFromPool(projectileTag, shootPoint.position, shootPoint.rotation * Quaternion.Euler(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0f)).GetComponent<Projectile>();
-            projectile.SetVelocity(initialLaunchSpeed);
-            projectile.projectileTeamID = teamID;
-            projectile.damage = damage;
-            projectile.shooterEntity = weaponWieldingEntity;
+            projectile.Activate(initialLaunchSpeed, teamID, damage, weaponWieldingEntity);
         }
         
         if(!infiniteMagazine)currentMagazineAmmo--;
     }
 
-
-    public override void HandleWeaponKey(int weaponKey)
+    public override void HandleWeaponKeyDown(int weaponKey)
     {
         if (currentMagazineAmmo > 0)
         {
             if (Time.time > nextShootTime)
             {
                 Shoot();
+
+                //audio
+                if (customAudioSource != null)
+                {
+                    if (!splitSounds)
+                    {
+                        customAudioSource.SetSound(shootSound);
+                        customAudioSource.Play();
+                    }
+                    else
+                    {
+                        customAudioSource.SetSound(shootSoundStart);
+                        customAudioSource.Play();
+                    }
+                }
+               
+
+
+
                 nextShootTime = Time.time + shootingInterval;
                 if (currentMagazineAmmo == 0)
                 {
-                    if(weaponSystem!=null)weaponSystem.StartReload();
+                    if (weaponSystem != null) weaponSystem.StartReload();
                 }
             }
-        } 
+        }
     }
+
+   
+
+    public override void HandleWeaponKeyHold(int weaponKey)
+    {
+        //here we should check if automatic trigger, not in weapon controller TODO
+        if (automaticTrigger)
+        {
+            if (currentMagazineAmmo > 0)
+            {
+                if (Time.time > nextShootTime)
+                {
+                    Shoot();
+
+                    if (customAudioSource != null)
+                    {
+                        if (splitSounds)
+                        {
+                            if (!loppingMiddleSound)
+                            {
+                                customAudioSource.SetSound(shootSoundMid);
+                                customAudioSource.Play();
+                                customAudioSource.SetLoop(true);
+                            }
+                        }
+                        else
+                        {
+                            customAudioSource.SetSound(shootSound);
+                            customAudioSource.Play();
+                        }
+                    }
+                    
+
+
+
+                    nextShootTime = Time.time + shootingInterval;
+                    if (currentMagazineAmmo == 0)
+                    {
+                        if (weaponSystem != null)
+                        {
+                            weaponSystem.StartReload();
+
+                            if (customAudioSource != null)
+                            {
+                                if (splitSounds)
+                                {
+                                    customAudioSource.SetLoop(false);
+                                    customAudioSource.SetSound(shootSoundEnd);
+                                    customAudioSource.Play();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+       
+    }
+
+    public override void HandleWeaponKeyUp(int weaponKey)
+    {
+        if (customAudioSource != null)
+        {
+            if (splitSounds)
+            {
+                customAudioSource.SetLoop(false);
+                customAudioSource.SetSound(shootSoundEnd);
+                customAudioSource.Play();
+            }
+        }
+    }
+
+
+
 
 
     public Vector3 GetProjectileSpawnPoint()
@@ -84,15 +189,42 @@ public class MissileWeapon : Weapon
         initialLaunchSpeed
     }*/
 
-    public virtual void Reload(int value)
+    //only for audio so far
+    public virtual void StartReloading()
     {
-        currentMagazineAmmo = value;
+        Debug.Log("startReload");
+        if (splitSounds)
+        {
+            customAudioSource.SetLoop(false);
+            customAudioSource.SetSound(shootSoundEnd);
+            customAudioSource.Play();
+        }
+        Invoke("PlayStartReloadSoundDelayed", reloadSoundDelay);
     }
 
-    public void Reload()
+    void PlayStartReloadSoundDelayed()
+    {
+        customAudioSource.SetSound(reloadSound);
+        customAudioSource.Play();
+    }
+
+    public virtual void AbortReloading()
+    {
+        customAudioSource.Stop();
+    }
+
+    public virtual void EndReloading(int value)
+    {
+        currentMagazineAmmo = value;
+        customAudioSource.Stop();
+
+    }
+
+    /*public void EndReload()
     {
         currentMagazineAmmo = magazineSize;
-    }
+        customAudioSource.Stop();
+    }*/
 
     /*public int GetCurrentMagazineAmmo()
     {

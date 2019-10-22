@@ -11,4 +11,26 @@ public class AudioSourceCustom : MonoBehaviour
     {
         audioSource.Play();
     }   
+
+    public void Stop()
+    {
+        audioSource.Stop();
+    }
+
+    public void SetSound(AudioClip clip)
+    {
+        audioSource.clip = clip;
+       
+    }
+
+    public bool IsPlayingSound()
+    {
+        return audioSource.isPlaying;
+
+    }
+
+    public void SetLoop(bool loop)
+    {
+        audioSource.loop = loop;
+    }
 }

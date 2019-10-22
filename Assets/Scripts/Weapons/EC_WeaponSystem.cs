@@ -87,7 +87,7 @@ public class EC_WeaponSystem : EntityComponent
         {
             if (currentSelectedWeapon != null)
             {
-                currentSelectedWeapon.HandleWeaponKey(actionID);
+                currentSelectedWeapon.HandleWeaponKeyDown(actionID);
             }
         }
        
@@ -99,10 +99,22 @@ public class EC_WeaponSystem : EntityComponent
         {
             if (currentSelectedWeapon != null)
             {
-                if (currentSelectedWeapon.automaticTrigger)
-                {
-                    currentSelectedWeapon.HandleWeaponKey(actionID);
-                }
+
+                 currentSelectedWeapon.HandleWeaponKeyHold(actionID);
+
+            }
+        }
+    }
+
+    public void UseWeaponEnd(int actionID)
+    {
+        if (state == WeaponSystemState.Default)
+        {
+            if (currentSelectedWeapon != null)
+            {
+
+                 currentSelectedWeapon.HandleWeaponKeyUp(actionID);
+
             }
         }
     }
@@ -252,11 +264,15 @@ public class EC_WeaponSystem : EntityComponent
     {
         state = WeaponSystemState.Reloading;
         reloadingEndTime = Time.time + (currentSelectedWeapon as MissileWeapon).reloadTime;
+        MissileWeapon currentMW = currentSelectedWeapon as MissileWeapon;
+        currentMW.StartReloading();
     }
 
     void AbortReloading()
     {
         state = WeaponSystemState.Default;
+        MissileWeapon currentMW = currentSelectedWeapon as MissileWeapon;
+        currentMW.AbortReloading();
     }
 
 
@@ -269,13 +285,13 @@ public class EC_WeaponSystem : EntityComponent
             MissileWeapon currentMW = currentSelectedWeapon as MissileWeapon;
             if (currentMW.ammoType == AmmoType.Infinite)
             {
-                currentMW.Reload(currentMW.magazineSize);
+                currentMW.EndReloading(currentMW.magazineSize);
             }
             else
             {
                 ammo[currentMW.ammoType] += currentMW.currentMagazineAmmo;
                 int clamped = Mathf.Clamp(ammo[currentMW.ammoType], 0, currentMW.magazineSize);
-                currentMW.Reload(clamped);
+                currentMW.EndReloading(clamped);
                 ammo[currentMW.ammoType] -= clamped;
             }
         }

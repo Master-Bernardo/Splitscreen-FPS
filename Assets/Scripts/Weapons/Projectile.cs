@@ -25,11 +25,43 @@ public class Projectile : MonoBehaviour
 
     Vector3 velocityLastFrame; //wen need to save this because it changes on collision
 
+    [Header("Sound")]
+    public AudioClip flySound; //TODO implement this for fireballs or similar
+    public AudioClip impactSound;
+    public AudioSourceCustom audioSource;
+    //public Transform audioSourceTransform;
+    public ProjectileImpactSound impactSoundDisableController;
+
+
 
     public void SetVelocity(float startVelocity)
     {
         this.startVelocity = startVelocity;
         rb.velocity = transform.forward * startVelocity;
+    }
+
+    //used when we get this element from the pool
+    public void Activate(float startVelocity, int teamID, float damage, GameEntity shooterEntity)
+    {
+        this.startVelocity = startVelocity;
+        rb.velocity = transform.forward * startVelocity;
+        projectileTeamID = teamID;
+        this.damage = damage;
+        this.shooterEntity = shooterEntity;
+        
+        if (audioSource != null)
+        {
+            if (flySound != null)
+            {
+                audioSource.SetLoop(true);
+                audioSource.SetSound(flySound);
+                audioSource.Play();
+            }
+            impactSoundDisableController.ResetPosition(transform);
+           
+        }
+
+
     }
 
 
@@ -44,6 +76,20 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
+        if (audioSource != null)
+        {         
+            if (impactSound != null)
+            {
+                impactSoundDisableController.Deparent();
+
+                audioSource.SetLoop(false);
+                audioSource.SetSound(impactSound);
+                audioSource.Play();
+            }
+        }
+
+
+
         IDamageable<DamageInfo> damageable = collision.gameObject.GetComponent<IDamageable<DamageInfo>>();
         IPusheable<Vector3> pusheable = collision.gameObject.GetComponent<IPusheable<Vector3>>();
 

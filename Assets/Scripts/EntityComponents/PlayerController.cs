@@ -57,11 +57,13 @@ public class PlayerController : MonoBehaviour
         if(controlMode == PlayerControlMode.Default) weaponSystem.UseWeaponStart(0);
         pressedWeaponID = 0;
         weaponPressed = true;
+        weaponSystem.UseWeaponStart(pressedWeaponID);
     }
 
     public void OnW1Release()
     {
         weaponPressed = false;
+        weaponSystem.UseWeaponEnd(pressedWeaponID);
     }
 
     public void OnReload()

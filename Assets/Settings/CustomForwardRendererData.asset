@@ -62,10 +62,10 @@ MonoBehaviour:
     samplingPS: {fileID: 4800000, guid: 04c410c9937594faa893a11dceb85f7e, type: 3}
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 127799
+    m_Bits: 521015
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 127799
+    m_Bits: 521015
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
@@ -83,10 +83,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: NewRenderObjects
+  m_Name: UnitsInFront
   m_EditorClassIdentifier: 
   settings:
-    passTag: NewRenderObjects
+    passTag: UnitsInFront
     Event: 300
     filterSettings:
       RenderQueueType: 0

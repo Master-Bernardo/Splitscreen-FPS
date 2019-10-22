@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Unit : GameEntity, IDamageable<DamageInfo>
 {
     public UnitData unitData;
     [SerializeField]
     public DamageManager damageManager;
+    public UnityEvent onTakeDamageEvent;
 
     public void TakeDamage(DamageInfo damageInfo)
     {
+        Debug.Log("folge: damage ");
+
+        onTakeDamageEvent.Invoke();
         foreach (EntityComponent component in components)
         {
             component.OnTakeDamage(damageInfo);

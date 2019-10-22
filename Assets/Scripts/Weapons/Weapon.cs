@@ -29,7 +29,17 @@ public class Weapon : MonoBehaviour
 
     }
 
-    public virtual void HandleWeaponKey(int weaponKey)
+    public virtual void HandleWeaponKeyDown(int weaponKey)
+    {
+
+    }
+
+    public virtual void HandleWeaponKeyHold(int weaponKey)
+    {
+
+    }
+
+    public virtual void HandleWeaponKeyUp(int weaponKey)
     {
 
     }

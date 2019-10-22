@@ -820,7 +820,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 73015
+    m_Bits: 409399
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1321,11 +1321,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1482742041147023733, guid: b2747a8075c85994cbcb010e96f3b09e,
-        type: 3}
-      propertyPath: onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 613556850185081196}
     - target: {fileID: 695186444330799899, guid: b2747a8075c85994cbcb010e96f3b09e,
         type: 3}
       propertyPath: healthBarFill
@@ -1386,6 +1381,11 @@ PrefabInstance:
       propertyPath: m_VertexStreams.Array.data[2]
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1482742041147023733, guid: b2747a8075c85994cbcb010e96f3b09e,
+        type: 3}
+      propertyPath: onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 613556850185081196}
     - target: {fileID: 3559837219021777666, guid: b2747a8075c85994cbcb010e96f3b09e,
         type: 3}
       propertyPath: m_LocalScale.x

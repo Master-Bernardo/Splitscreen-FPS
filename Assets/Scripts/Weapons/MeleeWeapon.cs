@@ -37,7 +37,7 @@ public class MeleeWeapon : Weapon
     }
 
 
-    public override void HandleWeaponKey(int weaponKey)
+    public override void HandleWeaponKeyHold(int weaponKey)
     {
         if (Time.time > nextPrepareMeleeAttackTime)
         {

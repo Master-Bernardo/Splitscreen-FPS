@@ -229,7 +229,7 @@ public class B_MeleeFighter : Behaviour
         {
             if (weapon.CanAttack())
             {
-                weapon.HandleWeaponKey(0);
+                weapon.HandleWeaponKeyHold(0);
             }
         }
 

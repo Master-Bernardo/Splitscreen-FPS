@@ -177,7 +177,11 @@ public class SpiltscreenManager : MonoBehaviour
             foreach (InputDevice device in playerContainers[playerNumber - 1].GetComponent<PlayerInput>().user.pairedDevices)
             {
                 //Debug.Log("device");
-                if (device == InputSystem.devices[InputSystem.devices.Count - 1]) isThereAFreeGamepadLeft = false; ;
+                if (device == InputSystem.devices[InputSystem.devices.Count - 1]) isThereAFreeGamepadLeft = false; 
+            }
+            if(playerContainers[playerNumber - 1].GetComponent<PlayerInput>().user.pairedDevices.Count == 0)
+            {
+                isThereAFreeGamepadLeft = false;
             }
 
             if (isThereAFreeGamepadLeft)
