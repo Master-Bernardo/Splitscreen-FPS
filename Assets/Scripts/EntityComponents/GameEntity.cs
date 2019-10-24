@@ -64,8 +64,6 @@ public class GameEntity : MonoBehaviour
 
     public virtual void Die(GameEntity killer)
     {
-        Debug.Log("folge: die ");
-
         onDieEvent.Invoke();
         foreach (EntityComponent component in components)
         {

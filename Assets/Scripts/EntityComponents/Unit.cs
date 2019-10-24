@@ -12,8 +12,6 @@ public class Unit : GameEntity, IDamageable<DamageInfo>
 
     public void TakeDamage(DamageInfo damageInfo)
     {
-        Debug.Log("folge: damage ");
-
         onTakeDamageEvent.Invoke();
         foreach (EntityComponent component in components)
         {

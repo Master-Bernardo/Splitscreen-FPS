@@ -339,11 +339,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1362219360397472216}
     m_Modifications:
-    - target: {fileID: 6785413449453875807, guid: 9f353e27ddbedb5478776932ffc34681,
+    - target: {fileID: 2642850889428066682, guid: 9f353e27ddbedb5478776932ffc34681,
         type: 3}
-      propertyPath: m_Name
-      value: UnitSoundManager
-      objectReference: {fileID: 0}
+      propertyPath: voicelineSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 0dc25b9b36bf58f479275e4113b3e25c,
+        type: 2}
     - target: {fileID: 1448009862347702111, guid: 9f353e27ddbedb5478776932ffc34681,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -398,6 +399,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785413449453875807, guid: 9f353e27ddbedb5478776932ffc34681,
+        type: 3}
+      propertyPath: m_Name
+      value: UnitSoundManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f353e27ddbedb5478776932ffc34681, type: 3}
@@ -426,11 +432,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 717128045127950020}
     m_Modifications:
-    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
-        type: 3}
-      propertyPath: m_Name
-      value: Sword
-      objectReference: {fileID: 0}
     - target: {fileID: 6527649046478672803, guid: a3d7ea4283f824548be4fe5a48a704cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -485,6 +486,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
+        type: 3}
+      propertyPath: m_Name
+      value: Sword
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3d7ea4283f824548be4fe5a48a704cb, type: 3}

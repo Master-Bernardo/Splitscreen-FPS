@@ -1229,11 +1229,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366190835090200056}
     m_Modifications:
-    - target: {fileID: 6785413449453875807, guid: 9f353e27ddbedb5478776932ffc34681,
+    - target: {fileID: 2642850889428066682, guid: 9f353e27ddbedb5478776932ffc34681,
         type: 3}
-      propertyPath: m_Name
-      value: UnitSoundManager
+      propertyPath: isPlayer
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2642850889428066682, guid: 9f353e27ddbedb5478776932ffc34681,
+        type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 2366190835090200056}
     - target: {fileID: 1448009862347702111, guid: 9f353e27ddbedb5478776932ffc34681,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1289,16 +1294,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2642850889428066682, guid: 9f353e27ddbedb5478776932ffc34681,
+    - target: {fileID: 6785413449453875807, guid: 9f353e27ddbedb5478776932ffc34681,
         type: 3}
-      propertyPath: isPlayer
-      value: 1
+      propertyPath: m_Name
+      value: UnitSoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2642850889428066682, guid: 9f353e27ddbedb5478776932ffc34681,
+    - target: {fileID: 5108918783741196965, guid: 9f353e27ddbedb5478776932ffc34681,
         type: 3}
-      propertyPath: playerTransform
-      value: 
-      objectReference: {fileID: 2366190835090200056}
+      propertyPath: m_Volume
+      value: 0.286
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f353e27ddbedb5478776932ffc34681, type: 3}
 --- !u!114 &6133137957181484364 stripped

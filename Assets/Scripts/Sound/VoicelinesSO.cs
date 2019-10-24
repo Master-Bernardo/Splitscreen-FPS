@@ -5,9 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class VoicelineState
 {
-    string name;
-    AudioClip[] stateSounds;
+    public string name;
+    public AudioClip[] stateSounds;
     public float soundInterval;
+    [Tooltip("the next sound playTime is time time + soundInterval + - or + randomiser")]
     public float soundIntervallRandomiser;
 }
 
