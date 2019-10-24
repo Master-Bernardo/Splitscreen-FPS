@@ -17,8 +17,9 @@ MonoBehaviour:
     stateSounds:
     - {fileID: 8300000, guid: 8c916e5d604aef6488e0a089700025c0, type: 3}
     - {fileID: 8300000, guid: 938bd013791176743b151c78cdd743c6, type: 3}
-    soundInterval: 6
-    soundIntervallRandomiser: 1
+    - {fileID: 8300000, guid: f0ed0f49899aa754a83a05e42400904f, type: 3}
+    soundInterval: 10
+    soundIntervallRandomiser: 2
   - name: WhatAStrange
     stateSounds:
     - {fileID: 8300000, guid: 5b3598aadf346d442a8e7ada49b9203f, type: 3}

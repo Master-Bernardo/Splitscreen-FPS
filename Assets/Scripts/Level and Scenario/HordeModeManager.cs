@@ -49,6 +49,20 @@ public class HordeModeManager : MonoBehaviour
 
     HordeModeState state;
 
+    [Header("Sound")]
+    public AudioClip waveStartSound;
+    public AudioClip waveEndSound;
+    public AudioClip playerDiesSound;
+    public AudioClip defeatSound;
+    public AudioClip victorySound;
+
+    public AudioSourceCustom audioSource;
+
+    public AudioClip waveMusic;
+    public AudioClip pauseMusic;
+
+    public MusicManager musicManager;
+
     void Awake()
     {
         if (Instance != null)
@@ -81,6 +95,9 @@ public class HordeModeManager : MonoBehaviour
         //Debug.Log("debug.log( count): " + activePlayers.Count);
 
         nextWaveTime = prepTime;
+
+        //sound
+        musicManager.PlayMusic(pauseMusic, true, 2);
     }
 
     public void AddSpawner(HordeSpawner spawner)
@@ -123,6 +140,11 @@ public class HordeModeManager : MonoBehaviour
 
                     currentWaveRecruitmentPoints = currentWaveRecruitmentPoints * (1 + waveRiser*unitsMultiplier);
 
+                    //sound wave start
+                    musicManager.StopMusic();
+                    audioSource.PlaySound(waveStartSound, false);
+                    musicManager.PlayMusic(waveMusic, true, 2);
+
                 }
                 else
                 {
@@ -144,6 +166,7 @@ public class HordeModeManager : MonoBehaviour
                     }
                     else
                     {
+                        //wave won
                         RespawnPlayers();
                         state = HordeModeState.Pause;
                         nextWaveTime = Time.time + pauseTime;
@@ -155,8 +178,13 @@ public class HordeModeManager : MonoBehaviour
                            // hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
                             //Debug.Log("add: " + pointsForFirstWave * Mathf.Pow(pointsMultiplier, waveNumber-1));
                         }
+
+                        //sound 
+                        musicManager.StopMusic();
+                        audioSource.PlaySound(waveEndSound, false);
+                        musicManager.PlayMusic(pauseMusic, true, 4);
                     }
-                    
+
 
                 }
                 else
@@ -341,6 +369,9 @@ public class HordeModeManager : MonoBehaviour
         {
             Defeat();
         }
+
+        //sound
+        audioSource.PlaySound(playerDiesSound, false);
     }
 
     public void RespawnPlayers()
@@ -363,6 +394,11 @@ public class HordeModeManager : MonoBehaviour
         {
             hordeUI[i].ShowWinPanel();
         }
+
+        //sound
+        musicManager.StopMusic();
+        audioSource.PlaySound(victorySound, false);
+
     }
 
     void Defeat()
@@ -372,6 +408,10 @@ public class HordeModeManager : MonoBehaviour
         {
             hordeUI[i].ShowDefeatPanel();
         }
+
+        //sound
+        musicManager.StopMusic();
+        audioSource.PlaySound(defeatSound, false);
     }
 
     #endregion
