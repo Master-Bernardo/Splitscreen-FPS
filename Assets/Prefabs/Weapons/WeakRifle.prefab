@@ -135,8 +135,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4204844011557427023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.317, z: 0.287}
-  m_LocalScale: {x: 0.17510557, y: 0.20842335, z: 2.0383}
+  m_LocalPosition: {x: -0.038, y: 0.116, z: 0.287}
+  m_LocalScale: {x: 0.10035404, y: 0.11944865, z: 1.1681617}
   m_Children:
   - {fileID: 1689724798034375263}
   - {fileID: 4760271217736681960}
@@ -415,6 +415,8 @@ MonoBehaviour:
   currentMagazineAmmo: 0
   customAudioSource: {fileID: 5256611717227164151}
   shootSound: {fileID: 8300000, guid: 21fc9e37a8fe04a32a8ed376a21b5cd9, type: 3}
+  reloadSound: {fileID: 0}
+  reloadSoundDelay: 0
   splitSounds: 0
   shootSoundStart: {fileID: 0}
   shootSoundMid: {fileID: 0}

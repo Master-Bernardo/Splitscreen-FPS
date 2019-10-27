@@ -25,6 +25,11 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     bool lookAt = false;
     float lastRotationTime; // if we rotate only once every x frames, we need to calculate our own deltaTIme
 
+    //aiming is different
+    GameEntity targetToAimAt;
+    Transform relativeAimCenter; //if aiming with a weapon or similar
+    bool aimAt = false;
+
     //TODO Add dashing 
     protected enum MovementState
     {
@@ -64,6 +69,11 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     [Header("Debug")]
     [SerializeField]
     bool showGizmo;
+
+    [Header("SpineRotation")]
+    [Tooltip("only used by humanoids")]
+    public bool useSpine;
+    public Transform spine;
 
     public override void SetUpComponent(GameEntity entity)
     {
@@ -105,11 +115,25 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
                 nextMovementUpdateTime = Time.time + movementUpdateIntervall;
                 if (targetToLookAt != null)
                 {
-                    RotateTo(targetToLookAt.position - transform.position);
+                     RotateTo(targetToLookAt.position - transform.position);
                 }
             }
        }
 
+        if (aimAt)
+        {
+            if (Time.time > nextMovementUpdateTime)
+            {
+                nextMovementUpdateTime = Time.time + movementUpdateIntervall;
+                if (targetToAimAt != null)
+                {
+                    Vector3 direction = (targetToAimAt.GetPositionForAiming() - transform.position).normalized;
+                    Vector3 directionModifer = direction - relativeAimCenter.forward;
+                    Vector3 recultingDirection = direction + directionModifer;
+                    RotateTo(directionModifer);
+                }
+            }
+        }
         //Debug.Log(gameObject.name + " rb speed: " + new Vector3(rb.velocity.x, 0 ,rb.velocity.z).magnitude);
 
 
@@ -259,13 +283,34 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //sets the agent to rotate 
     public void RotateTo(Vector3 direction)
     {
+
         float deltaTime = Time.time - lastRotationTime;
+
+        if (useSpine)
+        {
+            //only rotate on local x direction
+            //first delete side movements- only leave y and z
+            Vector3 directionForSpine = transform.InverseTransformDirection(direction);
+            directionForSpine.x = 0;
+            //directionForSpine = Quaternion.AngleAxis(-90, spine.forward) * directionForSpine;
+            //directionForSpine = transform.TransformDirection(directionForSpine);
+            Quaternion desiredSpineRotation = Quaternion.LookRotation(directionForSpine);
+            spine.localRotation = Quaternion.RotateTowards(spine.localRotation, desiredSpineRotation, angularSpeed * deltaTime);
+        }
+
+
         direction.y = 0;
         Quaternion desiredLookRotation = Quaternion.LookRotation(direction);
         //because we want the same speed as the agent, which has its angular speed saved as degrees per second we use the rotaate towards function
         transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredLookRotation, angularSpeed * deltaTime );
+
+       
+
+
         lastRotationTime = Time.time;
     }
+
+   
 
     public void SmoothRotateTo(Vector3 direction)
     {
@@ -293,18 +338,52 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
 
     //this method tells the agent to look at a specific target while moving
+    //only rotates in the direction
     public void LookAt(Transform targetToLookAt)
     {
         this.targetToLookAt = targetToLookAt;
         agent.updateRotation = false;
         lastRotationTime = Time.time;
         lookAt = true;
+
+        relativeAimCenter = null;
+    }
+
+    //aims the unit to this location based on a relative point like a weapon, so it always hits,
+    //with rotation left and right
+    //with spine up and down
+    public void AimAt(GameEntity targetToAimAt, Transform relativeAimCenter)
+    {
+        this.targetToAimAt = targetToAimAt;
+        this.relativeAimCenter = relativeAimCenter;
+        agent.updateRotation = false;
+        lastRotationTime = Time.time;
+        aimAt = true;
+    }
+
+    public void StartAimAt()
+    {
+        aimAt = true;
+        lastRotationTime = Time.time;
+        agent.updateRotation = false;
+    }
+
+    public void AimAt(Vector3 direction)
+    {
+        RotateTo(direction);
+        //spine also here
     }
 
     public void StopLookAt()
     {
         agent.updateRotation = true;
         lookAt = false;
+    }
+
+    public void StopAimAt()
+    {
+        agent.updateRotation = true;
+        aimAt = false;
     }
 
     public virtual bool IsMoving()

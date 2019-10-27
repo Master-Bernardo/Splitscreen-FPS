@@ -272,7 +272,7 @@ public class B_MissileFighter : Behaviour
 
     EC_Movement movement;
     EC_Sensing enemySensing;
-    EC_MissileWeaponController weapon;
+    EC_MissileWeaponController weaponController;
     //goes to nearest enemy, shoots  and looks at them when in range, tries not to get too close
 
     public float perfectShootingDistance;
@@ -291,7 +291,7 @@ public class B_MissileFighter : Behaviour
         this.enemySensing = enemySensing;
         this.entity = entity;
         this.movement = movement;
-        this.weapon = weapon;
+        this.weaponController = weapon;
 
         nextDistanceCheckTime = UnityEngine.Random.Range(0, distanceCheckingInterval);
 
@@ -321,30 +321,34 @@ public class B_MissileFighter : Behaviour
             if ((nearestEnemyPosition - myPosition).sqrMagnitude > maxShootingDistance)
             {
                 inRange = false;
-                movement.StopLookAt();
-                weapon.StopAiming();
+                //movement.StopLookAt();
+                weaponController.StopAiming();
                 //Debug.Log("stop aim");
+
+               // movement.StopAimAt();
+
             }
             else
             {
                 inRange = true;
-               // Debug.Log("start aim");
+                // Debug.Log("start aim");
+                //movement.LookAt(enemySensing.nearestEnemy.transform);
+                weaponController.AimAt(enemySensing.nearestEnemy);
 
-                movement.LookAt(enemySensing.nearestEnemy.transform);
-                weapon.AimAt(enemySensing.nearestEnemy);
+                //movement.AimAt(enemySensing.nearestEnemy, weapon.transform);
 
             }
         }
 
         if (inRange)
         {
-            if (weapon.CanShoot())
+            if (weaponController.HasEnoughAmmoLoaded())
             {
-                weapon.Shoot();
+                weaponController.Shoot();
             }
-            else if(!weapon.reloading)
+            else if(!weaponController.reloading)
             {
-                weapon.Reload();
+                weaponController.Reload();
             }
         }
 

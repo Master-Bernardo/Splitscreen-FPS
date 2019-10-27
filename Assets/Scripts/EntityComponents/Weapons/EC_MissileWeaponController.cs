@@ -8,23 +8,20 @@ using UnityEngine;
  */ 
 public class EC_MissileWeaponController : EntityComponent
 {
-    //public float shootingInterval;
-    //float nextShootingTime;
-    //public float damage;
+
+    //units should rotate like player only to the sides und up and down - for melee and missile
+    public EC_Movement movement;
     public MissileWeapon weapon;
 
     [Tooltip("how fast do we aim")]
-    public float turningSpeed;
-    //public GameObject projectilePrefab;
-    //public Transform projectileSpawnPoint;
+    //public float turningSpeed;
 
-    public Transform parent;
+    //public Transform parent;
     bool aiming = false;
     GameEntity currentTarget;
 
     public bool gravityProjectile;
-    //projectuile needs to weight 1kg?
-    //public float initialLaunchSpeed;
+
     bool hasMovement; //does currentTarget have movement?
     EC_Movement currentEnemyMovement;
 
@@ -34,11 +31,13 @@ public class EC_MissileWeaponController : EntityComponent
     public bool reloading = false;
     float reloadEndTime;
 
-    /*public override void SetUpComponent(GameEntity entity)
-    {
-        base.SetUpComponent(entity);
-        nextShootingTime = Time.time + shootingInterval;
-    }*/
+    public Animator handsAnimator; // for animating reload
+    //how to solve weapon positioning without animator?
+    [Tooltip("will be used if animator is disabled - thus we can not guarantee correct positioning")]
+    public Transform alternativeShootPoint;
+
+    //public bool reighthandLeads; //when aiming, everything will be controlled based on one hand
+    //the weapon will not get rotated? - only the spawnpoint a bit?
 
     public override void UpdateComponent()
     {
@@ -49,7 +48,7 @@ public class EC_MissileWeaponController : EntityComponent
 
             if (currentTarget != null)
             {
-                Vector3 desiredAimVector = Vector3.zero;
+                Vector3 desiredWeaponAimVector = Vector3.zero;
 
 
                 if (!gravityProjectile)
@@ -64,11 +63,11 @@ public class EC_MissileWeaponController : EntityComponent
                         //now calculate again, but with speed of the target added
                         timeInAir = ((currentTarget.GetPositionForAiming() + currentEnemyMovement.GetCurrentVelocity() * timeInAir) - weapon.GetProjectileSpawnPoint()).magnitude / weapon.initialLaunchSpeed;
 
-                        desiredAimVector = (currentTarget.GetPositionForAiming()+currentEnemyMovement.GetCurrentVelocity()*timeInAir) - weapon.transform.position;
+                        desiredWeaponAimVector = (currentTarget.GetPositionForAiming()+currentEnemyMovement.GetCurrentVelocity()*timeInAir) - weapon.transform.position;
                     }
                     else
                     {
-                        desiredAimVector = currentTarget.GetPositionForAiming() - weapon.transform.position;
+                        desiredWeaponAimVector = currentTarget.GetPositionForAiming() - weapon.transform.position;
                     }
                 }
                 else
@@ -114,9 +113,11 @@ public class EC_MissileWeaponController : EntityComponent
                             timeInAir = distanceX / vX;
                         }
 
-                        desiredAimVector = (enemyPosition + currentEnemyMovement.GetCurrentVelocity() * timeInAir)- weaponPosition;
-                        desiredAimVector.y = 0;
-                        desiredAimVector = Quaternion.AngleAxis(-launchAngle, weapon.transform.right) * desiredAimVector;
+                        desiredWeaponAimVector = (enemyPosition + currentEnemyMovement.GetCurrentVelocity() * timeInAir)- weaponPosition;
+
+
+                        //desiredWeaponAimVector.y = 0;
+                        //desiredWeaponAimVector = Quaternion.AngleAxis(-launchAngle, weapon.transform.right) * desiredWeaponAimVector;
                         //Debug.Log("has movement: " + launchAngle);
 
                     }
@@ -132,10 +133,11 @@ public class EC_MissileWeaponController : EntityComponent
                             true
                         );
                         
-                        //desiredAimVector = Quaternion.AngleAxis(-launchAngle, projectileSpawnPoint.right) * desiredAimVector;
-                        desiredAimVector = enemyPosition - weaponPosition;
-                        desiredAimVector.y = 0;
-                        desiredAimVector = Quaternion.AngleAxis(-launchAngle, weapon.transform.right) * desiredAimVector;
+                        desiredWeaponAimVector = enemyPosition - weaponPosition;
+
+
+                        //desiredWeaponAimVector.y = 0;
+                        //desiredWeaponAimVector = Quaternion.AngleAxis(-launchAngle, weapon.transform.right) * desiredWeaponAimVector;
                         //Debug.Log("no movement: " + launchAngle);
 
                     }
@@ -144,14 +146,17 @@ public class EC_MissileWeaponController : EntityComponent
 
 
                 }
-
-                RotateTowards(desiredAimVector);
+                /*desiredWeaponAimVector.Normalize();
+                Vector3 desiredUnitAimVector = desiredWeaponAimVector + (desiredWeaponAimVector - weapon.transform.forward.normalized);
+                movement.AimAt(desiredUnitAimVector);*/
+                movement.AimAt(desiredWeaponAimVector);
+      
             }
         }
-        else
+        /*else
         {
-            RotateTowards(parent.forward);
-        }
+            movement.AimAt(desiredUnitAimVector);
+        }*/
 
         if (reloading)
         {
@@ -166,25 +171,12 @@ public class EC_MissileWeaponController : EntityComponent
     public void Shoot()
     {
         //add random rotation based on skill
-
+        //- solve this by adding a different disturmance to the perfect aiming vector every x seconds
         weapon.HandleWeaponKeyDown(0);
-        /*Projectile projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation * Quaternion.Euler(Random.Range(-shootingError, shootingError), Random.Range(-shootingError, shootingError), 0f)).GetComponent<Projectile>();
-        projectile.startVelocity = initialLaunchSpeed;
-        projectile.projectileTeamID = myEntity.teamID;
-        projectile.damage = damage;
-        nextShootingTime = Time.time + shootingInterval;*/
     }
 
-    public bool CanShoot()
+    public bool HasEnoughAmmoLoaded()
     {
-        /*if (Time.time > nextShootingTime)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }*/
         if (weapon.currentMagazineAmmo > 0)
         {
             return true;
@@ -205,6 +197,7 @@ public class EC_MissileWeaponController : EntityComponent
     public void AimAt(GameEntity target)
     {
         aiming = true;
+        movement.StartAimAt();
         currentTarget = target;
         currentEnemyMovement = target.GetComponent<EC_Movement>();
         if (currentEnemyMovement != null) hasMovement = true;
@@ -212,24 +205,22 @@ public class EC_MissileWeaponController : EntityComponent
 
     }
 
-    /*public void AimAt(Vector3 position)
-    {
-        aiming = true;
-    }*/
 
     public void StopAiming()
     {
         aiming = false;
+        movement.StopAimAt();
+
     }
 
 
-    void RotateTowards(Vector3 desiredLookVector)
+    /*void RotateTowards(Vector3 desiredLookVector)
     {
         //Quaternion desiredLookRotation = Quaternion.LookRotation(position - turrenRotatingBarrel.transform.position);
         Quaternion desiredLookRotation = Quaternion.LookRotation(desiredLookVector);
         weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, desiredLookRotation, turningSpeed*Time.deltaTime);
 
-    }
+    }*/
 
 
 

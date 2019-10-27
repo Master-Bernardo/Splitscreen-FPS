@@ -23,7 +23,7 @@ public class EC_HumanWeaponController : EntityComponent
 
     public WeaponControllerState state;
 
-    [Header("Missile")]
+    /*[Header("Missile")]
 
     [Tooltip("how fast do we aim")]
     public float turningSpeed;
@@ -34,7 +34,6 @@ public class EC_HumanWeaponController : EntityComponent
 
     public bool gravityProjectile;
     //projectuile needs to weight 1kg?
-    //public float initialLaunchSpeed;
     bool currentTargetHasMovement; //does currentTarget has a movementController
     EC_Movement currentEnemyMovement;
 
@@ -42,7 +41,7 @@ public class EC_HumanWeaponController : EntityComponent
     public float shootingError;
 
     public bool reloading = false;
-    float reloadEndTime;
+    float reloadEndTime;*/
 
 
     [Header("Melee")]
@@ -73,6 +72,11 @@ public class EC_HumanWeaponController : EntityComponent
 
     public override void UpdateComponent()
     {
+        switch(state)
+        {
+
+        }
+
         if (meleeAttackInitiated)
         {
             if (Time.time > nextMeleeAttackTime)
