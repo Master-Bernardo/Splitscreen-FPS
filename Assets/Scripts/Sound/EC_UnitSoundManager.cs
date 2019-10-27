@@ -68,15 +68,18 @@ public class EC_UnitSoundManager : EntityComponent
 
     public override void OnTakeDamage(DamageInfo damageInfo)
     {
-        audioSource.SetSound(damageSound);
-        audioSource.Play();
+        if (damageSound != null)
+        {
+            audioSource.SetSound(damageSound);
+            audioSource.Play();
+        }    
     }
 
 
     public override void OnDie(GameEntity killer)
     {
         transform.SetParent(null);
-        if (!isPlayer) Destroy(this.gameObject, 10); //let the die sound stay a while  - but what should we do with the player?
+        if (!isPlayer) Destroy(gameObject, 10); //let the die sound stay a while  - but what should we do with the player?
         audioSource.SetSound(deathSound);
         audioSource.Play();
     }

@@ -126,6 +126,7 @@ public class B_MeleeFighter : Behaviour
 {
     EC_Sensing enemySensing;
     EC_Movement movement;
+    Animator handsAnimator;
 
     public float distanceCheckingInterval;
     float nextDistanceCheckTime;
@@ -139,29 +140,36 @@ public class B_MeleeFighter : Behaviour
     float enemyWidth;
 
     //meleefighting
-    MeleeWeapon weapon;
+    //MeleeWeapon weapon;
+    EC_HumanWeaponController weaponController;
     [SerializeField]
     bool inRange;
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, MeleeWeapon weapon)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_HumanWeaponController weaponController)//, MeleeWeapon weapon)
     {
         this.entity = entity;
         this.movement = movement;
         this.enemySensing = enemySensing;
-        this.weapon = weapon;
+        //this.weapon = weapon;
+        this.weaponController = weaponController;
 
         nextDistanceCheckTime = UnityEngine.Random.Range(0, distanceCheckingInterval);
         maxMeleeDistance *= maxMeleeDistance;
     }
 
-    /*enum MeleeFighterState
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_HumanWeaponController weaponController, Animator handsAnimator)//, MeleeWeapon weapon)
     {
-        TooFar,
-        TooNear,
-        InMeleeDistance
+        this.entity = entity;
+        this.movement = movement;
+        this.enemySensing = enemySensing;
+        //this.weapon = weapon;
+        this.weaponController = weaponController;
+        this.handsAnimator = handsAnimator;
+
+        nextDistanceCheckTime = UnityEngine.Random.Range(0, distanceCheckingInterval);
+        maxMeleeDistance *= maxMeleeDistance;
     }
 
-    MeleeFighterState state;*/
 
     protected override void Update()
     {
@@ -227,12 +235,21 @@ public class B_MeleeFighter : Behaviour
 
         if (inRange)
         {
-            if (weapon.CanAttack())
+            /*if (weaponController.CanMeleeAttack())
             {
-                weapon.HandleWeaponKeyHold(0);
-            }
+                weaponController.HandleWeaponKeyHold(0);
+            }*/
+            weaponController.MeleeAttack();
         }
 
+    }
+
+    public override void OnBehaviourEnter()
+    {
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetTrigger("EnterCombatStance");
+        }
     }
 
     public override void OnBehaviourExit()
@@ -240,6 +257,11 @@ public class B_MeleeFighter : Behaviour
         movement.Stop();
         movement.StopLookAt();
         inRange = false;
+
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetTrigger("EnterIdleStance");
+        }
     }
 }
 

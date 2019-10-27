@@ -78,6 +78,9 @@ MonoBehaviour:
   width: 0.5
   unitData: {fileID: 0}
   damageManager: {fileID: 0}
+  onTakeDamageEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &198733100851196946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,13 +121,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9957dad10bc9d7b4ca87bf26eae90a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmo: 0
   movementUpdateIntervall: 0
+  rb: {fileID: 3583093012250160441}
   canBePushed: 1
   pushTreshold: 5
   dashForce: 100
   dashTime: 0.125
   dashMultiplier: 0.75
+  showGizmo: 0
 --- !u!114 &-7568736579957523176
 MonoBehaviour:
   m_ObjectHideFlags: 0

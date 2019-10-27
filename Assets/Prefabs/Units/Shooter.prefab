@@ -125,13 +125,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9957dad10bc9d7b4ca87bf26eae90a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmo: 0
   movementUpdateIntervall: 0
+  rb: {fileID: 6754178515157054542}
   canBePushed: 1
   pushTreshold: 5
   dashForce: 100
   dashTime: 0.125
   dashMultiplier: 0.75
+  showGizmo: 0
 --- !u!114 &-7568736579957523176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,6 +266,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1526730658472777866}
     m_Modifications:
+    - target: {fileID: 7771058485830626116, guid: b8ed1f081a2a6b44cbd563288ca5beba,
+        type: 3}
+      propertyPath: m_Name
+      value: UnlimitedAmmoRifle
+      objectReference: {fileID: 0}
     - target: {fileID: 4945291708861343405, guid: b8ed1f081a2a6b44cbd563288ca5beba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -319,11 +325,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7771058485830626116, guid: b8ed1f081a2a6b44cbd563288ca5beba,
-        type: 3}
-      propertyPath: m_Name
-      value: UnlimitedAmmoRifle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8ed1f081a2a6b44cbd563288ca5beba, type: 3}

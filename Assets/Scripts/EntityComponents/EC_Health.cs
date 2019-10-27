@@ -7,6 +7,8 @@ public class EC_Health : EntityComponent
 {
     public float currentHealth;
     public float maxHealth;
+
+    [Header("Visuals")]
     public Image healthBarFill; // for later
     public bool changeColorOnDamage;
     bool colorChanged;
@@ -16,10 +18,9 @@ public class EC_Health : EntityComponent
     public float changeColorTime = 0.2f;
     float nextGoBackToNormalColorTime;
 
+    [Header("DeathEffect")]
     //performance wise better not, but is used by players for example
     public bool instantateDeathEffect;
-
-
 
     public DeathEffect deathEffect;
 

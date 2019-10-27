@@ -202,7 +202,7 @@ public class HordeModeManager : MonoBehaviour
 
     public void OnEnemyFromThisWaveDies(GameEntity entity)
     {
-        Debug.Log("enemy dies");
+
         for (int i = 0; i < hordeUI.Length; i++)
         {
             hordeUI[i].UpdateEnemiesLeft(currentWaveEnemies.Count);

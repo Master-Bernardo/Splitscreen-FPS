@@ -33,7 +33,7 @@ public class MeleeWeapon : Weapon
 
     private void Start()
     {
-        currentAttack = attacks[attackID];
+        //currentAttack = attacks[attackID];
     }
 
 

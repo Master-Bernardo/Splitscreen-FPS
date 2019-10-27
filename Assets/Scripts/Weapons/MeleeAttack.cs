@@ -5,8 +5,8 @@ using System;
 
 
 //some meleeWeapons have 
-[System.Serializable]
-public class MeleeAttack
+[CreateAssetMenu(fileName = "New MeleeAttackSO", menuName = "MeleeAttackSO")]
+public class MeleeAttack: ScriptableObject
 {
     [Header("Attack")]
     public string attackName;

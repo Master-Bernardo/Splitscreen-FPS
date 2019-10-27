@@ -42,7 +42,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
     public override void SetUpComponent(GameEntity entity)
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         currentDashPoints = maxDashPoints;
 
         angularSpeed = rotationSpeed;

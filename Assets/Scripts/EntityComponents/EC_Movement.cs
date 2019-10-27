@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 //[RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 public class EC_Movement : EntityComponent, IPusheable<Vector3>
 {  
     [HideInInspector]
@@ -13,12 +13,10 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //for rotation independent of navmeshAgent;
     protected float angularSpeed;
 
-    [SerializeField]
-    bool showGizmo;
-
-
+   
     //for optimisation we can call the updater only every x frames
     float nextMovementUpdateTime;
+    [Header("PerformanceOptimisation")]
     [SerializeField]
     float movementUpdateIntervall = 1 / 6;
 
@@ -36,11 +34,13 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     }
     protected MovementState movementState;
 
+    [Header("References")]
     //pushing with rb
+    [SerializeField]
     protected Rigidbody rb;
     //public float gravityMultiplier;
 
-
+    [Header("PushPhysics")]
     public bool canBePushed;
     //bool isBeingPushed = false;
     [Tooltip("under which velocity is the pushed agent not considered pushed anymore")]
@@ -50,6 +50,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     bool movementOrderIssuedWhileBeingPushed = false;
     Vector3 targetMovePositionNotYetOrdered;
 
+    [Header("Dash")]
     //dashing with rb
     public float dashForce;
     public float dashTime;//how long does the dash force gets applied?
@@ -60,10 +61,14 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     public float dashMultiplier; // when an agents gets his rb activated and dashes, he does not have the same gravity forces applied to it as the player so we modify his dash push force value
     //bool dashBrake = false; //are we giving force in the opposite direction?
 
+    [Header("Debug")]
+    [SerializeField]
+    bool showGizmo;
+
     public override void SetUpComponent(GameEntity entity)
     {
         agent = GetComponent<NavMeshAgent>();
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         //almost the same speed as original navmeshAgent
         angularSpeed = agent.angularSpeed;
         //optimisation

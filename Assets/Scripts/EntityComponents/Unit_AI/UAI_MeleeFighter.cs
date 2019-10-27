@@ -8,14 +8,25 @@ public class UAI_MeleeFighter : EC_UnitAI
 
     public EC_Movement movement;
     public EC_Sensing sensing;
-    public MeleeWeapon weapon;
+    //public MeleeWeapon weapon;
+    public EC_HumanWeaponController weaponController;
+    public Animator handsAnimator;
 
     // Start is called before the first frame update
     public override void SetUpComponent(GameEntity entity)
     {
         base.SetUpComponent(entity);
         currentBehaviour = null;
-        meleeBehaviour.SetUpBehaviour(entity, movement, sensing, weapon);
+        if (handsAnimator != null)
+        {
+            meleeBehaviour.SetUpBehaviour(entity, movement, sensing, weaponController,handsAnimator);
+
+        }
+        else
+        {
+            meleeBehaviour.SetUpBehaviour(entity, movement, sensing, weaponController);
+
+        }
         //wanderBehaviour.SetUpBehaviour(entity, movement);
     }
 

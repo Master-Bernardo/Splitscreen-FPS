@@ -225,13 +225,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7794e0178b3e352429278d790ebf69cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmo: 0
   movementUpdateIntervall: 0
+  rb: {fileID: 2366190835090200061}
   canBePushed: 1
   pushTreshold: 0
   dashForce: 100
   dashTime: 0.125
   dashMultiplier: 1
+  showGizmo: 0
   targetMovementSpeed: 8
   maxAcceleration: 200
   maxDecceleration: 20
