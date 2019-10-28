@@ -221,12 +221,12 @@ public class B_MeleeFighter : Behaviour
             if ((nearestEnemyPosition - myPosition).sqrMagnitude > maxMeleeDistance)
             {
                 inRange = false;
-                movement.StopLookAt();
+               // movement.StopLookAt();
             }
             else
             {
                 inRange = true;
-                movement.LookAt(enemySensing.nearestEnemy.transform);
+               // movement.LookAt(enemySensing.nearestEnemy.transform);
 
             }
         }
@@ -250,6 +250,7 @@ public class B_MeleeFighter : Behaviour
         {
             handsAnimator.SetTrigger("EnterCombatStance");
         }
+        movement.LookAt(enemySensing.nearestEnemy.transform);
     }
 
     public override void OnBehaviourExit()

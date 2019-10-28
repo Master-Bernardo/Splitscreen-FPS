@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2470937881131544429}
-  m_LocalRotation: {x: 0.24498366, y: -0, z: -0, w: 0.96952724}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15296765, y: 0.066630036, z: 0.52521443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.113, z: 0.157}
+  m_LocalScale: {x: 0.11589441, y: 0.05048158, z: 0.39792347}
   m_Children: []
-  m_Father: {fileID: 1518594011234347594}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 28.362001, y: 0, z: 0}
+  m_Father: {fileID: 6527649046478672803}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1685079400080169606
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -79,58 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1 &5605946128200929121
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1518594011234347594}
-  - component: {fileID: 290857813310168982}
-  m_Layer: 11
-  m_Name: Sword
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1518594011234347594
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5605946128200929121}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 5337855673566110225}
-  - {fileID: 8882019584345047328}
-  m_Father: {fileID: 4479023422070185342}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &290857813310168982
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5605946128200929121}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d8292cd4006fe614488d952e00d47244, type: 2}
-  m_CullingMode: 2
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7315986814055885553
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,13 +104,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7315986814055885553}
-  m_LocalRotation: {x: 0.24498366, y: -0, z: -0, w: 0.96952724}
-  m_LocalPosition: {x: 0, y: 0.568, z: 0.307}
-  m_LocalScale: {x: 0.15296765, y: 1.9390349, z: 0.15296765}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.62100005, z: 0.147}
+  m_LocalScale: {x: 0.02578187, y: 1.4690905, z: 0.11589441}
   m_Children: []
-  m_Father: {fileID: 1518594011234347594}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 28.362001, y: 0, z: 0}
+  m_Father: {fileID: 6527649046478672803}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5285923850448225677
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -238,7 +186,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4479023422070185342}
+  - {fileID: 8882019584345047328}
+  - {fileID: 5337855673566110225}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -260,62 +209,8 @@ MonoBehaviour:
   damage: 10
   automaticTrigger: 0
   usesAimingLine: 0
-  aimingLine: {fileID: 0}
-  weaponAnimator: {fileID: 290857813310168982}
+  weaponAnimator: {fileID: 0}
   drawDamageGizmo: 0
   attacks:
-  - attackName: Attack 1
-    damage: 10
-    meleeAttackInterval: 0.5
-    attackDuration: 0.175
-    hitPosition: {x: 0, y: 0.6, z: 1.3}
-    hitSphereRadius: 0.7
-    pushes: 1
-    pushForce: 300
-    pushKillForce: 500
-    pushDirection: {x: 0, y: 0, z: 0}
-    defaultDirection: 1
-    animationName: Attack1
-  - attackName: Attack 2
-    damage: 10
-    meleeAttackInterval: 0.5
-    attackDuration: 0.175
-    hitPosition: {x: 0, y: 0.6, z: 1.3}
-    hitSphereRadius: 0.7
-    pushes: 1
-    pushForce: 300
-    pushKillForce: 500
-    pushDirection: {x: -1, y: 0, z: 0}
-    defaultDirection: 0
-    animationName: Attack2
---- !u!1 &8670779621177161047
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4479023422070185342}
-  m_Layer: 11
-  m_Name: AnimationHolder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4479023422070185342
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8670779621177161047}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1518594011234347594}
-  m_Father: {fileID: 6527649046478672803}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  - {fileID: 0}
+  - {fileID: 0}
