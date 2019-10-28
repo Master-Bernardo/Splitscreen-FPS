@@ -10,9 +10,12 @@ using UnityEngine;
 
 //weapon system takes care of changing and reloading weapon and having an inventory, can also be used by units. WeaponController is used to use the currentSelectedWeapon, weaponController should be able to work without weaponSystem
 
-public class EC_HumanWeaponController : EntityComponent
+public class EC_MeleeWeaponController : EntityComponent
 {
+    //if you use a unit which has spine movement, attack this script to the spine
     public Weapon currentWeapon;
+    [Tooltip("the hitboxes of the attacks are relative to this transform - usefull with spine")]
+    public Transform relativeTransform;
 
     public enum WeaponControllerState 
     {
@@ -137,7 +140,7 @@ public class EC_HumanWeaponController : EntityComponent
     {
         // if (currentTarget != null) currentTarget.TakeDamage(meleeDamage);
 
-        Collider[] visibleColliders = Physics.OverlapSphere(transform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
+        Collider[] visibleColliders = Physics.OverlapSphere(relativeTransform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
 
         for (int i = 0; i < visibleColliders.Length; i++)
         {
@@ -182,16 +185,16 @@ public class EC_HumanWeaponController : EntityComponent
                         {
                             if (entity != null)
                             {
-                                direction = (entity.transform.position + entity.aimingCorrector - transform.position).normalized;
+                                direction = (entity.transform.position + entity.aimingCorrector - relativeTransform.position).normalized;
                             }
                             else
                             {
-                                direction = (visibleColliders[i].gameObject.transform.position - transform.position).normalized;
+                                direction = (visibleColliders[i].gameObject.transform.position - relativeTransform.position).normalized;
                             }
                         }
                         else
                         {
-                            direction = transform.TransformDirection(currentAttack.pushDirection.normalized);
+                            direction = relativeTransform.TransformDirection(currentAttack.pushDirection.normalized);
                         }
 
                         pusheable.Push(direction * currentAttack.pushForce * Settings.Instance.forceMultiplier);
@@ -239,7 +242,7 @@ public class EC_HumanWeaponController : EntityComponent
             if (currentAttack != null)
             {
                 Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(transform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
+                Gizmos.DrawWireSphere(relativeTransform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
             }
         }
     }

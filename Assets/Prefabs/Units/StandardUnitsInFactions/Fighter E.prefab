@@ -77,6 +77,11 @@ PrefabInstance:
       propertyPath: teamID
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2335485628402519959, guid: 0a2a7d5c73433ff449e6b8923bacebbd,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     - target: {fileID: 3734641105251542954, guid: 0a2a7d5c73433ff449e6b8923bacebbd,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -87,7 +92,7 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
-    - target: {fileID: 2335485628402519959, guid: 0a2a7d5c73433ff449e6b8923bacebbd,
+    - target: {fileID: 739436311047599111, guid: 0a2a7d5c73433ff449e6b8923bacebbd,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

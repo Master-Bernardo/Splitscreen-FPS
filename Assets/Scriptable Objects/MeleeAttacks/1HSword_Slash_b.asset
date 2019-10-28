@@ -16,7 +16,7 @@ MonoBehaviour:
   damage: 10
   meleeAttackInterval: 1
   attackDuration: 0.5
-  hitPosition: {x: 0, y: 1.2, z: 1.3}
+  hitPosition: {x: 0, y: 0.2, z: 1.3}
   hitSphereRadius: 0
   pushes: 1
   pushForce: 300

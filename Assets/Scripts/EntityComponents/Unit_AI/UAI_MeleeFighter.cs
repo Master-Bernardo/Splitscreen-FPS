@@ -9,7 +9,7 @@ public class UAI_MeleeFighter : EC_UnitAI
     public EC_Movement movement;
     public EC_Sensing sensing;
     //public MeleeWeapon weapon;
-    public EC_HumanWeaponController weaponController;
+    public EC_MeleeWeaponController weaponController;
     public Animator handsAnimator;
 
     // Start is called before the first frame update

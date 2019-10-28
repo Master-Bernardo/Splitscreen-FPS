@@ -109,18 +109,37 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         }
 
         if (lookAt)
-       {
+        {
             if (Time.time > nextMovementUpdateTime)
             {
                 nextMovementUpdateTime = Time.time + movementUpdateIntervall;
                 if (targetToLookAt != null)
                 {
-                     RotateTo(targetToLookAt.position - transform.position);
+                    RotateTo(targetToLookAt.position - transform.position);
                 }
-            }
-       }
 
-        if (aimAt)
+            }
+        }
+        else
+        {
+            if (useSpine)
+            {
+                //reset the spine to normal position
+                if(spine.localRotation.eulerAngles != Vector3.zero)
+                {
+                    float deltaTime = Time.time - lastRotationTime;
+
+                    Quaternion desiredSpineRotation = Quaternion.Euler(0, 0, 0);
+
+                    spine.localRotation = Quaternion.RotateTowards(spine.localRotation, desiredSpineRotation, angularSpeed * deltaTime);
+
+                    lastRotationTime = Time.time;
+                }
+               
+            }
+        }
+
+        if (aimAt) //aim at is bassicaly look at with an offset, which isnt working right so far?
         {
             if (Time.time > nextMovementUpdateTime)
             {
@@ -291,10 +310,13 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             //only rotate on local x direction
             //first delete side movements- only leave y and z
             Vector3 directionForSpine = transform.InverseTransformDirection(direction);
-            directionForSpine.x = 0;
+            //directionForSpine.x = 0;
+
             //directionForSpine = Quaternion.AngleAxis(-90, spine.forward) * directionForSpine;
             //directionForSpine = transform.TransformDirection(directionForSpine);
             Quaternion desiredSpineRotation = Quaternion.LookRotation(directionForSpine);
+            desiredSpineRotation = Quaternion.Euler(desiredSpineRotation.eulerAngles.x, 0, 0);
+            //Debug.Log("desiredRotation: " + desiredSpineRotation.eulerAngles);
             spine.localRotation = Quaternion.RotateTowards(spine.localRotation, desiredSpineRotation, angularSpeed * deltaTime);
         }
 

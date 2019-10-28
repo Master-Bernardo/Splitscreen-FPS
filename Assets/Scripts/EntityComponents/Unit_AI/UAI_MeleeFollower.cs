@@ -10,7 +10,7 @@ public class UAI_MeleeFollower : EC_UnitAI
 
     public EC_Movement movement;
     public EC_Sensing sensing;
-    public EC_HumanWeaponController weaponController;
+    public EC_MeleeWeaponController weaponController;
 
     // Start is called before the first frame update
     public override void SetUpComponent(GameEntity entity)

@@ -141,11 +141,11 @@ public class B_MeleeFighter : Behaviour
 
     //meleefighting
     //MeleeWeapon weapon;
-    EC_HumanWeaponController weaponController;
+    EC_MeleeWeaponController weaponController;
     [SerializeField]
     bool inRange;
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_HumanWeaponController weaponController)//, MeleeWeapon weapon)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_MeleeWeaponController weaponController)//, MeleeWeapon weapon)
     {
         this.entity = entity;
         this.movement = movement;
@@ -157,7 +157,7 @@ public class B_MeleeFighter : Behaviour
         maxMeleeDistance *= maxMeleeDistance;
     }
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_HumanWeaponController weaponController, Animator handsAnimator)//, MeleeWeapon weapon)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_MeleeWeaponController weaponController, Animator handsAnimator)//, MeleeWeapon weapon)
     {
         this.entity = entity;
         this.movement = movement;
@@ -191,6 +191,7 @@ public class B_MeleeFighter : Behaviour
             //if the enemy is moving, we move to the position he will be at the time we arrive
             EC_Movement enemyMovement = enemySensing.nearestEnemy.GetComponent<EC_Movement>();
 
+            movement.LookAt(enemySensing.nearestEnemy.transform);
 
             if (enemyMovement.IsMoving())
             {
@@ -274,6 +275,7 @@ public class B_MissileFighter : Behaviour
     EC_Movement movement;
     EC_Sensing enemySensing;
     EC_MissileWeaponController weaponController;
+    Animator handsAnimator;
     //goes to nearest enemy, shoots  and looks at them when in range, tries not to get too close
 
     public float perfectShootingDistance;
@@ -297,7 +299,19 @@ public class B_MissileFighter : Behaviour
         nextDistanceCheckTime = UnityEngine.Random.Range(0, distanceCheckingInterval);
 
         maxShootingDistance *= maxShootingDistance;
+    }
 
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_MissileWeaponController weapon, Animator handsAnimator)
+    {
+        this.enemySensing = enemySensing;
+        this.entity = entity;
+        this.movement = movement;
+        this.weaponController = weapon;
+        this.handsAnimator = handsAnimator;
+
+        nextDistanceCheckTime = UnityEngine.Random.Range(0, distanceCheckingInterval);
+
+        maxShootingDistance *= maxShootingDistance;
     }
 
     protected override void Update()
@@ -358,8 +372,22 @@ public class B_MissileFighter : Behaviour
 
     public override void OnBehaviourExit()
     {
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetTrigger("EnterIdleStance2");
+        }
         movement.Stop();
-        movement.StopLookAt();
+        //movement.StopLookAt();
+        weaponController.StopAiming();
+
         inRange = false;
+    }
+
+    public override void OnBehaviourEnter()
+    {
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetTrigger("EnterCombatStance2");
+        }
     }
 }
