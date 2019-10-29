@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1362219360397472216}
   - component: {fileID: 651446857378753757}
   - component: {fileID: 6076253166484247145}
-  - component: {fileID: 5761236081457510323}
   - component: {fileID: 1362219360397472218}
   - component: {fileID: -7568736579957523176}
   - component: {fileID: 8466272924457072801}
@@ -92,28 +91,13 @@ MonoBehaviour:
     perfectShootingDistance: 12
     maxShootingDistance: 20
     distanceCheckingInterval: 0.2
+  idleBehaviour:
+    behaviourUpdateInterval: 0
+    entity: {fileID: 0}
   movement: {fileID: 1362219360397472218}
   sensing: {fileID: -7568736579957523176}
   weapon: {fileID: 6698582988817642302}
   handsAnimator: {fileID: 4387909223804606813}
---- !u!114 &5761236081457510323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362219360397472217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f186a7cacc4d278438df0c8d839c8b04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 8446360440123459573}
-  turningSpeed: 60
-  parent: {fileID: 1362219360397472216}
-  gravityProjectile: 0
-  shootingError: 5
-  reloading: 0
 --- !u!114 &1362219360397472218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,6 +389,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HumanModel
       objectReference: {fileID: 0}
+    - target: {fileID: 8802928292075680608, guid: 83d591f793407114883b120b4c8a1a6f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5b446a23ba7059340be528571d97454a, type: 2}
     - target: {fileID: 8567294715437575186, guid: 83d591f793407114883b120b4c8a1a6f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -666,6 +655,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     - target: {fileID: 6604589183905111465, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -676,11 +670,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df929418312630c41bb6aa5be091ddb3, type: 3}
 --- !u!4 &7745279501281761960 stripped

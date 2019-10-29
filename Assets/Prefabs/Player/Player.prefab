@@ -233,6 +233,8 @@ MonoBehaviour:
   dashTime: 0.125
   dashMultiplier: 1
   showGizmo: 0
+  useSpine: 0
+  spine: {fileID: 0}
   targetMovementSpeed: 8
   maxAcceleration: 200
   maxDecceleration: 20
@@ -265,9 +267,11 @@ MonoBehaviour:
   changeColorOnDamage: 1
   damageMaterial: {fileID: 2100000, guid: 8297e0eb55f729243a4875f7b5ffdd3c, type: 2}
   renderersToTint:
-  - {fileID: 7918929224588067193}
-  - {fileID: 2226575582736707717}
-  - {fileID: 3602149101854982465}
+  - {fileID: 6885778150479666184}
+  - {fileID: 7206007692609349272}
+  - {fileID: 7414824733305998641}
+  - {fileID: 5098781926106793439}
+  - {fileID: 3311146790476966021}
   changeColorTime: 0.2
   instantateDeathEffect: 0
   deathEffect: {fileID: 4543000439627870190}
@@ -283,7 +287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8eb1c1ac89c534d91f2518ae323644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimVisualiser: {fileID: 8126922323807101222}
   inventory:
   - {fileID: 0}
   - {fileID: 0}
@@ -292,6 +295,7 @@ MonoBehaviour:
   startRocketAmmo: 3
   startGrenadeAmmo: 0
   startShockGrenadeAmmo: 0
+  aimVisualiser: {fileID: 8126922323807101222}
   weaponHUD: {fileID: 0}
   startingWeapon1: {fileID: 7771058485830626116, guid: 3e43726cdc0c10545acf9950acfc5a74,
     type: 3}
@@ -712,7 +716,7 @@ Transform:
   - {fileID: 7064133528805784503}
   - {fileID: 2957260617283037347}
   m_Father: {fileID: 3918144962237356551}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7618927314109659560
 GameObject:
@@ -1050,11 +1054,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2366190835090200056}
     m_Modifications:
-    - target: {fileID: 3082245522138485886, guid: 83d591f793407114883b120b4c8a1a6f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 191a9e575e67bb04ab8512cc93d15d3d, type: 2}
     - target: {fileID: 162194869008924412, guid: 83d591f793407114883b120b4c8a1a6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1120,6 +1119,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3082245522138485886, guid: 83d591f793407114883b120b4c8a1a6f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 191a9e575e67bb04ab8512cc93d15d3d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83d591f793407114883b120b4c8a1a6f, type: 3}
 --- !u!4 &3918144962237356551 stripped
@@ -1128,21 +1132,33 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3756062883466585339}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &7918929224588067193 stripped
+--- !u!23 &6885778150479666184 stripped
 MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 6468725314796529026, guid: 83d591f793407114883b120b4c8a1a6f,
+  m_CorrespondingSourceObject: {fileID: 7759427228889430259, guid: 83d591f793407114883b120b4c8a1a6f,
     type: 3}
   m_PrefabInstance: {fileID: 3756062883466585339}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &3602149101854982465 stripped
+--- !u!23 &7206007692609349272 stripped
 MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 422582790819751354, guid: 83d591f793407114883b120b4c8a1a6f,
+  m_CorrespondingSourceObject: {fileID: 5773850687753962083, guid: 83d591f793407114883b120b4c8a1a6f,
     type: 3}
   m_PrefabInstance: {fileID: 3756062883466585339}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &2226575582736707717 stripped
+--- !u!23 &7414824733305998641 stripped
 MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3082245522138485886, guid: 83d591f793407114883b120b4c8a1a6f,
+  m_CorrespondingSourceObject: {fileID: 5964604865596500426, guid: 83d591f793407114883b120b4c8a1a6f,
+    type: 3}
+  m_PrefabInstance: {fileID: 3756062883466585339}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5098781926106793439 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8278377455904432420, guid: 83d591f793407114883b120b4c8a1a6f,
+    type: 3}
+  m_PrefabInstance: {fileID: 3756062883466585339}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3311146790476966021 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1861034741445414014, guid: 83d591f793407114883b120b4c8a1a6f,
     type: 3}
   m_PrefabInstance: {fileID: 3756062883466585339}
   m_PrefabAsset: {fileID: 0}

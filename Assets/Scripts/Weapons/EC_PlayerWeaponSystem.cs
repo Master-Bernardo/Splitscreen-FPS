@@ -8,24 +8,31 @@ public class EC_PlayerWeaponSystem : EC_WeaponSystem
     [Header("Visualisation")]
     public AimVisualiser aimVisualiser;
 
-    [Header("Weapons")]
+    /*[Header("Weapons")]
     [SerializeField]
     Weapon[] inventory; //will be set up in inspector
     Weapon currentSelectedWeapon;
     int currentSelectedWeaponID;
-    //public Text weaponInfo; //shows weapon name and ammo
 
-    public Transform rightHand;
+    public Transform rightHand;*/
 
-    [Header("Ammo")]
+    /*[Header("Ammo")]
     //ammo in pockets - not in magazines
 
     Dictionary<AmmoType, int> ammo; //TODO this better
     public int startRocketAmmo;
     public int startGrenadeAmmo;
-    public int startShockGrenadeAmmo;
+    public int startShockGrenadeAmmo;*/
 
     public WeaponHUD weaponHUD;
+
+  
+
+    [Header("Starting Weapons")]
+    public GameObject startingWeapon1;
+    public GameObject startingWeapon2;
+    public GameObject startingWeapon3;
+
 
     //public Camera rayCastCamera; //fp camera
     //[Header("Animation")]
@@ -35,13 +42,8 @@ public class EC_PlayerWeaponSystem : EC_WeaponSystem
     //public GameObject playerUILayerGO;
     //public int playerUILayer;
 
-    [Header("Starting Weapons")]
-    public GameObject startingWeapon1;
-    public GameObject startingWeapon2;
-    public GameObject startingWeapon3;
 
-
-    enum WeaponSystemState
+    /*enum WeaponSystemState
     {
         Default,
         Reloading,
@@ -50,31 +52,32 @@ public class EC_PlayerWeaponSystem : EC_WeaponSystem
 
     WeaponSystemState state = WeaponSystemState.Default;
 
-    float reloadingEndTime;
+    float reloadingEndTime;*/
 
     public override void SetUpComponent(GameEntity entity)
     {
+        ResetWeapons();
         base.SetUpComponent(entity);
 
 
-        ammo = new Dictionary<AmmoType, int>();
+        //ammo = new Dictionary<AmmoType, int>();
 
-        ResetWeapons();
+       
+        if (weaponHUD != null) weaponHUD.SetUp(this);
+        /* foreach (Weapon weapon in inventory)
+         {
+             if (weapon != null)
+             {
+                 weapon.gameObject.SetActive(false);
+                 weapon.SetUp(this);
+             }          
+         }
+         if(weaponHUD!=null)weaponHUD.SetUp(this);
+         ChangeWeapon(0);
 
-       /* foreach (Weapon weapon in inventory)
-        {
-            if (weapon != null)
-            {
-                weapon.gameObject.SetActive(false);
-                weapon.SetUp(this);
-            }          
-        }
-        if(weaponHUD!=null)weaponHUD.SetUp(this);
-        ChangeWeapon(0);
-
-        ammo[AmmoType.Rocket] = startRocketAmmo;
-        ammo[AmmoType.Grenade] = startGrenadeAmmo;
-        ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;*/
+         ammo[AmmoType.Rocket] = startRocketAmmo;
+         ammo[AmmoType.Grenade] = startGrenadeAmmo;
+         ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;*/
 
         //Debug.Log("len: " + SortingLayer.layers.Length);
         //playerUILayer = playerUILayerGO.layer
@@ -119,64 +122,9 @@ public class EC_PlayerWeaponSystem : EC_WeaponSystem
         }
     }
 
-    public void ReloadWeapon()
+    public override void ChangeWeapon(int inventorySlot)
     {
-        if (state == WeaponSystemState.Default)
-        {
-            MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
-            if (mw != null)
-            {
-                if (!mw.infiniteMagazine)
-                {
-                    if (!mw.IsMagazineFull())
-                    {
-                        StartReload();
-                    }
-                }
-            }
-        }
-          
-    }
 
-    public override void UpdateComponent()
-    {
-        currentSelectedWeapon = inventory[currentSelectedWeaponID];
-
-
-        //if(currentSelectedWeapon!=null)currentSelectedWeapon.UpdateAimingLine();
-        if (currentSelectedWeapon != null)
-        {
-            if (currentSelectedWeapon.usesAimingLine)
-            {
-                MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
-                aimVisualiser.DrawLine(mw.GetProjectileSpawnPoint(), mw.transform.forward, 15, mw.bloom);
-            }
-        }
-
-
-
-            switch (state)
-        {        
-            case WeaponSystemState.Reloading:
-
-                if (Time.time > reloadingEndTime)
-                {
-                    EndReload();
-                }
-
-                break;
-        }
-
-
-        if (weaponHUD != null)
-        {
-            weaponHUD.UpdateHUD(currentSelectedWeapon);
-        }
-    }
-
-    public void ChangeWeapon(int inventorySlot)
-    {
-        
         //animator.SetTrigger("changeWeapon");
         //animator.SetBool("reloading", false);
         if (state == WeaponSystemState.Reloading)
@@ -207,33 +155,8 @@ public class EC_PlayerWeaponSystem : EC_WeaponSystem
 
     }
 
-    public void SelectNextWeapon()
-    {
-        if (currentSelectedWeaponID == inventory.Length-1)
-        {
-            ChangeWeapon(0);
-        }
-        else
-        {
-            ChangeWeapon(currentSelectedWeaponID + 1);
-        }
-    }
-
-    public void SelectPreviousWeapon()
-    {
-        if(currentSelectedWeaponID == 0)
-        {
-            ChangeWeapon(inventory.Length - 1);
-        }
-        else
-        {
-            ChangeWeapon(currentSelectedWeaponID - 1);
-        }
-    }
-
-
     //returns the current selected weapon
-    public Weapon SwapWeapon(Weapon newWeapon)
+    public override Weapon SwapWeapon(Weapon newWeapon)
     {
         AbortReloading();
 
@@ -260,74 +183,30 @@ public class EC_PlayerWeaponSystem : EC_WeaponSystem
 
     }
 
-    public void StartReload()
+
+    public override void UpdateComponent()
     {
-        state = WeaponSystemState.Reloading;
-        reloadingEndTime = Time.time + (currentSelectedWeapon as MissileWeapon).reloadTime;
-        MissileWeapon currentMW = currentSelectedWeapon as MissileWeapon;
-        currentMW.StartReloading();
-    }
+        base.UpdateComponent();
 
-    void AbortReloading()
-    {
-        state = WeaponSystemState.Default;
-        MissileWeapon currentMW = currentSelectedWeapon as MissileWeapon;
-        currentMW.AbortReloading();
-    }
-
-
-    public void EndReload()
-    {
-        state = WeaponSystemState.Default;
-
-        if (currentSelectedWeapon is MissileWeapon)
+        if (currentSelectedWeapon != null)
         {
-            MissileWeapon currentMW = currentSelectedWeapon as MissileWeapon;
-            if (currentMW.ammoType == AmmoType.Infinite)
+            if (currentSelectedWeapon.usesAimingLine)
             {
-                currentMW.EndReloading(currentMW.magazineSize);
-            }
-            else
-            {
-                ammo[currentMW.ammoType] += currentMW.currentMagazineAmmo;
-                int clamped = Mathf.Clamp(ammo[currentMW.ammoType], 0, currentMW.magazineSize);
-                currentMW.EndReloading(clamped);
-                ammo[currentMW.ammoType] -= clamped;
+                MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
+                aimVisualiser.DrawLine(mw.GetProjectileSpawnPoint(), mw.transform.forward, 15, mw.bloom);
             }
         }
+
+
+        if (weaponHUD != null)
+        {
+            weaponHUD.UpdateHUD(currentSelectedWeapon);
+        }
     }
+
+    
 
    
-    
-    //gets called by the weapons
-    public int GetAmmo(AmmoType ammoType)
-    {
-        return ammo[ammoType];
-    }
-
-    //gets called by the weapons
-    public void SetAmmo(AmmoType ammoType, int value)
-    {
-        ammo[ammoType] = value;
-    }
-
-    public void AddAmmo(AmmoType ammoType, int value)
-    {
-        //ammo[ammoType] += (int)Mathf.Round(value * currentSelectedWeapon.ammoMultiplier);
-        ammo[ammoType] += value;
-    }
-
-    public bool IsReloading()
-    {
-        if (state == WeaponSystemState.Reloading)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
     //resetWeaponsBackToStartingWeapons
     public void ResetWeapons()
@@ -360,22 +239,8 @@ public class EC_PlayerWeaponSystem : EC_WeaponSystem
             inventory[2] = weapon3.GetComponent<Weapon>();
         }
 
-
-
-        foreach (Weapon weapon in inventory)
-        {
-            if (weapon != null)
-            {
-                weapon.teamID = myEntity.teamID;
-                weapon.gameObject.SetActive(false);
-                weapon.SetUp(this);
-            }
-        }
-        if (weaponHUD != null) weaponHUD.SetUp(this);
-        ChangeWeapon(0);
-
-        ammo[AmmoType.Rocket] = startRocketAmmo;
-        ammo[AmmoType.Grenade] = startGrenadeAmmo;
-        ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;
+ 
     }
+
+    
 }

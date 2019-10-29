@@ -36,13 +36,19 @@ public class EC_UnitAI : EntityComponent
 
     }
 
-    protected void SetCurrentBehaviour(Behaviour newBehaviour)
+    //returns true if behaviour was actually changed, false if it stayed the same
+    protected bool SetCurrentBehaviour(Behaviour newBehaviour)
     {
         if (currentBehaviour != newBehaviour)
         {
             if(currentBehaviour!=null)currentBehaviour.OnBehaviourExit();
             currentBehaviour = newBehaviour;
             if(currentBehaviour!=null)currentBehaviour.OnBehaviourEnter();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

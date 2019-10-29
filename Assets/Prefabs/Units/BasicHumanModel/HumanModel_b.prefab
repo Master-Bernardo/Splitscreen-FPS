@@ -132,6 +132,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: HumanModel_c
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 377133d87da76014ea40ef9b0f6b2dff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2693055581561565694, guid: 377133d87da76014ea40ef9b0f6b2dff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1901656939309906722, guid: 377133d87da76014ea40ef9b0f6b2dff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1707243787577406375, guid: 377133d87da76014ea40ef9b0f6b2dff,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -146,6 +161,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5302133483690518018, guid: 377133d87da76014ea40ef9b0f6b2dff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -56468709311820666, guid: 377133d87da76014ea40ef9b0f6b2dff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9111962883125049612, guid: 377133d87da76014ea40ef9b0f6b2dff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7600020629449085786, guid: 377133d87da76014ea40ef9b0f6b2dff,
         type: 3}

@@ -19,6 +19,7 @@ public class UAI_MeleeFollower : EC_UnitAI
         currentBehaviour = null;
         meleeBehaviour.SetUpBehaviour(entity, movement, sensing, weaponController);
         wanderBehaviour.SetUpBehaviour(entity, movement);
+
         maxDistanceToPlayer *= maxDistanceToPlayer;
     }
 

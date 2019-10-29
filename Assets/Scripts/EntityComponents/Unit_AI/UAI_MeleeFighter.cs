@@ -5,6 +5,8 @@ using UnityEngine;
 public class UAI_MeleeFighter : EC_UnitAI
 {
     public B_MeleeFighter meleeBehaviour;
+    public B_Idle idleBehaviour;
+
 
     public EC_Movement movement;
     public EC_Sensing sensing;
@@ -27,6 +29,8 @@ public class UAI_MeleeFighter : EC_UnitAI
             meleeBehaviour.SetUpBehaviour(entity, movement, sensing, weaponController);
 
         }
+        idleBehaviour.SetUpBehaviour(handsAnimator);
+
         //wanderBehaviour.SetUpBehaviour(entity, movement);
     }
 
@@ -44,7 +48,7 @@ public class UAI_MeleeFighter : EC_UnitAI
         }
         else
         {
-            SetCurrentBehaviour(null);
+            SetCurrentBehaviour(idleBehaviour);
         }
     }
 }

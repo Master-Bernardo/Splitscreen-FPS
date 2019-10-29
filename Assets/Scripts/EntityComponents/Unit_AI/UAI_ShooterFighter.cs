@@ -6,13 +6,14 @@ public class UAI_ShooterFighter : EC_UnitAI
 {
     public B_MissileFighter missileBehaviour;
     public B_MeleeFighter meleeBehaviour;
-    public EC_PlayerWeaponSystem weaponSystem;
+    public B_Idle idleBehaviour;
+    public EC_WeaponSystem weaponSystem;
 
 
     public EC_Movement movement;
     public EC_Sensing sensing;
-    public EC_MissileWeaponController weapon;
-    public EC_MeleeWeaponController weaponController;
+    public EC_MissileWeaponController missileWeaponController;
+    public EC_MeleeWeaponController meleeWeaponController;
     public Animator handsAnimator;
     public float meleeRadius;
 
@@ -21,8 +22,9 @@ public class UAI_ShooterFighter : EC_UnitAI
     {
         base.SetUpComponent(entity);
         currentBehaviour = null;
-        missileBehaviour.SetUpBehaviour(entity, movement, sensing, weapon, handsAnimator);
-        meleeBehaviour.SetUpBehaviour(entity, movement, sensing, weaponController, handsAnimator);
+        missileBehaviour.SetUpBehaviour(entity, movement, sensing, missileWeaponController, handsAnimator);
+        meleeBehaviour.SetUpBehaviour(entity, movement, sensing, meleeWeaponController, handsAnimator);
+        idleBehaviour.SetUpBehaviour(handsAnimator);
     }
 
     public override void CheckCurrentBehaviour()
@@ -31,16 +33,25 @@ public class UAI_ShooterFighter : EC_UnitAI
         {
             if (Vector3.Distance(sensing.nearestEnemy.transform.position, transform.position) < meleeRadius)
             {
-                SetCurrentBehaviour(meleeBehaviour);
+                if (SetCurrentBehaviour(meleeBehaviour))
+                {
+                    //switch weapon if the behaviour was changed
+                    weaponSystem.ChangeWeapon(0);
+                }
             }
             else
             {
-                SetCurrentBehaviour(missileBehaviour);
+                if (SetCurrentBehaviour(missileBehaviour))
+                {
+                    //switch weapon if the behaviour was changed
+                    weaponSystem.ChangeWeapon(1);
+
+                }
             }
         }
         else
         {
-            SetCurrentBehaviour(null);
+            SetCurrentBehaviour(idleBehaviour);
         }
     }
 }

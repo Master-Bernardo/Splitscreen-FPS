@@ -251,7 +251,7 @@ public class B_MeleeFighter : Behaviour
     {
         if (handsAnimator != null)
         {
-            handsAnimator.SetTrigger("EnterCombatStanceMelee1");
+            handsAnimator.SetTrigger("EnterCombatStance1");
         }
         movement.ActivateLookAt();
     }
@@ -262,10 +262,10 @@ public class B_MeleeFighter : Behaviour
         movement.StopLookAt();
         inRange = false;
 
-        if (handsAnimator != null)
+        /*if (handsAnimator != null)
         {
             handsAnimator.SetTrigger("EnterIdleStanceMelee1");
-        }
+        }*/
     }
 }
 
@@ -374,10 +374,10 @@ public class B_MissileFighter : Behaviour
 
     public override void OnBehaviourExit()
     {
-        if (handsAnimator != null)
+        /*if (handsAnimator != null)
         {
             handsAnimator.SetTrigger("EnterIdleStanceMissile1");
-        }
+        }*/
         movement.Stop();
         //movement.StopLookAt();
         weaponController.StopAiming();
@@ -389,7 +389,27 @@ public class B_MissileFighter : Behaviour
     {
         if (handsAnimator != null)
         {
-            handsAnimator.SetTrigger("EnterCombatStanceMissile1");
+            handsAnimator.SetTrigger("EnterCombatStance2");
+        }
+    }
+}
+
+[System.Serializable]
+public class B_Idle : Behaviour
+{
+    Animator handsAnimator;
+
+    public void SetUpBehaviour( Animator handsAnimator)
+    {
+        this.handsAnimator = handsAnimator;
+    }
+
+    public override void OnBehaviourEnter()
+    {
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetTrigger("EnterIdleStance");
+            Debug.Log("enter idle stance");
         }
     }
 }

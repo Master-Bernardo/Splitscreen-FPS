@@ -130,6 +130,8 @@ public class EC_MeleeWeaponController : EntityComponent
         //target.TakeDamage(meleeDamage);
         meleeAttackInitiated = true;
         nextMeleeAttackTime = Time.time + currentAttack.attackDuration;
+        Debug.Log("set trigger: " + currentAttack.animationName);
+
         handsAnimator.SetTrigger(currentAttack.animationName);
         //currentTarget = target;
 
