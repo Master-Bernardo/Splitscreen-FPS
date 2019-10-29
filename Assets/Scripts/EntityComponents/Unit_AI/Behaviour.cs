@@ -173,6 +173,8 @@ public class B_MeleeFighter : Behaviour
 
     protected override void Update()
     {
+        movement.LookAt(enemySensing.nearestEnemy.GetPositionForAiming()- entity.GetPositionForAiming());
+
         if (Time.time > nextDistanceCheckTime)
         {
             nextDistanceCheckTime += distanceCheckingInterval;
@@ -191,7 +193,7 @@ public class B_MeleeFighter : Behaviour
             //if the enemy is moving, we move to the position he will be at the time we arrive
             EC_Movement enemyMovement = enemySensing.nearestEnemy.GetComponent<EC_Movement>();
 
-            movement.LookAt(enemySensing.nearestEnemy.transform);
+            
 
             if (enemyMovement.IsMoving())
             {
@@ -251,7 +253,7 @@ public class B_MeleeFighter : Behaviour
         {
             handsAnimator.SetTrigger("EnterCombatStance");
         }
-        movement.LookAt(enemySensing.nearestEnemy.transform);
+        movement.ActivateLookAt();
     }
 
     public override void OnBehaviourExit()

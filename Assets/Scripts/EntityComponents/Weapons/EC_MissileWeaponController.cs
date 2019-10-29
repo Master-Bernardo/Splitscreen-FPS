@@ -115,11 +115,6 @@ public class EC_MissileWeaponController : EntityComponent
 
                         desiredWeaponAimVector = (enemyPosition + currentEnemyMovement.GetCurrentVelocity() * timeInAir)- weaponPosition;
 
-
-                        //desiredWeaponAimVector.y = 0;
-                        //desiredWeaponAimVector = Quaternion.AngleAxis(-launchAngle, weapon.transform.right) * desiredWeaponAimVector;
-                        //Debug.Log("has movement: " + launchAngle);
-
                     }
                     else
                     {
@@ -135,28 +130,16 @@ public class EC_MissileWeaponController : EntityComponent
                         
                         desiredWeaponAimVector = enemyPosition - weaponPosition;
 
-
-                        //desiredWeaponAimVector.y = 0;
-                        //desiredWeaponAimVector = Quaternion.AngleAxis(-launchAngle, weapon.transform.right) * desiredWeaponAimVector;
-                        //Debug.Log("no movement: " + launchAngle);
-
                     }
 
 
 
 
                 }
-                /*desiredWeaponAimVector.Normalize();
-                Vector3 desiredUnitAimVector = desiredWeaponAimVector + (desiredWeaponAimVector - weapon.transform.forward.normalized);
-                movement.AimAt(desiredUnitAimVector);*/
-                movement.AimAt(desiredWeaponAimVector);
+                movement.LookAt(desiredWeaponAimVector);
       
             }
         }
-        /*else
-        {
-            movement.AimAt(desiredUnitAimVector);
-        }*/
 
         if (reloading)
         {
@@ -197,7 +180,7 @@ public class EC_MissileWeaponController : EntityComponent
     public void AimAt(GameEntity target)
     {
         aiming = true;
-        movement.StartAimAt();
+        movement.ActivateLookAt();
         currentTarget = target;
         currentEnemyMovement = target.GetComponent<EC_Movement>();
         if (currentEnemyMovement != null) hasMovement = true;
@@ -209,18 +192,9 @@ public class EC_MissileWeaponController : EntityComponent
     public void StopAiming()
     {
         aiming = false;
-        movement.StopAimAt();
+        movement.StopLookAt();
 
     }
-
-
-    /*void RotateTowards(Vector3 desiredLookVector)
-    {
-        //Quaternion desiredLookRotation = Quaternion.LookRotation(position - turrenRotatingBarrel.transform.position);
-        Quaternion desiredLookRotation = Quaternion.LookRotation(desiredLookVector);
-        weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, desiredLookRotation, turningSpeed*Time.deltaTime);
-
-    }*/
 
 
 
