@@ -13,7 +13,7 @@ public class EC_MissileWeaponController : EntityComponent
     public EC_Movement movement;
     public MissileWeapon weapon;
 
-    [Tooltip("how fast do we aim")]
+    //[Tooltip("how fast do we aim")]
     //public float turningSpeed;
 
     //public Transform parent;
@@ -28,15 +28,14 @@ public class EC_MissileWeaponController : EntityComponent
     [Tooltip("the bullet gets rotated randomly upon shooting, so we add some skill based aiming")]
     public float shootingError;
 
-    public bool reloading = false;
-    float reloadEndTime;
+   /* public bool reloading = false;
+    float reloadEndTime;*/
 
     public Animator handsAnimator; // for animating reload
     //how to solve weapon positioning without animator?
     [Tooltip("will be used if animator is disabled - thus we can not guarantee correct positioning")]
     public Transform alternativeShootPoint;
 
-    //public bool reighthandLeads; //when aiming, everything will be controlled based on one hand
     //the weapon will not get rotated? - only the spawnpoint a bit?
 
     public override void UpdateComponent()
@@ -141,14 +140,14 @@ public class EC_MissileWeaponController : EntityComponent
             }
         }
 
-        if (reloading)
+       /* if (reloading)
         {
             if (Time.time > reloadEndTime)
             {
                 reloading = false;
                 weapon.EndReloading(weapon.magazineSize);
             }
-        }
+        }*/
     }
 
     public void Shoot()
@@ -171,11 +170,11 @@ public class EC_MissileWeaponController : EntityComponent
 
     }
 
-    public void Reload()
+    /*public void Reload()
     {
         reloading = true;
         reloadEndTime = Time.time + weapon.reloadTime;
-    }
+    }*/
 
     public void AimAt(GameEntity target)
     {

@@ -278,6 +278,7 @@ public class B_MissileFighter : Behaviour
     EC_Sensing enemySensing;
     EC_MissileWeaponController weaponController;
     Animator handsAnimator;
+    EC_WeaponSystem weaponSystem;
     //goes to nearest enemy, shoots  and looks at them when in range, tries not to get too close
 
     public float perfectShootingDistance;
@@ -303,13 +304,14 @@ public class B_MissileFighter : Behaviour
         maxShootingDistance *= maxShootingDistance;
     }
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_MissileWeaponController weapon, Animator handsAnimator)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_MissileWeaponController weapon, Animator handsAnimator, EC_WeaponSystem weaponSystem)
     {
         this.enemySensing = enemySensing;
         this.entity = entity;
         this.movement = movement;
         this.weaponController = weapon;
         this.handsAnimator = handsAnimator;
+        this.weaponSystem = weaponSystem;
 
         nextDistanceCheckTime = UnityEngine.Random.Range(0, distanceCheckingInterval);
 
@@ -362,10 +364,13 @@ public class B_MissileFighter : Behaviour
             if (weaponController.HasEnoughAmmoLoaded())
             {
                 weaponController.Shoot();
+               
             }
-            else if(!weaponController.reloading)
+            else if(!weaponSystem.IsReloading())
             {
-                weaponController.Reload();
+                Debug.Log("not enough ammo");
+                weaponSystem.StartReload();
+                Debug.Log("reload");
             }
         }
 
@@ -409,7 +414,7 @@ public class B_Idle : Behaviour
         if (handsAnimator != null)
         {
             handsAnimator.SetTrigger("EnterIdleStance");
-            Debug.Log("enter idle stance");
+           // Debug.Log("enter idle stance");
         }
     }
 }

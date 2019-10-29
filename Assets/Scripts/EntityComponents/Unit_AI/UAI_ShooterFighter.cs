@@ -22,7 +22,7 @@ public class UAI_ShooterFighter : EC_UnitAI
     {
         base.SetUpComponent(entity);
         currentBehaviour = null;
-        missileBehaviour.SetUpBehaviour(entity, movement, sensing, missileWeaponController, handsAnimator);
+        missileBehaviour.SetUpBehaviour(entity, movement, sensing, missileWeaponController, handsAnimator, weaponSystem);
         meleeBehaviour.SetUpBehaviour(entity, movement, sensing, meleeWeaponController, handsAnimator);
         idleBehaviour.SetUpBehaviour(handsAnimator);
     }

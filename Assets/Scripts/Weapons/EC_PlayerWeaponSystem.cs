@@ -155,6 +155,31 @@ public class EC_PlayerWeaponSystem : EC_WeaponSystem
 
     }
 
+
+    public void SelectNextWeapon()
+    {
+        if (currentSelectedWeaponID == inventory.Length - 1)
+        {
+            ChangeWeapon(0);
+        }
+        else
+        {
+            ChangeWeapon(currentSelectedWeaponID + 1);
+        }
+    }
+
+    public void SelectPreviousWeapon()
+    {
+        if (currentSelectedWeaponID == 0)
+        {
+            ChangeWeapon(inventory.Length - 1);
+        }
+        else
+        {
+            ChangeWeapon(currentSelectedWeaponID - 1);
+        }
+    }
+
     //returns the current selected weapon
     public override Weapon SwapWeapon(Weapon newWeapon)
     {

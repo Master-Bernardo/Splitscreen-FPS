@@ -103,7 +103,7 @@ public class EC_WeaponSystem : EntityComponent
 
     public virtual void ChangeWeapon(int inventorySlot)
     {
-        Debug.Log("changeWeapon");
+        //Debug.Log("changeWeapon");
         //animator.SetTrigger("changeWeapon");
         //animator.SetBool("reloading", false);
         if (state == WeaponSystemState.Reloading)
@@ -128,35 +128,12 @@ public class EC_WeaponSystem : EntityComponent
             currentSelectedWeapon.gameObject.SetActive(true);
             currentSelectedWeapon.OnWeaponSelect(myEntity);
             //aimVisualiser.ShowLine();
-
+            Debug.Log("weaponSyelected");
 
         }
 
     }
 
-    public void SelectNextWeapon()
-    {
-        if (currentSelectedWeaponID == inventory.Length - 1)
-        {
-            ChangeWeapon(0);
-        }
-        else
-        {
-            ChangeWeapon(currentSelectedWeaponID + 1);
-        }
-    }
-
-    public void SelectPreviousWeapon()
-    {
-        if (currentSelectedWeaponID == 0)
-        {
-            ChangeWeapon(inventory.Length - 1);
-        }
-        else
-        {
-            ChangeWeapon(currentSelectedWeaponID - 1);
-        }
-    }
 
 
     //returns the current selected weapon
@@ -190,8 +167,8 @@ public class EC_WeaponSystem : EntityComponent
     public void StartReload()
     {
         state = WeaponSystemState.Reloading;
-        reloadingEndTime = Time.time + (currentSelectedWeapon as MissileWeapon).reloadTime;
         MissileWeapon currentMW = currentSelectedWeapon as MissileWeapon;
+        reloadingEndTime = Time.time + currentMW.reloadTime;
         currentMW.StartReloading();
     }
 

@@ -192,7 +192,7 @@ public class MissileWeapon : Weapon
     //only for audio so far
     public virtual void StartReloading()
     {
-        Debug.Log("startReload");
+        //Debug.Log("startReload");
         if (splitSounds)
         {
             customAudioSource.SetLoop(false);

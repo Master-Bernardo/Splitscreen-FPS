@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1362219360397472216}
   - component: {fileID: 651446857378753757}
   - component: {fileID: 6076253166484247145}
+  - component: {fileID: 876735372725070880}
   - component: {fileID: 1362219360397472218}
   - component: {fileID: -7568736579957523176}
   - component: {fileID: 8466272924457072801}
@@ -62,6 +63,7 @@ MonoBehaviour:
   - {fileID: -7568736579957523176}
   - {fileID: 5236516953952753299}
   - {fileID: 8466272924457072801}
+  - {fileID: 876735372725070880}
   aimingCorrector: {x: 0, y: 1, z: 0}
   onDieEvent:
     m_PersistentCalls:
@@ -98,6 +100,25 @@ MonoBehaviour:
   sensing: {fileID: -7568736579957523176}
   weapon: {fileID: 6698582988817642302}
   handsAnimator: {fileID: 4387909223804606813}
+  weaponSystem: {fileID: 876735372725070880}
+--- !u!114 &876735372725070880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362219360397472217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6653c50d19d114446851bff2a0ca35c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory:
+  - {fileID: 8446360440123459573}
+  rightHand: {fileID: 6360832723503046307}
+  startRocketAmmo: 0
+  startGrenadeAmmo: 0
+  startShockGrenadeAmmo: 0
 --- !u!114 &1362219360397472218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,7 +254,6 @@ MonoBehaviour:
   weapon: {fileID: 8446360440123459573}
   gravityProjectile: 0
   shootingError: 0
-  reloading: 0
   handsAnimator: {fileID: 4387909223804606813}
   alternativeShootPoint: {fileID: 0}
 --- !u!1001 &3353940218050023428
@@ -247,21 +267,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UnlimitedAmmoRifle
-      objectReference: {fileID: 0}
-    - target: {fileID: 5792722691891564185, guid: b8ed1f081a2a6b44cbd563288ca5beba,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.169
-      objectReference: {fileID: 0}
-    - target: {fileID: 5792722691891564185, guid: b8ed1f081a2a6b44cbd563288ca5beba,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.319
-      objectReference: {fileID: 0}
-    - target: {fileID: 1186426686374872184, guid: b8ed1f081a2a6b44cbd563288ca5beba,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4945291708861343405, guid: b8ed1f081a2a6b44cbd563288ca5beba,
         type: 3}
@@ -287,6 +292,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.005654089
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792722691891564185, guid: b8ed1f081a2a6b44cbd563288ca5beba,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.169
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792722691891564185, guid: b8ed1f081a2a6b44cbd563288ca5beba,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.319
+      objectReference: {fileID: 0}
+    - target: {fileID: 1186426686374872184, guid: b8ed1f081a2a6b44cbd563288ca5beba,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4204844011557427023, guid: b8ed1f081a2a6b44cbd563288ca5beba,
         type: 3}

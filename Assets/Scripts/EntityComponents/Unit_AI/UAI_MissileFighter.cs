@@ -11,13 +11,14 @@ public class UAI_MissileFighter : EC_UnitAI
     public EC_Sensing sensing;
     public EC_MissileWeaponController weapon;
     public Animator handsAnimator;
+    public EC_WeaponSystem weaponSystem;
 
     // Start is called before the first frame update
     public override void SetUpComponent(GameEntity entity)
     {
         base.SetUpComponent(entity);
         currentBehaviour = null;
-        missileBehaviour.SetUpBehaviour(entity, movement, sensing, weapon, handsAnimator);
+        missileBehaviour.SetUpBehaviour(entity, movement, sensing, weapon, handsAnimator, weaponSystem);
         idleBehaviour.SetUpBehaviour(handsAnimator);
 
     }

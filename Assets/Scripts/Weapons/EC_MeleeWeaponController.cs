@@ -75,10 +75,7 @@ public class EC_MeleeWeaponController : EntityComponent
 
     public override void UpdateComponent()
     {
-        switch(state)
-        {
 
-        }
 
         if (meleeAttackInitiated)
         {
@@ -130,7 +127,7 @@ public class EC_MeleeWeaponController : EntityComponent
         //target.TakeDamage(meleeDamage);
         meleeAttackInitiated = true;
         nextMeleeAttackTime = Time.time + currentAttack.attackDuration;
-        Debug.Log("set trigger: " + currentAttack.animationName);
+        //Debug.Log("set trigger: " + currentAttack.animationName);
 
         handsAnimator.SetTrigger(currentAttack.animationName);
         //currentTarget = target;
