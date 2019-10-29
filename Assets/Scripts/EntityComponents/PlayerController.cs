@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public Transform deadPlayerGhostTransform;
     public PlayerMovementRTS deadPlayerMovement;
     public PlayerInput playerInput;
-    public EC_WeaponSystem weaponSystem;
+    public EC_PlayerWeaponSystem weaponSystem;
     public InteractableShower interactableShower;
 
     public Vector3 currentLookVector;
@@ -275,7 +275,7 @@ public class PlayerController : MonoBehaviour
 
     public void DeactivatePlayer()
     {
-        if (looseWeaponOnDeactivate) playerEntity.GetComponent<EC_WeaponSystem>().ResetWeapons();
+        if (looseWeaponOnDeactivate) playerEntity.GetComponent<EC_PlayerWeaponSystem>().ResetWeapons();
 
         playerEntity.gameObject.SetActive(false);
         Vector3 rtsCamPosition = playerEntity.transform.position;

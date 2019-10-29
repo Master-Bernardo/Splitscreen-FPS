@@ -21,15 +21,9 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     float movementUpdateIntervall = 1 / 6;
 
     //our agent can either rotate to the direction he is facing or have a target to which he is alwys rotated to - if lookAt is true
-    //GameEntity targetToLookAt;
     bool lookAt = false;
     float lastRotationTime; // if we rotate only once every x frames, we need to calculate our own deltaTIme
 
-    //aiming is different
-    //GameEntity targetToAimAt;
-    //bool lookAtRelativeToWeapon = false;
-    //Transform relativeAimCenter; //if aiming with a weapon or similar
-    //bool aimAt = false;
 
     //TODO Add dashing 
     protected enum MovementState

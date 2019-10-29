@@ -17,9 +17,9 @@ public class WeaponHUD : MonoBehaviour
 
     public GameObject reloadingPanel;
 
-    EC_WeaponSystem weaponSystem;
+    EC_PlayerWeaponSystem weaponSystem;
 
-    public void SetUp(EC_WeaponSystem weaponSystem)
+    public void SetUp(EC_PlayerWeaponSystem weaponSystem)
     {
         this.weaponSystem = weaponSystem;
     }

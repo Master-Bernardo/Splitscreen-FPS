@@ -33,7 +33,7 @@ public class Int_Pickup : MonoBehaviour
         }
         else if(pickupType == PickupType.Ammo)
         {
-            EC_WeaponSystem weaponSystem = interactable.interactingPlayer.GetComponent<EC_WeaponSystem>();
+            EC_PlayerWeaponSystem weaponSystem = interactable.interactingPlayer.GetComponent<EC_PlayerWeaponSystem>();
             weaponSystem.AddAmmo(ammoType, amount);
         }
 

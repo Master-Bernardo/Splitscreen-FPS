@@ -17,6 +17,7 @@ public class UAI_MissileFighter : EC_UnitAI
         base.SetUpComponent(entity);
         currentBehaviour = null;
         missileBehaviour.SetUpBehaviour(entity, movement, sensing, weapon, handsAnimator);
+
     }
 
     public override void CheckCurrentBehaviour()

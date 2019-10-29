@@ -19,7 +19,7 @@ public class Int_WeaponPickup : MonoBehaviour
         //if this is only one weapon, then the pickup will now contain the players weapon which he swapped
         if (!infinite)
         {
-            Weapon playersCurrentWeapon = interactable.interactingPlayer.GetComponent<EC_WeaponSystem>().SwapWeapon(pickUpWeapon);
+            Weapon playersCurrentWeapon = interactable.interactingPlayer.GetComponent<EC_PlayerWeaponSystem>().SwapWeapon(pickUpWeapon);
 
             if (playersCurrentWeapon != null)
             {
@@ -39,7 +39,7 @@ public class Int_WeaponPickup : MonoBehaviour
         {
             //make a sepaerate container class for this - also instantate this container when we drop a weapon - call it DRopWeaponPikcupContainer
             GameObject clone = Instantiate(pickUpWeapon.gameObject);
-            Weapon playersCurrentWeapon = interactable.interactingPlayer.GetComponent<EC_WeaponSystem>().SwapWeapon(clone.GetComponent<Weapon>());
+            Weapon playersCurrentWeapon = interactable.interactingPlayer.GetComponent<EC_PlayerWeaponSystem>().SwapWeapon(clone.GetComponent<Weapon>());
 
             if (playersCurrentWeapon != null)
             {

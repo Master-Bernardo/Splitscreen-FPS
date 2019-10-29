@@ -7,14 +7,14 @@ public class Weapon : MonoBehaviour
     [Header("Base Weapon")]
     public string weaponName;
     public int teamID;
-    protected EC_WeaponSystem weaponSystem;
+    protected EC_PlayerWeaponSystem weaponSystem;
     public GameEntity weaponWieldingEntity;
     public float damage; //could be expanded later to diffeent damages  
     public bool automaticTrigger;
     public bool usesAimingLine;
     //public AimingLine aimingLine;
 
-    public void SetUp(EC_WeaponSystem weaponSystem)
+    public void SetUp(EC_PlayerWeaponSystem weaponSystem)
     {
         this.weaponSystem = weaponSystem;
     }
