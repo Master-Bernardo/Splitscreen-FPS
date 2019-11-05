@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EC_PlayerWeaponSystem : EC_WeaponSystem
+public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
 {
     [Header("Visualisation")]
     public AimVisualiser aimVisualiser;

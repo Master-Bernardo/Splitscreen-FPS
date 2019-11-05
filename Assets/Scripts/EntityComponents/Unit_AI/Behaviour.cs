@@ -251,7 +251,7 @@ public class B_MeleeFighter : Behaviour
     {
         if (handsAnimator != null)
         {
-            handsAnimator.SetTrigger("EnterCombatStance1");
+            handsAnimator.SetBool("CombatStance1", true);
         }
         movement.ActivateLookAt();
     }
@@ -261,6 +261,11 @@ public class B_MeleeFighter : Behaviour
         movement.Stop();
         movement.StopLookAt();
         inRange = false;
+
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetBool("CombatStance1", false);
+        }
 
         /*if (handsAnimator != null)
         {
@@ -278,7 +283,7 @@ public class B_MissileFighter : Behaviour
     EC_Sensing enemySensing;
     EC_MissileWeaponController weaponController;
     Animator handsAnimator;
-    EC_WeaponSystem weaponSystem;
+    EC_HumanWeaponSystem weaponSystem;
     //goes to nearest enemy, shoots  and looks at them when in range, tries not to get too close
 
     public float perfectShootingDistance;
@@ -304,7 +309,7 @@ public class B_MissileFighter : Behaviour
         maxShootingDistance *= maxShootingDistance;
     }
 
-    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_MissileWeaponController weapon, Animator handsAnimator, EC_WeaponSystem weaponSystem)
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_MissileWeaponController weapon, Animator handsAnimator, EC_HumanWeaponSystem weaponSystem)
     {
         this.enemySensing = enemySensing;
         this.entity = entity;
@@ -361,16 +366,21 @@ public class B_MissileFighter : Behaviour
 
         if (inRange)
         {
+            //Debug.Log("weaponController");
             if (weaponController.HasEnoughAmmoLoaded())
             {
-                weaponController.Shoot();
-               
+                if (weaponSystem.CanShoot())
+                {
+                    weaponController.Shoot();
+                    //Debug.Log("shot on state: " + weaponSystem.state);
+                }
+
             }
             else if(!weaponSystem.IsReloading())
             {
-                Debug.Log("not enough ammo");
+                //Debug.Log("not enough ammo");
                 weaponSystem.StartReload();
-                Debug.Log("reload");
+                //Debug.Log("reload");
             }
         }
 
@@ -388,13 +398,18 @@ public class B_MissileFighter : Behaviour
         weaponController.StopAiming();
 
         inRange = false;
+
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetBool("CombatStance2", false);
+        }
     }
 
     public override void OnBehaviourEnter()
     {
         if (handsAnimator != null)
         {
-            handsAnimator.SetTrigger("EnterCombatStance2");
+            handsAnimator.SetBool("CombatStance2", true);
         }
     }
 }
@@ -409,11 +424,20 @@ public class B_Idle : Behaviour
         this.handsAnimator = handsAnimator;
     }
 
+
+    public override void OnBehaviourExit()
+    {
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetBool("IdleStance", false);
+        }
+    }
+
     public override void OnBehaviourEnter()
     {
         if (handsAnimator != null)
         {
-            handsAnimator.SetTrigger("EnterIdleStance");
+            handsAnimator.SetBool("IdleStance", true);
            // Debug.Log("enter idle stance");
         }
     }

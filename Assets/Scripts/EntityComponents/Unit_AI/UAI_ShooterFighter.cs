@@ -7,7 +7,7 @@ public class UAI_ShooterFighter : EC_UnitAI
     public B_MissileFighter missileBehaviour;
     public B_MeleeFighter meleeBehaviour;
     public B_Idle idleBehaviour;
-    public EC_WeaponSystem weaponSystem;
+    public EC_HumanWeaponSystem weaponSystem;
 
 
     public EC_Movement movement;
@@ -33,18 +33,21 @@ public class UAI_ShooterFighter : EC_UnitAI
         {
             if (Vector3.Distance(sensing.nearestEnemy.transform.position, transform.position) < meleeRadius)
             {
-                if (SetCurrentBehaviour(meleeBehaviour))
+                if (currentBehaviour !=meleeBehaviour)
                 {
                     //switch weapon if the behaviour was changed
                     weaponSystem.ChangeWeapon(0);
+                    SetCurrentBehaviour(meleeBehaviour);
                 }
             }
             else
             {
-                if (SetCurrentBehaviour(missileBehaviour))
+                if (currentBehaviour != missileBehaviour)
                 {
                     //switch weapon if the behaviour was changed
                     weaponSystem.ChangeWeapon(1);
+                    SetCurrentBehaviour(missileBehaviour);
+                    Debug.Log("changedWeapon");
 
                 }
             }

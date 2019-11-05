@@ -11,7 +11,7 @@ public class UAI_MissileFighter : EC_UnitAI
     public EC_Sensing sensing;
     public EC_MissileWeaponController weapon;
     public Animator handsAnimator;
-    public EC_WeaponSystem weaponSystem;
+    public EC_HumanWeaponSystem weaponSystem;
 
     // Start is called before the first frame update
     public override void SetUpComponent(GameEntity entity)

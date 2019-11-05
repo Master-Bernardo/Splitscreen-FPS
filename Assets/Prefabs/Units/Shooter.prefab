@@ -119,6 +119,7 @@ MonoBehaviour:
   startRocketAmmo: 0
   startGrenadeAmmo: 0
   startShockGrenadeAmmo: 0
+  handsAnimator: {fileID: 4387909223804606813}
 --- !u!114 &1362219360397472218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,11 +676,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     - target: {fileID: 6604589183905111465, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -690,6 +686,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df929418312630c41bb6aa5be091ddb3, type: 3}
 --- !u!4 &7745279501281761960 stripped
