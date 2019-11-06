@@ -297,6 +297,11 @@ public class B_MissileFighter : Behaviour
     public float distanceCheckingInterval;
     float nextDistanceCheckTime;
 
+    [Tooltip("to make the bahaviour more realistical, the unit starts shooting after a small delay after entering this behaviour")]
+    public float shootingStartDelay;
+    float shootingStartTime;
+    bool shootingStarted;
+
     public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, EC_MissileWeaponController weapon)
     {
         this.enemySensing = enemySensing;
@@ -364,25 +369,37 @@ public class B_MissileFighter : Behaviour
             }
         }
 
-        if (inRange)
+        if (!shootingStarted)
         {
-            //Debug.Log("weaponController");
-            if (weaponController.HasEnoughAmmoLoaded())
+            if (Time.time > shootingStartTime) shootingStarted = true;
+        }
+        else
+        {
+            if (inRange)
             {
-                if (weaponSystem.CanShoot())
+                //Debug.Log("weaponController");
+                if (weaponController.HasEnoughAmmoLoaded())
                 {
-                    weaponController.Shoot();
-                    //Debug.Log("shot on state: " + weaponSystem.state);
-                }
+                    if (weaponSystem.CanShoot())
+                    {
 
-            }
-            else if(!weaponSystem.IsReloading())
-            {
-                //Debug.Log("not enough ammo");
-                weaponSystem.StartReload();
-                //Debug.Log("reload");
+                         weaponController.Shoot();
+
+
+                        //Debug.Log("shot on state: " + weaponSystem.state);
+                    }
+
+                }
+                else if (!weaponSystem.IsReloading())
+                {
+                    //Debug.Log("not enough ammo");
+                    weaponSystem.StartReload();
+                    //Debug.Log("reload");
+                }
             }
         }
+
+       
 
        
     }
@@ -407,6 +424,9 @@ public class B_MissileFighter : Behaviour
 
     public override void OnBehaviourEnter()
     {
+        shootingStarted = false;
+        shootingStartTime = Time.time + shootingStartDelay;
+
         if (handsAnimator != null)
         {
             handsAnimator.SetBool("CombatStance2", true);

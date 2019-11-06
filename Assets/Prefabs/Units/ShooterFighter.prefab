@@ -95,6 +95,7 @@ MonoBehaviour:
     perfectShootingDistance: 12
     maxShootingDistance: 20
     distanceCheckingInterval: 0.2
+    shootingStartDelay: 1
   meleeBehaviour:
     behaviourUpdateInterval: 0
     entity: {fileID: 0}

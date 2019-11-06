@@ -26,7 +26,7 @@ public class EC_HumanWeaponSystem : EntityComponent
     [Header("SwitchWeapon time")]
     [Tooltip("this value times 2 is the time it takes to change a weapon completely")]
     public float drawOrHideTime = 0.35f;
-    Weapon weaponToHide;
+    Weapon previousWeapon;
     float hideWeaponEndTime;
     float drawWeaponEndTime;
 
@@ -71,30 +71,21 @@ public class EC_HumanWeaponSystem : EntityComponent
                 break;
 
             case WeaponSystemState.HidingWeapon:
-
+                Debug.Log("HidingWeapon");
                 if (Time.time > hideWeaponEndTime)
-                {
-                    state = WeaponSystemState.DrawingWeapon;
-                    drawWeaponEndTime = Time.time + drawOrHideTime;
-                    weaponToHide.gameObject.SetActive(false);
-
-                    if (currentSelectedWeapon != null)
-                    {
-                        currentSelectedWeapon.gameObject.SetActive(true);
-                    }
-                    if (handsAnimator != null)
-                    {
-                        handsAnimator.SetTrigger("DrawWeapon");
-                    }
+                {   
+                    EndHideWeapon();
+                    DrawWeapon(currentSelectedWeapon);
                 }
 
                 break;
 
             case WeaponSystemState.DrawingWeapon:
-
+                Debug.Log("Drawing epaon------------------------");
                 if (Time.time > drawWeaponEndTime)
                 {
                     state = WeaponSystemState.Default;
+                    Debug.Log("Weapon Draw Completed ..+......+...........+............+..........+............");
                 }
 
                 break;
@@ -143,59 +134,77 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     public virtual void ChangeWeapon(int inventorySlot)
     {
-
-        Debug.Log("changeWeapon");
-        //animator.SetTrigger("changeWeapon");
-        //animator.SetBool("reloading", false);
-        if (state == WeaponSystemState.Reloading)
+        if(currentSelectedWeapon != inventory[inventorySlot])
         {
-            AbortReloading();
-        }
+            previousWeapon = currentSelectedWeapon;
+            currentSelectedWeaponID = inventorySlot;
+            currentSelectedWeapon = inventory[currentSelectedWeaponID];
 
-        if (currentSelectedWeapon != null)
-        {
-            Debug.Log("current Selected: " + currentSelectedWeapon);
-            //currentSelectedWeapon.gameObject.SetActive(false);
-            currentSelectedWeapon.OnWeaponDeselect();
-            state = WeaponSystemState.HidingWeapon;
-            hideWeaponEndTime = Time.time + drawOrHideTime;
-            weaponToHide = currentSelectedWeapon;
 
-            if (handsAnimator != null)
+            if (state == WeaponSystemState.Reloading)
             {
-                handsAnimator.SetTrigger("HideWeapon");
+                AbortReloading();
             }
-        }
-        else
-        {
-            Debug.Log("current weapon was null pon changeWeapon");
-            state = WeaponSystemState.DrawingWeapon;
-            drawWeaponEndTime = Time.time + drawOrHideTime;
-            if (handsAnimator != null)
+            else if(state == WeaponSystemState.HidingWeapon)
             {
-                handsAnimator.SetTrigger("DrawWeapon");
-                Debug.Log("trigger draw weaponset");
+                //if we are in the hiding process, we continue it , without restarting it - so do nothing
             }
-        }
-
-        currentSelectedWeaponID = inventorySlot;
-
-        currentSelectedWeapon = inventory[currentSelectedWeaponID];
-
-        if (currentSelectedWeapon != null)
-        {
-            //currentSelectedWeapon.gameObject.SetActive(true);
-            if(state == WeaponSystemState.DrawingWeapon)
+            else if(state == WeaponSystemState.DrawingWeapon)
             {
-                currentSelectedWeapon.gameObject.SetActive(true);
+                //if we are currently in the drawing process, we just restart the drawing process, without repeating the hiding process
+                EndHideWeapon();
+                DrawWeapon(currentSelectedWeapon);
             }
-            currentSelectedWeapon.OnWeaponSelect(myEntity);
+            else if(state == WeaponSystemState.Default)
+            {
+                if (previousWeapon != null)
+                {
+                   // Debug.Log("current Selected: " + previousWeapon);
+                    HideWeapon(previousWeapon);
+
+                }
+                else
+                {
+                   // Debug.Log("current weapon was null pon changeWeapon");
+
+                    DrawWeapon(currentSelectedWeapon);
+                }
+            }      
+        }
+    }
+
+    void DrawWeapon(Weapon weaponToDraw)
+    {
+        state = WeaponSystemState.DrawingWeapon;
+        drawWeaponEndTime = Time.time + drawOrHideTime;
+
+        weaponToDraw.gameObject.SetActive(true);
+        weaponToDraw.OnWeaponSelect(myEntity);
+
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetTrigger("DrawWeapon");
+            Debug.Log("trigger draw weaponset");
         }
 
+    }
 
+    void HideWeapon(Weapon weaponToHide)
+    {
+        state = WeaponSystemState.HidingWeapon;
+        hideWeaponEndTime = Time.time + drawOrHideTime;
+        previousWeapon = weaponToHide;
 
-        
+        if (handsAnimator != null)
+        {
+            handsAnimator.SetTrigger("HideWeapon");
+        }
+    }
 
+    void EndHideWeapon()
+    {
+        previousWeapon.OnWeaponDeselect();
+        previousWeapon.gameObject.SetActive(false);
     }
 
 
