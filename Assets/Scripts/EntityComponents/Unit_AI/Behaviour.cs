@@ -251,7 +251,8 @@ public class B_MeleeFighter : Behaviour
     {
         if (handsAnimator != null)
         {
-            handsAnimator.SetBool("CombatStance1", true);
+            //handsAnimator.SetBool("CombatStance1", true);
+            handsAnimator.SetBool("IdleStance", false);
         }
         movement.ActivateLookAt();
     }
@@ -264,7 +265,7 @@ public class B_MeleeFighter : Behaviour
 
         if (handsAnimator != null)
         {
-            handsAnimator.SetBool("CombatStance1", false);
+            //handsAnimator.SetBool("CombatStance1", false);
         }
 
         /*if (handsAnimator != null)
@@ -418,7 +419,8 @@ public class B_MissileFighter : Behaviour
 
         if (handsAnimator != null)
         {
-            handsAnimator.SetBool("CombatStance2", false);
+           // handsAnimator.SetBool("CombatStance2", false);
+
         }
     }
 
@@ -429,7 +431,9 @@ public class B_MissileFighter : Behaviour
 
         if (handsAnimator != null)
         {
-            handsAnimator.SetBool("CombatStance2", true);
+            //handsAnimator.SetBool("CombatStance2", true);
+            handsAnimator.SetBool("IdleStance", false);
+
         }
     }
 }
@@ -449,7 +453,7 @@ public class B_Idle : Behaviour
     {
         if (handsAnimator != null)
         {
-            handsAnimator.SetBool("IdleStance", false);
+           // handsAnimator.SetBool("IdleStance", false);
         }
     }
 
@@ -458,6 +462,7 @@ public class B_Idle : Behaviour
         if (handsAnimator != null)
         {
             handsAnimator.SetBool("IdleStance", true);
+
            // Debug.Log("enter idle stance");
         }
     }

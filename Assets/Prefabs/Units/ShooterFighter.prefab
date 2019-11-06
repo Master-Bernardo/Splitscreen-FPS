@@ -128,6 +128,8 @@ MonoBehaviour:
   inventory:
   - {fileID: 7847374340064651882}
   - {fileID: 8446360440123459573}
+  meleeWeaponControler: {fileID: 7584805891033289390}
+  missileWeaponController: {fileID: 6698582988817642302}
   rightHand: {fileID: 6360832723503046307}
   startRocketAmmo: 0
   startGrenadeAmmo: 0
@@ -166,10 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentWeapon: {fileID: 7847374340064651882}
   relativeTransform: {fileID: 3270906461379974078}
-  state: 0
-  attacks1:
-  - {fileID: 11400000, guid: 6f87a945bf3b74f4e9cbd17d96d78b5e, type: 2}
-  - {fileID: 11400000, guid: 5ac52f7a88732c04d99b7f319082ea14, type: 2}
+  attackSets:
+  - {fileID: 11400000, guid: 077be150cf2c4cb44bab1046e2e4aeec, type: 2}
+  currentAttackSet: 0
   handsAnimator: {fileID: 4387909223804606813}
   drawDamageGizmo: 0
 --- !u!114 &1362219360397472218
@@ -439,6 +440,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8802928292075680608, guid: 83d591f793407114883b120b4c8a1a6f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: acc5179ff350b5b4da56feca271ad96f, type: 2}
     - target: {fileID: 6632998149968066982, guid: 83d591f793407114883b120b4c8a1a6f,
         type: 3}
       propertyPath: m_Name
@@ -786,6 +792,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2580345955104155060, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     - target: {fileID: 6604589183905111465, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -796,11 +812,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df929418312630c41bb6aa5be091ddb3, type: 3}
 --- !u!4 &7745279501281761960 stripped

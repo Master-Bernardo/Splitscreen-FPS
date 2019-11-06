@@ -17,14 +17,14 @@ public class EC_MeleeWeaponController : EntityComponent
     [Tooltip("the hitboxes of the attacks are relative to this transform - usefull with spine")]
     public Transform relativeTransform;
 
-    public enum WeaponControllerState 
+   /* public enum WeaponControllerState 
     {
         NoWeapon,
         MissileWeapon,
         MeleeWeapon
     }
 
-    public WeaponControllerState state;
+    public WeaponControllerState state;*/
 
     /*[Header("Missile")]
 
@@ -48,7 +48,9 @@ public class EC_MeleeWeaponController : EntityComponent
 
 
     [Header("Melee")]
-    public MeleeAttack[] attacks1; //if we have different AttackSets, then we change it somehow
+
+    public MeleeAttackSet[] attackSets; //if we have different AttackSets, then we change it somehow
+    public int currentAttackSet;
     MeleeAttack currentAttack;
     int attackID = 1;
 
@@ -70,7 +72,7 @@ public class EC_MeleeWeaponController : EntityComponent
     {
         base.SetUpComponent(entity);
 
-        SetWeapon(currentWeapon);
+        //SetWeapon(currentWeapon);
     }
 
     public override void UpdateComponent()
@@ -87,8 +89,15 @@ public class EC_MeleeWeaponController : EntityComponent
         }
     }
 
+    //sets the current weapon and the corresponding attack set
+    public void SetWeapon(MeleeWeapon newWeapon)
+    {
+        currentWeapon = newWeapon;
+        currentAttackSet = newWeapon.attackSetID;
+        meleeAttackInitiated = false;
+    }
 
-    public void SetWeapon(Weapon newWeapon)
+    /*public void SetWeapon(Weapon newWeapon)
     {
         if(newWeapon is MeleeWeapon)
         {
@@ -105,7 +114,7 @@ public class EC_MeleeWeaponController : EntityComponent
 
 
         currentWeapon = newWeapon;
-    }
+    }*/
 
     public void MeleeAttack()
     {
@@ -113,13 +122,13 @@ public class EC_MeleeWeaponController : EntityComponent
         {
             Attack(attackID);
             //Debug.Log("attack: " + attackID);
-            attackID = Random.Range(0, attacks1.Length);
+            attackID = Random.Range(0, attackSets[currentAttackSet].attacks.Length);
         }
     }
 
     public void Attack(int attackID)
     {
-        currentAttack = attacks1[attackID];
+        currentAttack = attackSets[currentAttackSet].attacks[attackID];
 
         
         nextPrepareMeleeAttackTime = Time.time + currentAttack.meleeAttackInterval;
@@ -240,6 +249,7 @@ public class EC_MeleeWeaponController : EntityComponent
         {
             if (currentAttack != null)
             {
+                Debug.Log("current attack not null");
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(relativeTransform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
             }

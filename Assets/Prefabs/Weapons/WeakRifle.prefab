@@ -402,6 +402,7 @@ MonoBehaviour:
   damage: 5
   automaticTrigger: 0
   usesAimingLine: 1
+  stanceAnimationTypeID: 2
   shootPoint: {fileID: 5792722691891564185}
   fireRate: 1
   bloom: 0.5

@@ -180,10 +180,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentWeapon: {fileID: 775508951138762637}
   relativeTransform: {fileID: 8266468409923373655}
-  state: 0
-  attacks1:
-  - {fileID: 11400000, guid: 6f87a945bf3b74f4e9cbd17d96d78b5e, type: 2}
-  - {fileID: 11400000, guid: 5ac52f7a88732c04d99b7f319082ea14, type: 2}
+  attackSets:
+  - {fileID: 11400000, guid: 077be150cf2c4cb44bab1046e2e4aeec, type: 2}
+  currentAttackSet: 0
   handsAnimator: {fileID: 7149465579968348340}
   drawDamageGizmo: 1
 --- !u!195 &1362219360397472213
@@ -300,16 +299,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8802928292075680608, guid: 83d591f793407114883b120b4c8a1a6f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: acc5179ff350b5b4da56feca271ad96f, type: 2}
     - target: {fileID: 6632998149968066982, guid: 83d591f793407114883b120b4c8a1a6f,
         type: 3}
       propertyPath: m_Name
       value: HumanModel
       objectReference: {fileID: 0}
-    - target: {fileID: 8802928292075680608, guid: 83d591f793407114883b120b4c8a1a6f,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: aeecec7c6274218478fcb9b1a76041b6, type: 2}
     - target: {fileID: 8567294715437575186, guid: 83d591f793407114883b120b4c8a1a6f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -530,16 +529,6 @@ PrefabInstance:
       propertyPath: weaponAnimator
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
-        type: 3}
-      propertyPath: m_Name
-      value: Sword
-      objectReference: {fileID: 0}
-    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6527649046478672803, guid: a3d7ea4283f824548be4fe5a48a704cb,
         type: 3}
       propertyPath: m_RootOrder
@@ -580,12 +569,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.039
       objectReference: {fileID: 0}
-    - target: {fileID: 2470937881131544429, guid: a3d7ea4283f824548be4fe5a48a704cb,
+    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
+        type: 3}
+      propertyPath: m_Name
+      value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
         type: 3}
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7315986814055885553, guid: a3d7ea4283f824548be4fe5a48a704cb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470937881131544429, guid: a3d7ea4283f824548be4fe5a48a704cb,
         type: 3}
       propertyPath: m_Layer
       value: 10
@@ -685,6 +684,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2580345955104155060, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}

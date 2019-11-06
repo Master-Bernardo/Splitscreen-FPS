@@ -209,8 +209,5 @@ MonoBehaviour:
   damage: 10
   automaticTrigger: 0
   usesAimingLine: 0
-  weaponAnimator: {fileID: 0}
-  drawDamageGizmo: 0
-  attacks:
-  - {fileID: 0}
-  - {fileID: 0}
+  stanceAnimationTypeID: 1
+  attackSetID: 0

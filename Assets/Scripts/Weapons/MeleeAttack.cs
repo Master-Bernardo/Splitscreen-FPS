@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[CreateAssetMenu(fileName = "New MeleeAttackSet", menuName = "MeleeAttackSetSO")]
+public class MeleeAttackSet : ScriptableObject
+{
+    public string setName;
+    public MeleeAttack[] attacks;
+}
+
 
 //some meleeWeapons have 
-[CreateAssetMenu(fileName = "New MeleeAttackSO", menuName = "MeleeAttackSO")]
-public class MeleeAttack: ScriptableObject
+[CreateAssetMenu(fileName = "New MeleeAttack", menuName = "MeleeAttackSO")]
+public class MeleeAttack : ScriptableObject
 {
     [Header("Attack")]
     public string attackName;
@@ -16,7 +23,7 @@ public class MeleeAttack: ScriptableObject
     //how long does it take for the swing to hit its target?
     public float attackDuration;
 
-   // public bool drawDamageGizmo;
+    // public bool drawDamageGizmo;
     [Tooltip("position relative to the unit")]
     public Vector3 hitPosition;
     public float hitSphereRadius;

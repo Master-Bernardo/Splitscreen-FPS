@@ -9,7 +9,8 @@ public class EC_HumanWeaponSystem : EntityComponent
     protected Weapon[] inventory; //will be set up in inspector
     protected Weapon currentSelectedWeapon;
     protected int currentSelectedWeaponID;
-
+    public EC_MeleeWeaponController meleeWeaponControler;
+    public EC_MissileWeaponController missileWeaponController; //todo also needs to be set up during weapon Change
     public Transform rightHand;
 
     [Header("Ammo")]
@@ -71,7 +72,7 @@ public class EC_HumanWeaponSystem : EntityComponent
                 break;
 
             case WeaponSystemState.HidingWeapon:
-                Debug.Log("HidingWeapon");
+               // Debug.Log("HidingWeapon");
                 if (Time.time > hideWeaponEndTime)
                 {   
                     EndHideWeapon();
@@ -81,11 +82,11 @@ public class EC_HumanWeaponSystem : EntityComponent
                 break;
 
             case WeaponSystemState.DrawingWeapon:
-                Debug.Log("Drawing epaon------------------------");
+               // Debug.Log("Drawing epaon------------------------");
                 if (Time.time > drawWeaponEndTime)
                 {
                     state = WeaponSystemState.Default;
-                    Debug.Log("Weapon Draw Completed ..+......+...........+............+..........+............");
+                    //Debug.Log("Weapon Draw Completed ..+......+...........+............+..........+............");
                 }
 
                 break;
@@ -125,7 +126,7 @@ public class EC_HumanWeaponSystem : EntityComponent
             }
         }
         
-       // ChangeWeapon(0);
+        ChangeWeapon(0);
 
         ammo[AmmoType.Rocket] = startRocketAmmo;
         ammo[AmmoType.Grenade] = startGrenadeAmmo;
@@ -165,7 +166,7 @@ public class EC_HumanWeaponSystem : EntityComponent
                 }
                 else
                 {
-                   // Debug.Log("current weapon was null pon changeWeapon");
+                    Debug.Log("current weapon was null pon changeWeapon");
 
                     DrawWeapon(currentSelectedWeapon);
                 }
@@ -174,9 +175,7 @@ public class EC_HumanWeaponSystem : EntityComponent
     }
 
     protected virtual void DrawWeapon(Weapon weaponToDraw)
-    {
-       
-
+    {     
         state = WeaponSystemState.DrawingWeapon;
         drawWeaponEndTime = Time.time + drawOrHideTime;
 
@@ -184,10 +183,22 @@ public class EC_HumanWeaponSystem : EntityComponent
         {
             weaponToDraw.gameObject.SetActive(true);
             weaponToDraw.OnWeaponSelect(myEntity);
+            if(weaponToDraw is MeleeWeapon)
+            {
+                meleeWeaponControler.SetWeapon(weaponToDraw as MeleeWeapon);
+            }
         }
         if (handsAnimator != null)
         {
-            handsAnimator.SetTrigger("DrawWeapon");
+            if (weaponToDraw != null)
+            {
+                Debug.Log("draw weapon + " + weaponToDraw.stanceAnimationTypeID.ToString());
+                handsAnimator.SetTrigger("DrawWeapon" + weaponToDraw.stanceAnimationTypeID);
+            }
+            else
+            {
+                handsAnimator.SetTrigger("DrawWeapon" + 0);
+            }
             Debug.Log("trigger draw weaponset");
         }
 
@@ -207,8 +218,11 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     protected void EndHideWeapon()
     {
-        previousWeapon.OnWeaponDeselect();
-        previousWeapon.gameObject.SetActive(false);
+        if (previousWeapon != null)
+        {
+            previousWeapon.OnWeaponDeselect();
+            previousWeapon.gameObject.SetActive(false);
+        }    
     }
 
 
@@ -216,12 +230,15 @@ public class EC_HumanWeaponSystem : EntityComponent
     //returns the current selected weapon
     public virtual Weapon SwapWeapon(Weapon newWeapon)
     {
-        AbortReloading();
-
-        Weapon oldWeapon = currentSelectedWeapon;
-        if (oldWeapon != null)
+        if (state == WeaponSystemState.Reloading)
         {
-            oldWeapon.OnWeaponDeselect();
+            AbortReloading();
+        }
+
+        previousWeapon = currentSelectedWeapon;
+        if (previousWeapon != null)
+        {
+            previousWeapon.OnWeaponDeselect();
             //aimVisualiser.HideLine();
         }
 
@@ -237,7 +254,9 @@ public class EC_HumanWeaponSystem : EntityComponent
         currentSelectedWeapon.SetUp(this);
         currentSelectedWeapon.teamID = myEntity.teamID;
 
-        return oldWeapon;
+        DrawWeapon(currentSelectedWeapon);
+
+        return previousWeapon;
 
     }
 

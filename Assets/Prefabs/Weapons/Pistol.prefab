@@ -212,8 +212,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4204844011557427023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.171, z: 0.093}
-  m_LocalScale: {x: 0.12781121, y: 0.29439437, z: 1.4877745}
+  m_LocalPosition: {x: -0.01, y: 0.131, z: 0.168}
+  m_LocalScale: {x: 0.08171737, y: 0.18822399, z: 0.9512235}
   m_Children:
   - {fileID: 8528619725715022451}
   - {fileID: 1689724798034375263}
@@ -353,6 +353,7 @@ MonoBehaviour:
   damage: 5
   automaticTrigger: 0
   usesAimingLine: 1
+  stanceAnimationTypeID: 3
   shootPoint: {fileID: 5792722691891564185}
   fireRate: 10
   bloom: 0.5

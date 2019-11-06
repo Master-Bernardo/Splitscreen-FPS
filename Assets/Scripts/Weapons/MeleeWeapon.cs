@@ -7,16 +7,16 @@ public class MeleeWeapon : Weapon
     //public float meleeRange;
     //how fast can we attack?
    // public float meleeAttackInterval;
-    float nextPrepareMeleeAttackTime;
+    //float nextPrepareMeleeAttackTime;
 
-    public Animator weaponAnimator;
+   // public Animator weaponAnimator;
 
-    float nextMeleeAttackTime;
+    //float nextMeleeAttackTime;
     //how long does it take for the swing to hit its target?
     //public float attackDuration;
-    bool attack;
+   // bool attack;
 
-    public bool drawDamageGizmo;
+    //public bool drawDamageGizmo;
     /*[Tooltip("position relative to the unit")]
     public Vector3 hitPosition;
     public float hitSphereRadius;
@@ -26,12 +26,15 @@ public class MeleeWeapon : Weapon
     public float pushForce;*/
 
     //TODO only like this for now, change this later to be dependant also on other things
-    int attackID = 1;
+   /* int attackID = 1;
 
     public MeleeAttack[] attacks;
-    MeleeAttack currentAttack;
+    MeleeAttack currentAttack;*/
 
-    private void Start()
+    [Tooltip("which set of attacks is possible with thios weapon? - communicates iwth meleeWeaponsController")]
+    public int attackSetID;
+
+    /*private void Start()
     {
         //currentAttack = attacks[attackID];
     }
@@ -61,7 +64,7 @@ public class MeleeWeapon : Weapon
    /* public override void HandleLMBHold()
     {
     }*/
-
+    /*
     public override void OnWeaponSelect(GameEntity selectingEntity)
     {
         base.OnWeaponSelect(selectingEntity);
@@ -212,6 +215,6 @@ public class MeleeWeapon : Weapon
             }
            
         }
-    }
+    }*/
 }
 

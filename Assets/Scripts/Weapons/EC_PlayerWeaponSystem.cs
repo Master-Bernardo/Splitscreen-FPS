@@ -90,7 +90,14 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
         {
             if (currentSelectedWeapon != null)
             {
-                currentSelectedWeapon.HandleWeaponKeyDown(actionID);
+                if(currentSelectedWeapon is MeleeWeapon)
+                {
+                    meleeWeaponControler.MeleeAttack();
+                }
+                else
+                {
+                    currentSelectedWeapon.HandleWeaponKeyDown(actionID);
+                }
             }
         }
        

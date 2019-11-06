@@ -38,6 +38,12 @@ public class EC_MissileWeaponController : EntityComponent
 
     //the weapon will not get rotated? - only the spawnpoint a bit?
 
+        //sets new weapon
+    public void SetWeapon(MissileWeapon newWeapon)
+    {
+        //TODO
+    }
+
     public override void UpdateComponent()
     {
         if (aiming)

@@ -273,9 +273,11 @@ MonoBehaviour:
   damage: 20
   automaticTrigger: 0
   usesAimingLine: 1
+  stanceAnimationTypeID: 2
   shootPoint: {fileID: 5792722691891564185}
   fireRate: 1
   bloom: 0.5
+  bulletNumber: 1
   reloadTime: 1
   initialLaunchSpeed: 40
   ammoType: 3
@@ -283,6 +285,14 @@ MonoBehaviour:
   magazineSize: 1
   infiniteMagazine: 0
   currentMagazineAmmo: 0
+  customAudioSource: {fileID: 0}
+  shootSound: {fileID: 0}
+  reloadSound: {fileID: 0}
+  reloadSoundDelay: 0
+  splitSounds: 0
+  shootSoundStart: {fileID: 0}
+  shootSoundMid: {fileID: 0}
+  shootSoundEnd: {fileID: 0}
 --- !u!1 &7808636720201540322
 GameObject:
   m_ObjectHideFlags: 0

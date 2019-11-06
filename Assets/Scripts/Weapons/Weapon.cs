@@ -12,6 +12,8 @@ public class Weapon : MonoBehaviour
     public float damage; //could be expanded later to diffeent damages  
     public bool automaticTrigger;
     public bool usesAimingLine;
+    [Tooltip("the animation which is right for this weapon - 1 is sword, 2 is rifle, 3 is pistol")]
+    public int stanceAnimationTypeID;
     //public AimingLine aimingLine;
 
     public void SetUp(EC_HumanWeaponSystem weaponSystem)
