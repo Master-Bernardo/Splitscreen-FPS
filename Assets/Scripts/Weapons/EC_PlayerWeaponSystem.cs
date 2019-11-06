@@ -122,7 +122,7 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
         }
     }
 
-    public override void ChangeWeapon(int inventorySlot)
+    /*public override void ChangeWeapon(int inventorySlot)
     {
 
         //animator.SetTrigger("changeWeapon");
@@ -153,7 +153,7 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
 
         }
 
-    }
+    }*/
 
 
     public void SelectNextWeapon()
@@ -181,7 +181,7 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
     }
 
     //returns the current selected weapon
-    public override Weapon SwapWeapon(Weapon newWeapon)
+    /*public override Weapon SwapWeapon(Weapon newWeapon)
     {
         AbortReloading();
 
@@ -206,7 +206,7 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
 
         return oldWeapon;
 
-    }
+    }*/
 
 
     public override void UpdateComponent()

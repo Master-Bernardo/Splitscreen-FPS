@@ -173,14 +173,18 @@ public class EC_HumanWeaponSystem : EntityComponent
         }
     }
 
-    void DrawWeapon(Weapon weaponToDraw)
+    protected virtual void DrawWeapon(Weapon weaponToDraw)
     {
+       
+
         state = WeaponSystemState.DrawingWeapon;
         drawWeaponEndTime = Time.time + drawOrHideTime;
 
-        weaponToDraw.gameObject.SetActive(true);
-        weaponToDraw.OnWeaponSelect(myEntity);
-
+        if (weaponToDraw != null)
+        {
+            weaponToDraw.gameObject.SetActive(true);
+            weaponToDraw.OnWeaponSelect(myEntity);
+        }
         if (handsAnimator != null)
         {
             handsAnimator.SetTrigger("DrawWeapon");
@@ -189,7 +193,7 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     }
 
-    void HideWeapon(Weapon weaponToHide)
+    protected void HideWeapon(Weapon weaponToHide)
     {
         state = WeaponSystemState.HidingWeapon;
         hideWeaponEndTime = Time.time + drawOrHideTime;
@@ -201,7 +205,7 @@ public class EC_HumanWeaponSystem : EntityComponent
         }
     }
 
-    void EndHideWeapon()
+    protected void EndHideWeapon()
     {
         previousWeapon.OnWeaponDeselect();
         previousWeapon.gameObject.SetActive(false);
