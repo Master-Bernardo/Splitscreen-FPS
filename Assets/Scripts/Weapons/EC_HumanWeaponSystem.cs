@@ -144,7 +144,10 @@ public class EC_HumanWeaponSystem : EntityComponent
 
             if (state == WeaponSystemState.Reloading)
             {
+                Debug.Log("Change while reloading");
                 AbortReloading();
+
+                HideWeapon(previousWeapon);
             }
             else if(state == WeaponSystemState.HidingWeapon)
             {

@@ -204,13 +204,17 @@ public class MissileWeapon : Weapon
 
     void PlayStartReloadSoundDelayed()
     {
-        customAudioSource.SetSound(reloadSound);
-        customAudioSource.Play();
+        if (customAudioSource)
+        {
+            customAudioSource.SetSound(reloadSound);
+            customAudioSource.Play();
+        }
+      
     }
 
     public virtual void AbortReloading()
     {
-        customAudioSource.Stop();
+       if(customAudioSource!=null) customAudioSource.Stop();
     }
 
     public virtual void EndReloading(int value)
