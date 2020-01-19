@@ -7,12 +7,14 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-    public Camera cam;
+    public Camera topdownCam;
+    public Camera fpCam;
 
     enum PlayerControlMode
     {
-        Default,
-        Dead //we can move around the world as a dead ghost
+        TopDown,
+        FirstPerson,
+        RTS //we can move around the world as a dead ghost - also RTS Mode
     }
 
     PlayerControlMode controlMode;
@@ -36,6 +38,8 @@ public class PlayerController : MonoBehaviour
     Vector2 lookInputVectorUsed;
     //Vector2 lookInputVectorLastFrame; //for better controls
     Vector2 currentMousePosition; //for keyboard & mouse
+    Vector2 mouseDelta;
+    Vector2 mousePositionLastFrame;
 
     bool weaponPressed = false;
     int pressedWeaponID;
@@ -54,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnW1Press()
     {
-        if(controlMode == PlayerControlMode.Default) weaponSystem.UseWeaponStart(0);
+        if(controlMode == PlayerControlMode.TopDown) weaponSystem.UseWeaponStart(0);
         pressedWeaponID = 0;
         weaponPressed = true;
         weaponSystem.UseWeaponStart(pressedWeaponID);
@@ -109,8 +113,6 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("control sheme: " + playerInput.controlScheme);
         if(playerInput.controlScheme == "Gamepad")
         {
-
-
             lookInputVector = value.Get<Vector2>();
             //Debug.Log("gamepad");
             if(lookInputVector != new Vector2(0,0))
@@ -120,11 +122,16 @@ public class PlayerController : MonoBehaviour
             }
         }
         else
-        {
-            currentMousePosition = value.Get<Vector2>();
-            //Debug.Log("keyboard");
+        {      
+            if(controlMode == PlayerControlMode.TopDown)
+            {
+                currentMousePosition = value.Get<Vector2>();
+
+            }
+
         }
     }
+
 
     void OnNextWeapon(InputValue value)
     {
@@ -171,6 +178,9 @@ public class PlayerController : MonoBehaviour
         weaponSystem.ChangeWeapon(2);
     }
 
+   
+ 
+
     #endregion
 
 
@@ -183,18 +193,79 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //constant input checks:
+
+        if(controlMode == PlayerControlMode.FirstPerson)
+        {
+            currentMousePosition = Mouse.current.position.ReadValue();
+            mouseDelta = currentMousePosition - mousePositionLastFrame;
+            Debug.Log("mosue Delta = " + mouseDelta);
+            // Debug.Log("mousePositionLastFrame = " + mousePositionLastFrame);
+            //Debug.Log("mouseDelta: " + mouseDelta);
+            mousePositionLastFrame = currentMousePosition;
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ToogleCameraMode();
+        }
 
         //get movement
         float hor = movementInputVector.x;
         float ver = movementInputVector.y;
 
-        Vector3 camRight = (cam.transform.right).normalized;
-        Vector3 horV = camRight * hor;
-        Vector3 verV = new Vector3(-camRight.z, 0f, camRight.x) * ver;
-        movementVector = horV + verV;
+        if (controlMode == PlayerControlMode.FirstPerson)
+        {
+            movementVector = playerEntity.transform.right*hor + playerEntity.transform.forward*ver;
+
+            if (playerInput.controlScheme == "Gamepad")
+            {
+                /*if (lookInputVector != new Vector2(0, 0))
+                {
+                    currentLookVector = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
+                }
+                else
+                {
+                    if (movementVector != new Vector3(0, 0, 0))
+                    {
+                        currentLookVector = movementVector;
+                    }
+                }*/
+
+
+            }
+            else
+            {
+                //Vector2 playerPos = new Vector3(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
+                //Vector2 direction = playerPos -  currentMousePosition;
+                //Debug.Log("playerPos: " + playerPos);
+                //Vector2 direction = new Vector2(Screen.width / 2, Screen.height / 2) - currentMousePosition;
+                float horDirection = mouseDelta.y;
+               // Debug.Log("mouse Y: " + mouseDelta.y);
+               // Debug.Log("mouse X: " + mouseDelta.x);
+                float verDirection = mouseDelta.x;
+
+                currentLookVector = Quaternion.Euler(mouseDelta.y, mouseDelta.x, 0) * fpCam.transform.forward;
+                Debug.Log("dorward: " + fpCam.transform.forward);
+                Debug.Log("currentLookVector: " + currentLookVector);
+            }
+
+
+
+
+        }
+        else
+        {
+            Vector3 camRight = (topdownCam.transform.right).normalized;
+            Vector3 horV = camRight * hor;
+            Vector3 verV = new Vector3(-camRight.z, 0f, camRight.x) * ver;
+            movementVector = horV + verV;
+        }
+
+           
 
         
-        if(controlMode == PlayerControlMode.Default)
+        if(controlMode == PlayerControlMode.TopDown)
         {
             //rotate towards
 
@@ -202,7 +273,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (lookInputVector != new Vector2(0, 0))
                 {
-                    currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
+                    currentLookVector = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
                 }
                 else
                 {
@@ -220,7 +291,7 @@ public class PlayerController : MonoBehaviour
                 //Vector2 direction = playerPos -  currentMousePosition;
                 //Debug.Log("playerPos: " + playerPos);
                 Vector2 direction = new Vector2(Screen.width / 2, Screen.height / 2) - currentMousePosition;
-                currentLookVector = Quaternion.Euler(0, cam.transform.localEulerAngles.y + 180, 0) * new Vector3(direction.x, 0f, direction.y);
+                currentLookVector = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y + 180, 0) * new Vector3(direction.x, 0f, direction.y);
             }
 
             //weapon
@@ -235,24 +306,30 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-        else if( controlMode == PlayerControlMode.Dead)
+        else if (controlMode == PlayerControlMode.RTS)
         {
             deadPlayerMovement.UpdateMovement(movementVector);
-        }  
+        }
+
     }
 
     private void FixedUpdate()
     {
-        if (controlMode == PlayerControlMode.Default)
+        if (controlMode == PlayerControlMode.TopDown)
         {
             playerMovement.UpdateMovement(currentLookVector, movementVector);
         }
+        else if(controlMode == PlayerControlMode.FirstPerson)
+        {
+            playerMovement.UpdateMovement(currentLookVector, movementVector);
+        }
+        
     }
 
     public void TeleportPlayer(Vector3 position)
     {
         playerEntity.transform.position = position;
-        cam.GetComponent<SmoothCameraFollow>().TeleportToDesiredPosition();
+        topdownCam.GetComponent<SmoothCameraFollow>().TeleportToDesiredPosition();
 
     }
 
@@ -267,9 +344,9 @@ public class PlayerController : MonoBehaviour
         playerEntity.GetComponent<EC_Health>().ResetHealth();
         deadPlayerGhostTransform.gameObject.SetActive(false);
         playerEntity.gameObject.SetActive(true);
-        cam.GetComponent<SmoothCameraFollow>().target = playerEntity.transform;
+        topdownCam.GetComponent<SmoothCameraFollow>().target = playerEntity.transform;
 
-        controlMode = PlayerControlMode.Default;
+        controlMode = PlayerControlMode.TopDown;
 
     }
 
@@ -282,10 +359,26 @@ public class PlayerController : MonoBehaviour
         rtsCamPosition.y = 0;
         deadPlayerGhostTransform.position = rtsCamPosition;
         deadPlayerGhostTransform.gameObject.SetActive(true);
-        cam.GetComponent<SmoothCameraFollow>().target = deadPlayerGhostTransform;
+        topdownCam.GetComponent<SmoothCameraFollow>().target = deadPlayerGhostTransform;
 
 
-        controlMode = PlayerControlMode.Dead;
+        controlMode = PlayerControlMode.RTS;
 
+    }
+
+    public void ToogleCameraMode()
+    {
+        if (controlMode == PlayerControlMode.TopDown)
+        {
+            controlMode = PlayerControlMode.FirstPerson;
+            topdownCam.gameObject.SetActive(false);
+            fpCam.gameObject.SetActive(true);
+        }
+        else if (controlMode == PlayerControlMode.FirstPerson)
+        {
+            controlMode = PlayerControlMode.TopDown;
+            topdownCam.gameObject.SetActive(true);
+            fpCam.gameObject.SetActive(false);
+        }
     }
 }

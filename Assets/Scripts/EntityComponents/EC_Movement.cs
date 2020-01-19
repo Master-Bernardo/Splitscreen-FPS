@@ -299,7 +299,23 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
     public void SmoothRotateTo(Vector3 direction)
     {
+        Debug.Log("direction: " + direction);
+
         float deltaTime = Time.time - lastRotationTime;
+
+        if (useSpine)
+        {
+            //only rotate on local x direction
+            //first delete side movements- only leave y and z
+            Vector3 directionForSpine = transform.InverseTransformDirection(direction);
+
+            Quaternion desiredSpineRotation = Quaternion.LookRotation(directionForSpine);
+            desiredSpineRotation = Quaternion.Euler(desiredSpineRotation.eulerAngles.x, 0, 0);
+            Debug.Log("desired spine: " + desiredSpineRotation);
+            spine.localRotation = Quaternion.RotateTowards(spine.localRotation, desiredSpineRotation, angularSpeed * deltaTime);
+            Debug.Log("new spine Rotation: " + spine.localRotation.eulerAngles);
+        }
+
         direction.y = 0;
         Quaternion desiredLookRotation = Quaternion.LookRotation(direction);
         //because we want the same speed as the agent, which has its angular speed saved as degrees per second we use the rotaate towards function

@@ -15,6 +15,8 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     [Tooltip("after changing  maxRotationSpeed or angularDrag, we need to recallibrate PID")]
     public float rotationSpeed;
 
+    public float playerAngularSpeed;
+
     //public Vector3 currentLookVector;
 
     //Vector3 movementVector;
@@ -49,7 +51,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         maxAcceleration *= Settings.Instance.forceMultiplier;
         maxDecceleration *= Settings.Instance.forceMultiplier;
         jumpForce *= Settings.Instance.forceMultiplier;
-
+        angularSpeed = playerAngularSpeed;
     }
 
 
