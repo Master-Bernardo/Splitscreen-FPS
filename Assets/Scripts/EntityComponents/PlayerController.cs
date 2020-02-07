@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Fields
     public Camera topdownCam;
     public Camera fpCam;
 
@@ -20,7 +21,6 @@ public class PlayerController : MonoBehaviour
     PlayerControlMode controlMode;
 
     public UnityEvent onDieEvent;
-
 
     public PlayerMovement playerMovement;
     public GameEntity playerEntity;
@@ -51,9 +51,9 @@ public class PlayerController : MonoBehaviour
     public float xSensitivity = 0.3f;
     public float ySensitivity = 0.1f;
 
+    #endregion
 
-
-    #region controls
+    #region Controls
 
     public void OnMovement(InputValue value)
     {
@@ -192,29 +192,13 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
     void Start()
     {
         desiredLookVektor = playerEntity.transform.forward;
     }
 
-
-
     void Update()
     {
-        //constant input checks:
-
-        if(controlMode == PlayerControlMode.FirstPerson)
-        {
-            /*
-            currentMousePosition = Mouse.current.position.ReadValue();
-            mouseDelta = currentMousePosition - mousePositionLastFrame;
-            Debug.Log("mosue Delta = " + mouseDelta);
-            // Debug.Log("mousePositionLastFrame = " + mousePositionLastFrame);
-            //Debug.Log("mouseDelta: " + mouseDelta);
-            mousePositionLastFrame = currentMousePosition;*/
-        }
-
         if (Input.GetKeyDown(KeyCode.P))
         {
             ToogleCameraMode();
@@ -224,61 +208,13 @@ public class PlayerController : MonoBehaviour
         float hor = movementInputVector.x;
         float ver = movementInputVector.y;
 
+        #region determine movementVector
+
         if (controlMode == PlayerControlMode.FirstPerson)
         {
             movementVector = playerEntity.transform.right*hor + playerEntity.transform.forward*ver;
 
-            if (playerInput.controlScheme == "Gamepad")
-            {
-                /*if (lookInputVector != new Vector2(0, 0))
-                {
-                    currentLookVector = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
-                }
-                else
-                {
-                    if (movementVector != new Vector3(0, 0, 0))
-                    {
-                        currentLookVector = movementVector;
-                    }
-                }*/
-
-             //TODO
-            }
-            else
-            {
-                //Vector2 playerPos = new Vector3(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
-                //Vector2 direction = playerPos -  currentMousePosition;
-                //Debug.Log("playerPos: " + playerPos);
-                //Vector2 direction = new Vector2(Screen.width / 2, Screen.height / 2) - currentMousePosition;
-                float horDirection = mouseDelta.y;
-               //Debug.Log("mouse Y: " + mouseDelta.y);
-               // Debug.Log("mouse X: " + mouseDelta.x);
-                float verDirection = mouseDelta.x;
-
-                //desiredLookVektor =  Quaternion.Euler(mouseDelta.y, mouseDelta.x, 0) * fpCam.transform.forward;
-                //Debug.Log("dorward: " + fpCam.transform.forward);
-                //Debug.Log("currentLookVector: " + currentLookVector);
-
-                //desiredLookVektor = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
-                //desiredLookVektor += (Quaternion.AngleAxis(mouseDelta.y * ySensitivity, fpCam.transform.right) * fpCam.transform.forward).normalized;      
-                Vector3 desiredLookVektorHorizontal = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
-                Debug.Log("-----------------desiredLookVektorHorizontal:-------------------- " + desiredLookVektorHorizontal);
-
-                Debug.Log("desired vector Vert :  AngleAxis(-mouseDelta.y: " + -mouseDelta.y + " * ySenstivty: " + ySensitivity + " , " + fpCam.transform.right + " ) * " + fpCam.transform.forward + " ).normalized ");
-                Vector3 desiredLookVektorVertical = (Quaternion.AngleAxis(-mouseDelta.y * ySensitivity, fpCam.transform.right) * fpCam.transform.forward).normalized;
-                Debug.Log("desiredLookVektorVertical: " + desiredLookVektorVertical);
-
-                desiredLookVektor = new Vector3(desiredLookVektorHorizontal.x, desiredLookVektorVertical.y, desiredLookVektorHorizontal.z);
-                Debug.Log("desired::: " + desiredLookVektor);
-
-                //Debug.Log("forward before: " + fpCam.transform.forward);
-                Debug.Log("curr: " + desiredLookVektor);
-                //fpCam.transform.forward = 
-            }
-
-
-
-
+           
         }
         else
         {
@@ -288,9 +224,10 @@ public class PlayerController : MonoBehaviour
             movementVector = horV + verV;
         }
 
-           
+        #endregion
 
-        
+        #region determine desiredLookDirectionVector
+
         if(controlMode == PlayerControlMode.TopDown)
         {
             //rotate towards
@@ -313,65 +250,71 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                //Vector2 playerPos = new Vector3(cam.WorldToScreenPoint(transform.position).x, cam.WorldToScreenPoint(transform.position).y);
-                //Vector2 direction = playerPos -  currentMousePosition;
-                //Debug.Log("playerPos: " + playerPos);
                 Vector2 direction = new Vector2(Screen.width / 2, Screen.height / 2) - currentMousePosition;
                 desiredLookVektor = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y + 180, 0) * new Vector3(direction.x, 0f, direction.y);
             }
 
-            //weapon
-            if (weaponPressed)
-            {
-                weaponSystem.UseWeaponHold(pressedWeaponID);
-            }
-
-            if (interacting)
-            {
-                interactableShower.HoldInteract();
-
-            }
+           
         }
         else if (controlMode == PlayerControlMode.RTS)
         {
             deadPlayerMovement.UpdateMovement(movementVector);
         }
-        //if(Time.time>10)desiredLookVektor.y = 0.3f;
-        //else desiredLookVektor.y = 1f;
-        if (controlMode == PlayerControlMode.FirstPerson)
+        else if (controlMode == PlayerControlMode.FirstPerson)
         {
-            playerMovement.UpdateMovement(desiredLookVektor, movementVector);
-            Debug.Log("last fp corward: " + fpCam.transform.forward);
+            if (playerInput.controlScheme == "Gamepad")
+            {
+
+                //TODO
+
+                /*if (lookInputVector != new Vector2(0, 0))
+                {
+                    currentLookVector = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
+                }
+                else
+                {
+                    if (movementVector != new Vector3(0, 0, 0))
+                    {
+                        currentLookVector = movementVector;
+                    }
+                }*/
+
+            }
+            else
+            {
+                Vector3 desiredLookVektorHorizontal = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
+                Vector3 desiredLookVektorVertical = (Quaternion.AngleAxis(-mouseDelta.y * ySensitivity, fpCam.transform.right) * fpCam.transform.forward).normalized;
+                desiredLookVektor = new Vector3(desiredLookVektorHorizontal.x, desiredLookVektorVertical.y, desiredLookVektorHorizontal.z);
+            }
+
+            //first person mode gets rotation applied directly in update, not in fixedUpdate
+            playerMovement.InstantRotateTo(desiredLookVektor);
+
         }
-        //Debug.Log("default vector: " + currentLookVector);
+
+        #endregion
+
+        //weapon
+        if (weaponPressed)
+        {
+            weaponSystem.UseWeaponHold(pressedWeaponID);
+        }
+
+        if (interacting)
+        {
+            interactableShower.HoldInteract();
+        }
     }
 
     private void FixedUpdate()
     {
-      
+        //top down gets player rotation applied only in fixedUpdate
         if (controlMode == PlayerControlMode.TopDown)
         {
-            //Debug.Log("topdown vector: " + currentLookVector);
-            playerMovement.UpdateMovement(desiredLookVektor, movementVector);
+            playerMovement.SmoothRotateTo(desiredLookVektor);
         }
-       /* else if(controlMode == PlayerControlMode.FirstPerson)
-        {
-            playerMovement.UpdateMovement(currentLookVector, movementVector);
-        }*/
-        
-    }
 
-    public void TeleportPlayer(Vector3 position)
-    {
-        playerEntity.transform.position = position;
-        topdownCam.GetComponent<SmoothCameraFollow>().TeleportToDesiredPosition();
-
-    }
-
-    public void OnDie()
-    {
-        DeactivatePlayer();
-        onDieEvent.Invoke();
+        playerMovement.UpdateMovement(movementVector);     
     }
 
     public void ActivatePlayer()
@@ -417,5 +360,17 @@ public class PlayerController : MonoBehaviour
             topdownCam.gameObject.SetActive(true);
             fpCam.gameObject.SetActive(false);
         }
+    }
+
+    public void TeleportPlayer(Vector3 position)
+    {
+        playerEntity.transform.position = position;
+        topdownCam.GetComponent<SmoothCameraFollow>().TeleportToDesiredPosition();
+    }
+
+    public void OnDie()
+    {
+        DeactivatePlayer();
+        onDieEvent.Invoke();
     }
 }

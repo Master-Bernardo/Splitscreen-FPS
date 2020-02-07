@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-//[RequireComponent(typeof(NavMeshAgent))]
-//[RequireComponent(typeof(Rigidbody))]
 public class EC_Movement : EntityComponent, IPusheable<Vector3>
-{  
+{
+    #region Fields
     [HideInInspector]
     NavMeshAgent agent;
 
     //for rotation independent of navmeshAgent;
     protected float angularSpeed;
 
-   
     //for optimisation we can call the updater only every x frames
     float nextMovementUpdateTime;
     [Header("PerformanceOptimisation")]
@@ -24,8 +22,6 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     bool lookAt = false;
     protected float lastRotationTime; // if we rotate only once every x frames, we need to calculate our own deltaTIme
 
-
-    //TODO Add dashing 
     protected enum MovementState
     {
         Default,
@@ -59,7 +55,6 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     float nextDashEndTime;
     Vector3 dashDirection;
     public float dashMultiplier; // when an agents gets his rb activated and dashes, he does not have the same gravity forces applied to it as the player so we modify his dash push force value
-    //bool dashBrake = false; //are we giving force in the opposite direction?
 
     [Header("Debug")]
     [SerializeField]
@@ -70,16 +65,17 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     public bool useSpine;
     public Transform spine;
 
+    #endregion
+
     public override void SetUpComponent(GameEntity entity)
     {
         agent = GetComponent<NavMeshAgent>();
-        //rb = GetComponent<Rigidbody>();
         //almost the same speed as original navmeshAgent
         angularSpeed = agent.angularSpeed;
         //optimisation
         nextMovementUpdateTime = Time.time + Random.Range(0, movementUpdateIntervall);
 
-        pushTreshold *= pushTreshold;
+        pushTreshold *= pushTreshold; //because we cheking against squared values for optimisation
     }
 
     //update is only for looks- the rotation is important for logic but it can be a bit jaggy if far away or not on screen - lod this script, only call it every x seconds
@@ -122,25 +118,15 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
             }
         }
-        else
-        {
-            
-        }
-
-
-
     }
 
     public override void FixedUpdateComponent()
     {
-
         if (movementState == MovementState.BeingPushed)
         {
 
             rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
 
-            // Debug.Log("current veloity: " + rb.velocity.sqrMagnitude);
-            //Debug.Log("pushTreshold: " + pushTreshold);
             float velocityThisTime = rb.velocity.sqrMagnitude;
 
             //because of the start of the push the velocity can also be like 0, so we only check against the treshold, when the velocity is getting smaller
@@ -218,40 +204,35 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         }
     }
 
+    #region Movement Orders
+
     public virtual void Push(Vector3 force)
     {
         if (canBePushed)
         {
-            //Debug.Log("destination " + agent.destination);
             if (agent.destination != null)
             {
                 movementOrderIssuedWhileBeingPushed = true;
                 targetMovePositionNotYetOrdered = agent.destination;
             }
 
-            //isBeingPushed = true;
             movementState = MovementState.BeingPushed;
             Vector3 agentVelocity = agent.velocity;
             agent.enabled = false;
             rb.isKinematic = false;
             rb.velocity = agentVelocity;
-            // StopLookAt();
 
             rb.AddForce(force, ForceMode.Impulse);
-            velocityLastTime = 0;
-
-            
+            velocityLastTime = 0;   
         }
     }
 
     //works similar to push
     public virtual void Dash(Vector3 direction)
     {
-        //Push(direction * dashForce);
+        //if a units wants to use dash points, do it in the behaviour
         if (agent != null)
         {
-
-
             if (agent.destination != null)
             {
                 movementOrderIssuedWhileBeingPushed = true;
@@ -262,15 +243,12 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             agent.enabled = false;
             rb.isKinematic = false;
             rb.velocity = agentVelocity;
-
-
         }
       
         dashDirection = direction;
         nextDashEndTime = Time.time + dashTime;
         movementState = MovementState.Dashing;
     }
-
 
     //sets the agent to rotate 
     public void RotateTo(Vector3 direction)
@@ -296,10 +274,6 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         lastRotationTime = Time.time;
     }
 
-   
-
-    
-
     //for now simple moveTo without surface ship or flying
     public void MoveTo(Vector3 destination)
     {
@@ -313,6 +287,17 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             targetMovePositionNotYetOrdered = destination;
         }
     }
+
+    public void Stop()
+    {
+        if (agent.isActiveAndEnabled)
+        {
+            agent.ResetPath();
+
+        }
+    }
+
+    #endregion
 
     #region LookAt
 
@@ -339,18 +324,10 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
     #endregion
 
+    #region Status Checks
     public virtual bool IsMoving()
     {
-            return agent.velocity.magnitude > agent.speed / 2;
-    }
-
-    public void Stop()
-    {
-        if (agent.isActiveAndEnabled)
-        {
-            agent.ResetPath();
-
-        }
+         return agent.velocity.magnitude > agent.speed / 2;
     }
 
     public float GetCurrentVelocityMagnitude()
@@ -368,7 +345,11 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         return agent.speed;
     }
 
-     private void OnDrawGizmos()
+    #endregion
+
+    #region Debug
+
+    private void OnDrawGizmos()
      {
          if (showGizmo && agent!=null)
          {
@@ -380,5 +361,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
              }
          }
      }
+
+    #endregion
 }
 

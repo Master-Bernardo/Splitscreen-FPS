@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 {
+    #region Fields
     [Header("Player Movement")]
     public float targetMovementSpeed;
     public float maxAcceleration;
@@ -17,14 +18,8 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
     public float playerAngularSpeed;
 
-    //public Vector3 currentLookVector;
-
-    //Vector3 movementVector;
-
     bool jump = false;
     public float jumpForce;
-
-    //public float gravityMultiplier;
 
     bool grounded = false; //do we touch the earth?
     public Transform rayCastStartPosition;
@@ -33,18 +28,16 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     public float groundedCheckCapsuleHeight;
     public bool drawRaycastGizmo;
 
-
+    public bool useDashPoints;
     [Tooltip("like stamina - replenishes itself after time, only for player because of performance optimisation")]
     public float maxDashPoints;
     float currentDashPoints;
     public float dashPointReplenishmentSpeed;
 
-
-
+    #endregion
 
     public override void SetUpComponent(GameEntity entity)
     {
-        //rb = GetComponent<Rigidbody>();
         currentDashPoints = maxDashPoints;
 
         angularSpeed = rotationSpeed;
@@ -53,39 +46,41 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         jumpForce *= Settings.Instance.forceMultiplier;
         angularSpeed = playerAngularSpeed;
     }
+
     public override void UpdateComponent()
     {
 
     }
 
-        //gets called in fixed update
-        public void UpdateMovement(Vector3 currentLookVector, Vector3 movementVector)
+    #region Applying Movement/Force
+
+    //gets called in fixed update, used by topdown controller
+    public void UpdateMovement(Vector3 movementVector)
     {
-
-
-        //Debug.Log("actualVelcoity This frame: " + new Vector3(rb.velocity.x, 0, rb.velocity.z));
-        //gravity
+        //custom gravity
         rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
 
-        bool move = false;
+        #region apply physics-based movement
+
+        bool playerWantsToMove = false;
 
         if (!grounded)
         {
             if (movementVector != new Vector3(0, 0, 0))
             {
-                move = true;
+                playerWantsToMove = true;
             }
         }
         else
         {
             //if we are being pushed or dashing, and there is no input from the player, we should not deccelerate
-            if (movementVector != new Vector3(0, 0, 0) || movementVector == new Vector3(0,0,0) && (movementState == MovementState.Default))
+            if (movementVector != new Vector3(0, 0, 0) || movementVector == new Vector3(0, 0, 0) && (movementState == MovementState.Default))
             {
-                move = true;
+                playerWantsToMove = true;
             }
         }
 
-        if (move)
+        if (playerWantsToMove)
         {
             //movement
             Vector3 rbHorizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -112,35 +107,11 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
         }
 
+        #endregion
 
+        #region check if grounded
 
-
-        /*if (grounded)
-        {
-            //apply drag
-            rb.velocity = rb.velocity * (1 - Time.deltaTime * drag);
-        }*/
-
-
-        SmoothRotateTo(currentLookVector);
-        //RotateTo(currentLookVector);
-        //transform.forward = Vector3.Lerp(transform.forward, currentLookVector.normalized, rotationSpeed * Time.deltaTime);
-
-        //check if gorunded
-
-        /*
-        RaycastHit hit;
-        // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(rayCastStartPosition.position, -Vector3.up, out hit, groundedCheckRaycastDistance))
-        {
-            grounded = true;
-        }
-        else
-        {
-            grounded = false;
-        }*/
-
-        Collider[] colliders = Physics.OverlapCapsule(rayCastStartPosition.position, rayCastStartPosition.position + new Vector3(0,groundedCheckCapsuleHeight,0), groundedCheckRaycastDistance, groundedCheckLayermask);
+        Collider[] colliders = Physics.OverlapCapsule(rayCastStartPosition.position, rayCastStartPosition.position + new Vector3(0, groundedCheckCapsuleHeight, 0), groundedCheckRaycastDistance, groundedCheckLayermask);
 
         if (colliders.Length > 1)
         {
@@ -151,32 +122,34 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
             grounded = false;
         }
 
+        #endregion
+
+        #region jump & dash
         if (jump)
         {
             if (grounded)
             {
-                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);       
+                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             }
 
             jump = false;
         }
 
-       
         currentDashPoints += dashPointReplenishmentSpeed * Time.deltaTime;
         if (currentDashPoints > maxDashPoints) currentDashPoints = maxDashPoints;
-        
+        #endregion
     }
 
+
+    //spine and body rotation script, only for player, the ai guys have other scripts, used in topdown mode
     public void SmoothRotateTo(Vector3 direction)
     {
-        Debug.Log("direction: " + direction);
-
         float deltaTime = Time.time - lastRotationTime;
 
         if (useSpine)
         {
             Quaternion desiredSpineRotation = Quaternion.LookRotation(new Vector3(spine.transform.forward.x, direction.y, spine.transform.forward.z));
-            spine.rotation = Quaternion.RotateTowards(spine.rotation, desiredSpineRotation, angularSpeed * deltaTime);
+            spine.rotation = Quaternion.RotateTowards(spine.rotation, desiredSpineRotation, angularSpeed*3 * deltaTime); //cause rotateTowards and Lerp use differend speed, we increase this speed by 4 - this 4 is only an approximation
         }
 
         direction.y = 0;
@@ -186,6 +159,20 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         lastRotationTime = Time.time;
     }
 
+    //used in fps mode
+    public void InstantRotateTo(Vector3 direction)
+    {
+        float deltaTime = Time.time - lastRotationTime;
+
+        if (useSpine)
+        {
+            spine.rotation = Quaternion.LookRotation(new Vector3(spine.transform.forward.x, direction.y, spine.transform.forward.z));
+        }
+
+        direction.y = 0;
+        transform.rotation = Quaternion.LookRotation(direction);
+        lastRotationTime = Time.time;
+    }
 
     public void Jump()
     {
@@ -194,11 +181,14 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
     public override void Dash(Vector3 direction)
     {
-        if (currentDashPoints >= 1)
+        if (grounded)
         {
-            base.Dash(direction);
-            currentDashPoints--;
-        }
+            if (currentDashPoints >= 1)
+            {
+                base.Dash(direction);
+                currentDashPoints--;
+            }
+        } 
     }
 
     public override void Push(Vector3 force)
@@ -208,6 +198,10 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
             rb.AddForce(force, ForceMode.Impulse);
         }
     }
+
+    #endregion
+
+    #region Status Checks
 
     public override bool IsMoving()
     {
@@ -219,6 +213,10 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         return rb.velocity;
     }
 
+    #endregion
+
+    #region Debug
+
     private void OnDrawGizmos()
     {
         if (drawRaycastGizmo)
@@ -229,4 +227,6 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
         }
     }
+
+    #endregion
 }
