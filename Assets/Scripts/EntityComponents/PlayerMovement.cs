@@ -53,10 +53,13 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         jumpForce *= Settings.Instance.forceMultiplier;
         angularSpeed = playerAngularSpeed;
     }
+    public override void UpdateComponent()
+    {
 
+    }
 
-    //gets called in fixed update
-    public void UpdateMovement(Vector3 currentLookVector, Vector3 movementVector)
+        //gets called in fixed update
+        public void UpdateMovement(Vector3 currentLookVector, Vector3 movementVector)
     {
 
 
@@ -120,6 +123,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
 
         SmoothRotateTo(currentLookVector);
+        //RotateTo(currentLookVector);
         //transform.forward = Vector3.Lerp(transform.forward, currentLookVector.normalized, rotationSpeed * Time.deltaTime);
 
         //check if gorunded
@@ -161,6 +165,25 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         currentDashPoints += dashPointReplenishmentSpeed * Time.deltaTime;
         if (currentDashPoints > maxDashPoints) currentDashPoints = maxDashPoints;
         
+    }
+
+    public void SmoothRotateTo(Vector3 direction)
+    {
+        Debug.Log("direction: " + direction);
+
+        float deltaTime = Time.time - lastRotationTime;
+
+        if (useSpine)
+        {
+            Quaternion desiredSpineRotation = Quaternion.LookRotation(new Vector3(spine.transform.forward.x, direction.y, spine.transform.forward.z));
+            spine.rotation = Quaternion.RotateTowards(spine.rotation, desiredSpineRotation, angularSpeed * deltaTime);
+        }
+
+        direction.y = 0;
+        Quaternion desiredLookRotation = Quaternion.LookRotation(direction);
+        //because we want the same speed as the agent, which has its angular speed saved as degrees per second we use the rotaate towards function
+        transform.rotation = Quaternion.Lerp(transform.rotation, desiredLookRotation, angularSpeed * deltaTime);
+        lastRotationTime = Time.time;
     }
 
 

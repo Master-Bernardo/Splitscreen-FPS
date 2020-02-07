@@ -249,7 +249,7 @@ public class EC_MeleeWeaponController : EntityComponent
         {
             if (currentAttack != null)
             {
-                Debug.Log("current attack not null");
+                //Debug.Log("current attack not null");
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(relativeTransform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
             }

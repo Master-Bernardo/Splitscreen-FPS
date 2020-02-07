@@ -22,7 +22,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
     //our agent can either rotate to the direction he is facing or have a target to which he is alwys rotated to - if lookAt is true
     bool lookAt = false;
-    float lastRotationTime; // if we rotate only once every x frames, we need to calculate our own deltaTIme
+    protected float lastRotationTime; // if we rotate only once every x frames, we need to calculate our own deltaTIme
 
 
     //TODO Add dashing 
@@ -85,6 +85,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //update is only for looks- the rotation is important for logic but it can be a bit jaggy if far away or not on screen - lod this script, only call it every x seconds
     public override void UpdateComponent()
     {
+       // Debug.Log("mov update");
         if (Input.GetKeyDown(KeyCode.I))
         {
             if(agent!=null)MoveTo(transform.position + new Vector3(0, 0, 15));
@@ -297,31 +298,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
 
    
 
-    public void SmoothRotateTo(Vector3 direction)
-    {
-        Debug.Log("direction: " + direction);
-
-        float deltaTime = Time.time - lastRotationTime;
-
-        if (useSpine)
-        {
-            //only rotate on local x direction
-            //first delete side movements- only leave y and z
-            Vector3 directionForSpine = transform.InverseTransformDirection(direction);
-
-            Quaternion desiredSpineRotation = Quaternion.LookRotation(directionForSpine);
-            desiredSpineRotation = Quaternion.Euler(desiredSpineRotation.eulerAngles.x, 0, 0);
-            Debug.Log("desired spine: " + desiredSpineRotation);
-            spine.localRotation = Quaternion.RotateTowards(spine.localRotation, desiredSpineRotation, angularSpeed * deltaTime);
-            Debug.Log("new spine Rotation: " + spine.localRotation.eulerAngles);
-        }
-
-        direction.y = 0;
-        Quaternion desiredLookRotation = Quaternion.LookRotation(direction);
-        //because we want the same speed as the agent, which has its angular speed saved as degrees per second we use the rotaate towards function
-        transform.rotation = Quaternion.Lerp(transform.rotation, desiredLookRotation, angularSpeed * deltaTime);
-        lastRotationTime = Time.time;
-    }
+    
 
     //for now simple moveTo without surface ship or flying
     public void MoveTo(Vector3 destination)

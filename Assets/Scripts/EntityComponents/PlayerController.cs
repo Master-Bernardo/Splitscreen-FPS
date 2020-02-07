@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     public EC_PlayerWeaponSystem weaponSystem;
     public InteractableShower interactableShower;
 
-    public Vector3 currentLookVector;
+    public Vector3 desiredLookVektor;
     Vector3 movementVector;
 
     Vector3 movementInputVector;
@@ -39,13 +39,17 @@ public class PlayerController : MonoBehaviour
     //Vector2 lookInputVectorLastFrame; //for better controls
     Vector2 currentMousePosition; //for keyboard & mouse
     Vector2 mouseDelta;
-    Vector2 mousePositionLastFrame;
+    //Vector2 mousePositionLastFrame;
 
     bool weaponPressed = false;
     int pressedWeaponID;
 
     bool interacting = false;
     public bool looseWeaponOnDeactivate = true;
+
+
+    public float xSensitivity = 0.3f;
+    public float ySensitivity = 0.1f;
 
 
 
@@ -103,7 +107,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            playerMovement.Dash(currentLookVector.normalized);
+            playerMovement.Dash(desiredLookVektor.normalized);
             //Debug.Log("dash MMove");
         }
     }
@@ -178,15 +182,20 @@ public class PlayerController : MonoBehaviour
         weaponSystem.ChangeWeapon(2);
     }
 
-   
- 
+    public void OnLookAroundFP(InputValue value)
+    {
+        mouseDelta = value.Get<Vector2>();
+    }
+
+
+
 
     #endregion
 
 
     void Start()
     {
-        currentLookVector = playerEntity.transform.forward;
+        desiredLookVektor = playerEntity.transform.forward;
     }
 
 
@@ -197,12 +206,13 @@ public class PlayerController : MonoBehaviour
 
         if(controlMode == PlayerControlMode.FirstPerson)
         {
+            /*
             currentMousePosition = Mouse.current.position.ReadValue();
             mouseDelta = currentMousePosition - mousePositionLastFrame;
             Debug.Log("mosue Delta = " + mouseDelta);
             // Debug.Log("mousePositionLastFrame = " + mousePositionLastFrame);
             //Debug.Log("mouseDelta: " + mouseDelta);
-            mousePositionLastFrame = currentMousePosition;
+            mousePositionLastFrame = currentMousePosition;*/
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -232,7 +242,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }*/
 
-
+             //TODO
             }
             else
             {
@@ -241,13 +251,29 @@ public class PlayerController : MonoBehaviour
                 //Debug.Log("playerPos: " + playerPos);
                 //Vector2 direction = new Vector2(Screen.width / 2, Screen.height / 2) - currentMousePosition;
                 float horDirection = mouseDelta.y;
-               // Debug.Log("mouse Y: " + mouseDelta.y);
+               //Debug.Log("mouse Y: " + mouseDelta.y);
                // Debug.Log("mouse X: " + mouseDelta.x);
                 float verDirection = mouseDelta.x;
 
-                currentLookVector = Quaternion.Euler(mouseDelta.y, mouseDelta.x, 0) * fpCam.transform.forward;
-                Debug.Log("dorward: " + fpCam.transform.forward);
-                Debug.Log("currentLookVector: " + currentLookVector);
+                //desiredLookVektor =  Quaternion.Euler(mouseDelta.y, mouseDelta.x, 0) * fpCam.transform.forward;
+                //Debug.Log("dorward: " + fpCam.transform.forward);
+                //Debug.Log("currentLookVector: " + currentLookVector);
+
+                //desiredLookVektor = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
+                //desiredLookVektor += (Quaternion.AngleAxis(mouseDelta.y * ySensitivity, fpCam.transform.right) * fpCam.transform.forward).normalized;      
+                Vector3 desiredLookVektorHorizontal = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
+                Debug.Log("-----------------desiredLookVektorHorizontal:-------------------- " + desiredLookVektorHorizontal);
+
+                Debug.Log("desired vector Vert :  AngleAxis(-mouseDelta.y: " + -mouseDelta.y + " * ySenstivty: " + ySensitivity + " , " + fpCam.transform.right + " ) * " + fpCam.transform.forward + " ).normalized ");
+                Vector3 desiredLookVektorVertical = (Quaternion.AngleAxis(-mouseDelta.y * ySensitivity, fpCam.transform.right) * fpCam.transform.forward).normalized;
+                Debug.Log("desiredLookVektorVertical: " + desiredLookVektorVertical);
+
+                desiredLookVektor = new Vector3(desiredLookVektorHorizontal.x, desiredLookVektorVertical.y, desiredLookVektorHorizontal.z);
+                Debug.Log("desired::: " + desiredLookVektor);
+
+                //Debug.Log("forward before: " + fpCam.transform.forward);
+                Debug.Log("curr: " + desiredLookVektor);
+                //fpCam.transform.forward = 
             }
 
 
@@ -273,13 +299,13 @@ public class PlayerController : MonoBehaviour
             {
                 if (lookInputVector != new Vector2(0, 0))
                 {
-                    currentLookVector = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
+                    desiredLookVektor = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
                 }
                 else
                 {
                     if (movementVector != new Vector3(0, 0, 0))
                     {
-                        currentLookVector = movementVector;
+                        desiredLookVektor = movementVector;
                     }
                 }
 
@@ -291,7 +317,7 @@ public class PlayerController : MonoBehaviour
                 //Vector2 direction = playerPos -  currentMousePosition;
                 //Debug.Log("playerPos: " + playerPos);
                 Vector2 direction = new Vector2(Screen.width / 2, Screen.height / 2) - currentMousePosition;
-                currentLookVector = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y + 180, 0) * new Vector3(direction.x, 0f, direction.y);
+                desiredLookVektor = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y + 180, 0) * new Vector3(direction.x, 0f, direction.y);
             }
 
             //weapon
@@ -310,19 +336,28 @@ public class PlayerController : MonoBehaviour
         {
             deadPlayerMovement.UpdateMovement(movementVector);
         }
-
+        //if(Time.time>10)desiredLookVektor.y = 0.3f;
+        //else desiredLookVektor.y = 1f;
+        if (controlMode == PlayerControlMode.FirstPerson)
+        {
+            playerMovement.UpdateMovement(desiredLookVektor, movementVector);
+            Debug.Log("last fp corward: " + fpCam.transform.forward);
+        }
+        //Debug.Log("default vector: " + currentLookVector);
     }
 
     private void FixedUpdate()
     {
+      
         if (controlMode == PlayerControlMode.TopDown)
         {
-            playerMovement.UpdateMovement(currentLookVector, movementVector);
+            //Debug.Log("topdown vector: " + currentLookVector);
+            playerMovement.UpdateMovement(desiredLookVektor, movementVector);
         }
-        else if(controlMode == PlayerControlMode.FirstPerson)
+       /* else if(controlMode == PlayerControlMode.FirstPerson)
         {
             playerMovement.UpdateMovement(currentLookVector, movementVector);
-        }
+        }*/
         
     }
 
@@ -371,12 +406,14 @@ public class PlayerController : MonoBehaviour
         if (controlMode == PlayerControlMode.TopDown)
         {
             controlMode = PlayerControlMode.FirstPerson;
+            Cursor.lockState = CursorLockMode.Locked;
             topdownCam.gameObject.SetActive(false);
             fpCam.gameObject.SetActive(true);
         }
         else if (controlMode == PlayerControlMode.FirstPerson)
         {
             controlMode = PlayerControlMode.TopDown;
+            Cursor.lockState = CursorLockMode.None;
             topdownCam.gameObject.SetActive(true);
             fpCam.gameObject.SetActive(false);
         }

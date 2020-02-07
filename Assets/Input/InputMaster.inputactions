@@ -116,6 +116,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "LookAroundFP",
+                    "type": "Value",
+                    "id": "cdccba8f-f0f3-411a-b548-152df39bcd27",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -490,6 +498,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90d949b0-2b00-4ab2-9bdb-597323f3559e",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "LookAroundFP",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
