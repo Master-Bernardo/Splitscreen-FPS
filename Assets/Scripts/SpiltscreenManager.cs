@@ -7,7 +7,8 @@ using UnityEngine.InputSystem.Controls;
 
 public class SpiltscreenManager : MonoBehaviour
 {
-    public Camera[] cameras;
+    public Camera[] topDownCameras;
+    public Camera[] firstPersonCameras;
     public GameObject[] playerContainers;
     public int playerNumber;
     public bool useMultipleMonitors;
@@ -35,7 +36,8 @@ public class SpiltscreenManager : MonoBehaviour
                 playerContainers[2].SetActive(false);
                 playerContainers[3].SetActive(false);
 
-                cameras[0].rect = new Rect(0, 0, 1, 1);
+                topDownCameras[0].rect = new Rect(0, 0, 1, 1);
+                firstPersonCameras[0].rect = new Rect(0, 0, 1, 1);
 
                 //playerInputManager.JoinPlayer(1,1, playerInputs[0].controlScheme, playerInputs[0].par)
                 //playerInputManager.JoinPlayer(1);
@@ -51,12 +53,13 @@ public class SpiltscreenManager : MonoBehaviour
                 playerContainers[3].SetActive(false);
 
 
-                cameras[0].rect = new Rect(0, 0, 0.5f, 1);
-                cameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+                topDownCameras[0].rect = new Rect(0, 0, 0.5f, 1);
+                firstPersonCameras[0].rect = new Rect(0, 0, 0.5f, 1);
+                topDownCameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+                firstPersonCameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
 
-                cameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-
-                cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                topDownCameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
 
 
                 playerInputs[0].enabled = true;
@@ -68,10 +71,13 @@ public class SpiltscreenManager : MonoBehaviour
                     if (Display.displays.Length > 1)
                     {
                         Display.displays[1].Activate();
-                        cameras[1].targetDisplay = 1;
+                        topDownCameras[1].targetDisplay = 1;
+                        firstPersonCameras[1].targetDisplay = 1;
 
-                        cameras[0].rect = new Rect(0, 0, 1, 1);
-                        cameras[1].rect = new Rect(0, 0, 1, 1);
+                        topDownCameras[0].rect = new Rect(0, 0, 1, 1);
+                        firstPersonCameras[0].rect = new Rect(0, 0, 1, 1);
+                        topDownCameras[1].rect = new Rect(0, 0, 1, 1);
+                        firstPersonCameras[1].rect = new Rect(0, 0, 1, 1);
                     }
                 }
 
@@ -84,13 +90,16 @@ public class SpiltscreenManager : MonoBehaviour
                 playerContainers[2].SetActive(true);
                 playerContainers[3].SetActive(false);
 
-                cameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
-                cameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-                cameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
+                topDownCameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                firstPersonCameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                topDownCameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                firstPersonCameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                topDownCameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
+                firstPersonCameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
 
-                cameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-                cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-                cameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                topDownCameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                topDownCameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
 
 
 
@@ -104,15 +113,20 @@ public class SpiltscreenManager : MonoBehaviour
                     if (Display.displays.Length > 1)
                     {
                         Display.displays[1].Activate();
-                        cameras[1].targetDisplay = 1;
-                        cameras[2].targetDisplay = 1;
+                        topDownCameras[1].targetDisplay = 1;
+                        firstPersonCameras[1].targetDisplay = 1;
+                        topDownCameras[2].targetDisplay = 1;
+                        firstPersonCameras[2].targetDisplay = 1;
 
-                        cameras[0].rect = new Rect(0, 0, 1, 1);
-                        cameras[1].rect = new Rect(0, 0, 0.5f, 1);
-                        cameras[2].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        topDownCameras[0].rect = new Rect(0, 0, 1, 1);
+                        firstPersonCameras[0].rect = new Rect(0, 0, 1, 1);
+                        topDownCameras[1].rect = new Rect(0, 0, 0.5f, 1);
+                        firstPersonCameras[1].rect = new Rect(0, 0, 0.5f, 1);
+                        topDownCameras[2].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        firstPersonCameras[2].rect = new Rect(0.5f, 0, 0.5f, 1);
 
-                        cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-                        cameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        topDownCameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
                     }
                 }
 
@@ -125,15 +139,19 @@ public class SpiltscreenManager : MonoBehaviour
                 playerContainers[2].SetActive(true);
                 playerContainers[3].SetActive(true);
 
-                cameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
-                cameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-                cameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
-                cameras[3].rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+                topDownCameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                firstPersonCameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                topDownCameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                firstPersonCameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                topDownCameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
+                firstPersonCameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
+                topDownCameras[3].rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+                firstPersonCameras[3].rect = new Rect(0.5f, 0, 0.5f, 0.5f);
 
-                cameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-                cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-                cameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-                cameras[3].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                topDownCameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                topDownCameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                topDownCameras[3].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
 
 
                 playerInputs[0].enabled = true;
@@ -147,18 +165,24 @@ public class SpiltscreenManager : MonoBehaviour
                     if (Display.displays.Length > 1)
                     {
                         Display.displays[1].Activate();
-                        cameras[2].targetDisplay = 1;
-                        cameras[3].targetDisplay = 1;
+                        topDownCameras[2].targetDisplay = 1;
+                        firstPersonCameras[2].targetDisplay = 1;
+                        topDownCameras[3].targetDisplay = 1;
+                        firstPersonCameras[3].targetDisplay = 1;
 
-                        cameras[0].rect = new Rect(0, 0, 0.5f, 1);
-                        cameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
-                        cameras[2].rect = new Rect(0, 0, 0.5f, 1);
-                        cameras[3].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        topDownCameras[0].rect = new Rect(0, 0, 0.5f, 1);
+                        firstPersonCameras[0].rect = new Rect(0, 0, 0.5f, 1);
+                        topDownCameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        firstPersonCameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        topDownCameras[2].rect = new Rect(0, 0, 0.5f, 1);
+                        firstPersonCameras[2].rect = new Rect(0, 0, 0.5f, 1);
+                        topDownCameras[3].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        firstPersonCameras[3].rect = new Rect(0.5f, 0, 0.5f, 1);
 
-                        cameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-                        cameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-                        cameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
-                        cameras[3].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        topDownCameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        topDownCameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
+                        topDownCameras[3].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
                     }
                 }
 

@@ -511,6 +511,17 @@
                     "action": "LookAroundFP",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1c43b62d-ede4-43bf-bd07-b84f3c64026c",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=5,y=5)",
+                    "groups": "Gamepad",
+                    "action": "LookAroundFP",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

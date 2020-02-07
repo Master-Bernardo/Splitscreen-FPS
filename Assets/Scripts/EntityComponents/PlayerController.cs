@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     public PlayerMovement playerMovement;
     public GameEntity playerEntity;
-    public Transform deadPlayerGhostTransform;
+    public Transform rtsGhostTransform;
     public PlayerMovementRTS deadPlayerMovement;
     public PlayerInput playerInput;
     public EC_PlayerWeaponSystem weaponSystem;
@@ -136,7 +136,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     void OnNextWeapon(InputValue value)
     {
         if (playerInput.controlScheme == "Gamepad")
@@ -203,6 +202,18 @@ public class PlayerController : MonoBehaviour
         {
             ToogleCameraMode();
         }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SwitchToFPMode();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            SwitchToTopdown();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SwitchToRTSMode();
+        }
 
         //get movement
         float hor = movementInputVector.x;
@@ -212,9 +223,7 @@ public class PlayerController : MonoBehaviour
 
         if (controlMode == PlayerControlMode.FirstPerson)
         {
-            movementVector = playerEntity.transform.right*hor + playerEntity.transform.forward*ver;
-
-           
+            movementVector = playerEntity.transform.right*hor + playerEntity.transform.forward*ver; 
         }
         else
         {
@@ -222,13 +231,17 @@ public class PlayerController : MonoBehaviour
             Vector3 horV = camRight * hor;
             Vector3 verV = new Vector3(-camRight.z, 0f, camRight.x) * ver;
             movementVector = horV + verV;
+        }       
+        if (controlMode == PlayerControlMode.RTS)
+        {
+            deadPlayerMovement.UpdateMovement(movementVector);
         }
 
         #endregion
 
         #region determine desiredLookDirectionVector
 
-        if(controlMode == PlayerControlMode.TopDown)
+        if (controlMode == PlayerControlMode.TopDown)
         {
             //rotate towards
 
@@ -255,11 +268,7 @@ public class PlayerController : MonoBehaviour
             }
 
            
-        }
-        else if (controlMode == PlayerControlMode.RTS)
-        {
-            deadPlayerMovement.UpdateMovement(movementVector);
-        }
+        } 
         else if (controlMode == PlayerControlMode.FirstPerson)
         {
             if (playerInput.controlScheme == "Gamepad")
@@ -278,6 +287,9 @@ public class PlayerController : MonoBehaviour
                         currentLookVector = movementVector;
                     }
                 }*/
+                Vector3 desiredLookVektorHorizontal = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
+                Vector3 desiredLookVektorVertical = (Quaternion.AngleAxis(-mouseDelta.y * ySensitivity, fpCam.transform.right) * fpCam.transform.forward).normalized;
+                desiredLookVektor = new Vector3(desiredLookVektorHorizontal.x, desiredLookVektorVertical.y, desiredLookVektorHorizontal.z);
 
             }
             else
@@ -313,14 +325,14 @@ public class PlayerController : MonoBehaviour
         {
             playerMovement.SmoothRotateTo(desiredLookVektor);
         }
-
+        if(controlMode != PlayerControlMode.RTS)
         playerMovement.UpdateMovement(movementVector);     
     }
 
     public void ActivatePlayer()
     {
         playerEntity.GetComponent<EC_Health>().ResetHealth();
-        deadPlayerGhostTransform.gameObject.SetActive(false);
+        rtsGhostTransform.gameObject.SetActive(false);
         playerEntity.gameObject.SetActive(true);
         topdownCam.GetComponent<SmoothCameraFollow>().target = playerEntity.transform;
 
@@ -333,15 +345,8 @@ public class PlayerController : MonoBehaviour
         if (looseWeaponOnDeactivate) playerEntity.GetComponent<EC_PlayerWeaponSystem>().ResetWeapons();
 
         playerEntity.gameObject.SetActive(false);
-        Vector3 rtsCamPosition = playerEntity.transform.position;
-        rtsCamPosition.y = 0;
-        deadPlayerGhostTransform.position = rtsCamPosition;
-        deadPlayerGhostTransform.gameObject.SetActive(true);
-        topdownCam.GetComponent<SmoothCameraFollow>().target = deadPlayerGhostTransform;
 
-
-        controlMode = PlayerControlMode.RTS;
-
+        SwitchToRTSMode();
     }
 
     public void ToogleCameraMode()
@@ -350,6 +355,7 @@ public class PlayerController : MonoBehaviour
         {
             controlMode = PlayerControlMode.FirstPerson;
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             topdownCam.gameObject.SetActive(false);
             fpCam.gameObject.SetActive(true);
         }
@@ -357,9 +363,47 @@ public class PlayerController : MonoBehaviour
         {
             controlMode = PlayerControlMode.TopDown;
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             topdownCam.gameObject.SetActive(true);
             fpCam.gameObject.SetActive(false);
         }
+    }
+
+    void SwitchToFPMode()
+    {
+        controlMode = PlayerControlMode.FirstPerson;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        topdownCam.gameObject.SetActive(false);
+        fpCam.gameObject.SetActive(true);
+    }
+
+    void SwitchToTopdown()
+    {
+        topdownCam.GetComponent<SmoothCameraFollow>().target = playerEntity.transform;
+        controlMode = PlayerControlMode.TopDown;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        topdownCam.gameObject.SetActive(true);
+        fpCam.gameObject.SetActive(false);
+    }
+
+    void SwitchToRTSMode()
+    {
+        controlMode = PlayerControlMode.RTS;
+
+        Vector3 rtsCamPosition = playerEntity.transform.position;
+        rtsCamPosition.y = 0;
+        rtsGhostTransform.position = rtsCamPosition;
+        rtsGhostTransform.gameObject.SetActive(true);
+        topdownCam.GetComponent<SmoothCameraFollow>().target = rtsGhostTransform;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        topdownCam.gameObject.SetActive(true);
+        fpCam.gameObject.SetActive(false);
+
+       
     }
 
     public void TeleportPlayer(Vector3 position)
