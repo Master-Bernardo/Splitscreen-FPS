@@ -88,7 +88,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
             Vector3 deltaV = targetVelocity - rbHorizontalVelocity;
 
-            Vector3 accel = deltaV / Time.deltaTime;
+            Vector3 accel = deltaV / Time.fixedDeltaTime;
 
             if ((rbHorizontalVelocity + accel.normalized).sqrMagnitude > rbHorizontalVelocity.sqrMagnitude)
             {
@@ -144,19 +144,19 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     //spine and body rotation script, only for player, the ai guys have other scripts, used in topdown mode
     public void SmoothRotateTo(Vector3 direction)
     {
-        float deltaTime = Time.time - lastRotationTime;
+        //float deltaTime = Time.time - lastRotationTime;
 
         if (useSpine)
         {
             Quaternion desiredSpineRotation = Quaternion.LookRotation(new Vector3(spine.transform.forward.x, direction.y, spine.transform.forward.z));
-            spine.rotation = Quaternion.RotateTowards(spine.rotation, desiredSpineRotation, angularSpeed*3 * deltaTime); //cause rotateTowards and Lerp use differend speed, we increase this speed by 4 - this 4 is only an approximation
+            spine.rotation = Quaternion.RotateTowards(spine.rotation, desiredSpineRotation, angularSpeed*3 * Time.fixedDeltaTime); //cause rotateTowards and Lerp use differend speed, we increase this speed by 4 - this 4 is only an approximation
         }
 
         direction.y = 0;
         Quaternion desiredLookRotation = Quaternion.LookRotation(direction);
         //because we want the same speed as the agent, which has its angular speed saved as degrees per second we use the rotaate towards function
-        transform.rotation = Quaternion.Lerp(transform.rotation, desiredLookRotation, angularSpeed * deltaTime);
-        lastRotationTime = Time.time;
+        transform.rotation = Quaternion.Lerp(transform.rotation, desiredLookRotation, angularSpeed * Time.fixedDeltaTime);
+        //lastRotationTime = Time.time;
     }
 
     //used in fps mode

@@ -198,6 +198,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("-----------------------update normal---------------------");
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             ToogleCameraMode();
@@ -301,6 +303,7 @@ public class PlayerController : MonoBehaviour
 
             //first person mode gets rotation applied directly in update, not in fixedUpdate
             playerMovement.InstantRotateTo(desiredLookVektor);
+            Debug.Log("instant rotate to");
 
         }
 
@@ -324,9 +327,11 @@ public class PlayerController : MonoBehaviour
         if (controlMode == PlayerControlMode.TopDown)
         {
             playerMovement.SmoothRotateTo(desiredLookVektor);
+            Debug.Log("smoothRotate TO - fixed up");
         }
         if(controlMode != PlayerControlMode.RTS)
-        playerMovement.UpdateMovement(movementVector);     
+        playerMovement.UpdateMovement(movementVector);
+        Debug.Log("update movement fix");
     }
 
     public void ActivatePlayer()
@@ -383,7 +388,7 @@ public class PlayerController : MonoBehaviour
         topdownCam.GetComponent<SmoothCameraFollow>().target = playerEntity.transform;
         controlMode = PlayerControlMode.TopDown;
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.visible = false;
         topdownCam.gameObject.SetActive(true);
         fpCam.gameObject.SetActive(false);
     }
