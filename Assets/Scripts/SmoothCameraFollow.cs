@@ -30,14 +30,8 @@ public class SmoothCameraFollow : MonoBehaviour
     void LateUpdate()
     {
         Vector3 desiredPosition = target.position + offset;
-       // Vector3 currentVelocity = (transform.position - positionLastFame) * Time.deltaTime;
         Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity,  smoothTime);
         transform.position = smoothedPosition;
-        Debug.Log("late updat cam follow");
-        Debug.Log("target position: " + target.position);
-        //transform.LookAt(target);
-       // positionLastFame = transform.position;
-
     }
 
     public void TeleportToDesiredPosition()
