@@ -173,6 +173,7 @@ public class B_MeleeFighter : Behaviour
 
     protected override void Update()
     {
+        //Debug.Log("unit Update");
         movement.LookAt(enemySensing.nearestEnemy.GetPositionForAiming()- entity.GetPositionForAiming());
 
         if (Time.time > nextDistanceCheckTime)
@@ -224,12 +225,13 @@ public class B_MeleeFighter : Behaviour
             if ((nearestEnemyPosition - myPosition).sqrMagnitude > maxMeleeDistance)
             {
                 inRange = false;
-               // movement.StopLookAt();
+                // movement.StopLookAt();
+                //Debug.Log("notInRange");
             }
             else
             {
                 inRange = true;
-               // movement.LookAt(enemySensing.nearestEnemy.transform);
+                // movement.LookAt(enemySensing.nearestEnemy.transform);
 
             }
         }

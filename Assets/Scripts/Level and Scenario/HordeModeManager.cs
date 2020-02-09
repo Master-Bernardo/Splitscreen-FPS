@@ -232,7 +232,7 @@ public class HordeModeManager : MonoBehaviour
     void SpawnWave()
     {
         HordeWave currentWave = hordeScenario.waves[currentWaveNumber-1];
-        Debug.Log("current wave: " + currentWave);
+        Debug.Log("--------------------------------current wave: " + currentWave + "------------------------------------------");
         //if this wave has events - call them:
         events.disableEnableEvents[currentWaveNumber - 1].CallEvent();
 

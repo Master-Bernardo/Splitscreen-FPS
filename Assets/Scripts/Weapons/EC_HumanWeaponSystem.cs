@@ -169,7 +169,7 @@ public class EC_HumanWeaponSystem : EntityComponent
                 }
                 else
                 {
-                    Debug.Log("current weapon was null pon changeWeapon");
+                   // Debug.Log("current weapon was null pon changeWeapon");
 
                     DrawWeapon(currentSelectedWeapon);
                 }
@@ -195,14 +195,14 @@ public class EC_HumanWeaponSystem : EntityComponent
         {
             if (weaponToDraw != null)
             {
-                Debug.Log("draw weapon + " + weaponToDraw.stanceAnimationTypeID.ToString());
+                //Debug.Log("draw weapon + " + weaponToDraw.stanceAnimationTypeID.ToString());
                 handsAnimator.SetTrigger("DrawWeapon" + weaponToDraw.stanceAnimationTypeID);
             }
             else
             {
                 handsAnimator.SetTrigger("DrawWeapon" + 0);
             }
-            Debug.Log("trigger draw weaponset");
+            //Debug.Log("trigger draw weaponset");
         }
 
     }

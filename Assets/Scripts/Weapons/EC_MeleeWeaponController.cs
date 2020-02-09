@@ -17,14 +17,14 @@ public class EC_MeleeWeaponController : EntityComponent
     [Tooltip("the hitboxes of the attacks are relative to this transform - usefull with spine")]
     public Transform relativeTransform;
 
-   /* public enum WeaponControllerState 
-    {
-        NoWeapon,
-        MissileWeapon,
-        MeleeWeapon
-    }
+    /* public enum WeaponControllerState 
+     {
+         NoWeapon,
+         MissileWeapon,
+         MeleeWeapon
+     }
 
-    public WeaponControllerState state;*/
+     public WeaponControllerState state;*/
 
     /*[Header("Missile")]
 
@@ -49,9 +49,9 @@ public class EC_MeleeWeaponController : EntityComponent
 
     [Header("Melee")]
 
-    public MeleeAttackSet[] attackSets; //if we have different AttackSets, then we change it somehow
+    public SO_MeleeAttackSet[] attackSets; //if we have different AttackSets, then we change it somehow
     public int currentAttackSet;
-    MeleeAttack currentAttack;
+    SO_MeleeAttack currentAttack;
     int attackID = 1;
 
 
@@ -71,6 +71,16 @@ public class EC_MeleeWeaponController : EntityComponent
     public override void SetUpComponent(GameEntity entity)
     {
         base.SetUpComponent(entity);
+        if (attackSets[0] == null) Debug.Log("attacksets is null");
+        if (attackSets[0].attacks[0] == null) Debug.Log("attackSets[0] == null");
+        /*foreach(MeleeAttackSet attack in attackSets)
+        {
+            Debug.Log("--------attack set: -" + attack);
+            //foreach(MeleeAttack atta in attack.attacks)
+            //{
+               // Debug.Log("attack: " + atta);
+            //}
+        }*/
 
         //SetWeapon(currentWeapon);
     }
@@ -130,7 +140,7 @@ public class EC_MeleeWeaponController : EntityComponent
     {
         currentAttack = attackSets[currentAttackSet].attacks[attackID];
 
-        
+
         nextPrepareMeleeAttackTime = Time.time + currentAttack.meleeAttackInterval;
 
         //target.TakeDamage(meleeDamage);
@@ -141,7 +151,7 @@ public class EC_MeleeWeaponController : EntityComponent
         handsAnimator.SetTrigger(currentAttack.animationName);
         //currentTarget = target;
 
- 
+
     }
 
     void ExecuteMeleeAttack()
@@ -150,22 +160,32 @@ public class EC_MeleeWeaponController : EntityComponent
 
         Collider[] visibleColliders = Physics.OverlapSphere(relativeTransform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
 
+        //delete player from visible collliders
+
         for (int i = 0; i < visibleColliders.Length; i++)
         {
-            IDamageable<DamageInfo> damageable = visibleColliders[i].gameObject.GetComponent<IDamageable<DamageInfo>>();
-
-            // Debug.Log("collider " + visibleColliders[i]);
-            if (damageable != null)
+            if (visibleColliders[i].gameObject != myEntity.gameObject) //so we dont hit ourselves, maybe change this to a better solution in the future
             {
-                // check who did we hit, check if he has an gameEntity
-                GameEntity entity = visibleColliders[i].gameObject.GetComponent<GameEntity>();
-                // Debug.Log("damegable entity: " + entity);
-                if (entity != null)
+                IDamageable<DamageInfo> damageable = visibleColliders[i].gameObject.GetComponent<IDamageable<DamageInfo>>();
+
+                // Debug.Log("collider " + visibleColliders[i]);
+                if (damageable != null)
                 {
-                    if (!Settings.Instance.friendlyFire)
+                    // check who did we hit, check if he has an gameEntity
+                    GameEntity entity = visibleColliders[i].gameObject.GetComponent<GameEntity>();
+                    // Debug.Log("damegable entity: " + entity);
+                    if (entity != null)
                     {
-                        DiplomacyStatus diplomacyStatus = Settings.Instance.GetDiplomacyStatus(currentWeapon.teamID, entity.teamID);
-                        if (diplomacyStatus == DiplomacyStatus.War)
+                        if (!Settings.Instance.friendlyFire)
+                        {
+                            DiplomacyStatus diplomacyStatus = Settings.Instance.GetDiplomacyStatus(currentWeapon.teamID, entity.teamID);
+                            if (diplomacyStatus == DiplomacyStatus.War)
+                            {
+                                GiveDamage(damageable, visibleColliders[i].gameObject);
+                            }
+
+                        }
+                        else
                         {
                             GiveDamage(damageable, visibleColliders[i].gameObject);
                         }
@@ -176,41 +196,36 @@ public class EC_MeleeWeaponController : EntityComponent
                         GiveDamage(damageable, visibleColliders[i].gameObject);
                     }
 
-                }
-                else
-                {
-                    GiveDamage(damageable, visibleColliders[i].gameObject);
-                }
-
-                if (currentAttack.pushes)
-                {
-                    IPusheable<Vector3> pusheable = visibleColliders[i].gameObject.GetComponent<IPusheable<Vector3>>();
-
-                    if (pusheable != null)
+                    if (currentAttack.pushes)
                     {
-                        Vector3 direction;
-                        if (currentAttack.defaultDirection)
+                        IPusheable<Vector3> pusheable = visibleColliders[i].gameObject.GetComponent<IPusheable<Vector3>>();
+
+                        if (pusheable != null)
                         {
-                            if (entity != null)
+                            Vector3 direction;
+                            if (currentAttack.defaultDirection)
                             {
-                                direction = (entity.transform.position + entity.aimingCorrector - relativeTransform.position).normalized;
+                                if (entity != null)
+                                {
+                                    direction = (entity.transform.position + entity.aimingCorrector - relativeTransform.position).normalized;
+                                }
+                                else
+                                {
+                                    direction = (visibleColliders[i].gameObject.transform.position - relativeTransform.position).normalized;
+                                }
                             }
                             else
                             {
-                                direction = (visibleColliders[i].gameObject.transform.position - relativeTransform.position).normalized;
+                                direction = relativeTransform.TransformDirection(currentAttack.pushDirection.normalized);
                             }
-                        }
-                        else
-                        {
-                            direction = relativeTransform.TransformDirection(currentAttack.pushDirection.normalized);
-                        }
 
-                        pusheable.Push(direction * currentAttack.pushForce * Settings.Instance.forceMultiplier);
+                            pusheable.Push(direction * currentAttack.pushForce * Settings.Instance.forceMultiplier);
+                        }
                     }
+
+
+                    return;
                 }
-
-
-                return;
             }
 
         }
@@ -218,6 +233,7 @@ public class EC_MeleeWeaponController : EntityComponent
 
     void GiveDamage(IDamageable<DamageInfo> damageable, GameObject enemyTransform)
     {
+        //we check for pushes so the final hit can push him back
         if (currentAttack.pushes)
         {
             if (currentAttack.defaultDirection)
