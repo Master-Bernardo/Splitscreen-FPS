@@ -426,4 +426,16 @@ public class PlayerController : MonoBehaviour
         DeactivatePlayer();
         onDieEvent.Invoke();
     }
+
+    public Camera GetActiveCamera()
+    {
+        if(controlMode == PlayerControlMode.FirstPerson)
+        {
+            return fpCam;
+        }
+        else
+        {
+            return topdownCam;
+        }
+    }
 }

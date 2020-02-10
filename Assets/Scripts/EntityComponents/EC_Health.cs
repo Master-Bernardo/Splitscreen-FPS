@@ -113,7 +113,7 @@ public class EC_Health : EntityComponent
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            OnTakeDamage(new DamageInfo(50));
+            //OnTakeDamage(new DamageInfo(50));
         }
 
         base.UpdateComponent();
