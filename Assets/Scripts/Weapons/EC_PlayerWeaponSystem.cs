@@ -8,25 +8,7 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
     [Header("Visualisation")]
     public AimVisualiser aimVisualiser;
 
-    /*[Header("Weapons")]
-    [SerializeField]
-    Weapon[] inventory; //will be set up in inspector
-    Weapon currentSelectedWeapon;
-    int currentSelectedWeaponID;
-
-    public Transform rightHand;*/
-
-    /*[Header("Ammo")]
-    //ammo in pockets - not in magazines
-
-    Dictionary<AmmoType, int> ammo; //TODO this better
-    public int startRocketAmmo;
-    public int startGrenadeAmmo;
-    public int startShockGrenadeAmmo;*/
-
     public WeaponHUD weaponHUD;
-
-  
 
     [Header("Starting Weapons")]
     public GameObject startingWeapon1;
@@ -34,56 +16,36 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
     public GameObject startingWeapon3;
 
 
-    //public Camera rayCastCamera; //fp camera
-    //[Header("Animation")]
-    //public Animator animator;
-
-    //[Tooltip("select only one UI layer here")]
-    //public GameObject playerUILayerGO;
-    //public int playerUILayer;
-
-
-    /*enum WeaponSystemState
-    {
-        Default,
-        Reloading,
-        Changing
-    }
-
-    WeaponSystemState state = WeaponSystemState.Default;
-
-    float reloadingEndTime;*/
 
     public override void SetUpComponent(GameEntity entity)
     {
         ResetWeapons();
         base.SetUpComponent(entity);
-
-
-        //ammo = new Dictionary<AmmoType, int>();
-
        
         if (weaponHUD != null) weaponHUD.SetUp(this);
-        /* foreach (Weapon weapon in inventory)
-         {
-             if (weapon != null)
-             {
-                 weapon.gameObject.SetActive(false);
-                 weapon.SetUp(this);
-             }          
-         }
-         if(weaponHUD!=null)weaponHUD.SetUp(this);
-         ChangeWeapon(0);
-
-         ammo[AmmoType.Rocket] = startRocketAmmo;
-         ammo[AmmoType.Grenade] = startGrenadeAmmo;
-         ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;*/
-
-        //Debug.Log("len: " + SortingLayer.layers.Length);
-        //playerUILayer = playerUILayerGO.layer
-        //playerUILayer = SortingLayer.layers[playerUILayerID];
     }
 
+    public override void UpdateComponent()
+    {
+        base.UpdateComponent();
+
+        if (currentSelectedWeapon != null)
+        {
+            if (currentSelectedWeapon.usesAimingLine)
+            {
+                MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
+                aimVisualiser.DrawLine(mw.GetProjectileSpawnPoint(), mw.transform.forward, 15, mw.bloom);
+            }
+        }
+
+
+        if (weaponHUD != null)
+        {
+            weaponHUD.UpdateHUD(currentSelectedWeapon);
+        }
+    }
+
+    #region UseWeapon
     public void UseWeaponStart(int actionID)
     {
         if(state == WeaponSystemState.Default)
@@ -109,9 +71,7 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
         {
             if (currentSelectedWeapon != null)
             {
-
                  currentSelectedWeapon.HandleWeaponKeyHold(actionID);
-
             }
         }
     }
@@ -122,46 +82,14 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
         {
             if (currentSelectedWeapon != null)
             {
-
                  currentSelectedWeapon.HandleWeaponKeyUp(actionID);
-
             }
         }
     }
 
-    /*public override void ChangeWeapon(int inventorySlot)
-    {
+    #endregion
 
-        //animator.SetTrigger("changeWeapon");
-        //animator.SetBool("reloading", false);
-        if (state == WeaponSystemState.Reloading)
-        {
-            AbortReloading();
-        }
-
-        if (currentSelectedWeapon != null)
-        {
-            currentSelectedWeapon.gameObject.SetActive(false);
-            currentSelectedWeapon.OnWeaponDeselect();
-            aimVisualiser.HideLine();
-
-        }
-
-        currentSelectedWeaponID = inventorySlot;
-
-        currentSelectedWeapon = inventory[currentSelectedWeaponID];
-
-        if (currentSelectedWeapon != null)
-        {
-            currentSelectedWeapon.gameObject.SetActive(true);
-            currentSelectedWeapon.OnWeaponSelect(myEntity);
-            aimVisualiser.ShowLine();
-
-
-        }
-
-    }*/
-
+    #region SelectingWeapons
 
     public void SelectNextWeapon()
     {
@@ -187,60 +115,8 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
         }
     }
 
-    //returns the current selected weapon
-    /*public override Weapon SwapWeapon(Weapon newWeapon)
-    {
-        AbortReloading();
+    #endregion
 
-        Weapon oldWeapon = currentSelectedWeapon;
-        if (oldWeapon != null)
-        {
-            oldWeapon.OnWeaponDeselect();
-            aimVisualiser.HideLine();
-        }
-
-        currentSelectedWeapon = newWeapon;
-        currentSelectedWeapon.OnWeaponSelect(myEntity);
-        aimVisualiser.ShowLine();
-
-        inventory[currentSelectedWeaponID] = currentSelectedWeapon;
-
-        currentSelectedWeapon.transform.SetParent(rightHand.transform);
-        currentSelectedWeapon.transform.localPosition = new Vector3(0, 0, 0);
-        currentSelectedWeapon.transform.forward = rightHand.transform.forward;
-        currentSelectedWeapon.SetUp(this);
-        currentSelectedWeapon.teamID = myEntity.teamID;
-
-        return oldWeapon;
-
-    }*/
-
-
-    public override void UpdateComponent()
-    {
-        base.UpdateComponent();
-
-        if (currentSelectedWeapon != null)
-        {
-            if (currentSelectedWeapon.usesAimingLine)
-            {
-                MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
-                aimVisualiser.DrawLine(mw.GetProjectileSpawnPoint(), mw.transform.forward, 15, mw.bloom);
-            }
-        }
-
-
-        if (weaponHUD != null)
-        {
-            weaponHUD.UpdateHUD(currentSelectedWeapon);
-        }
-    }
-
-    
-
-   
-
-    //resetWeaponsBackToStartingWeapons
     public void ResetWeapons()
     {
         //first delete all weapons currently there

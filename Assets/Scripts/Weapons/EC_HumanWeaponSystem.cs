@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EC_HumanWeaponSystem : EntityComponent
 {
+    #region Fields
+
     [Header("Weapons")]
     [SerializeField]
     protected Weapon[] inventory; //will be set up in inspector
@@ -43,6 +45,9 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     protected float reloadingEndTime;
 
+    #endregion
+
+
 
     public override void SetUpComponent(GameEntity entity)
     {
@@ -55,18 +60,15 @@ public class EC_HumanWeaponSystem : EntityComponent
         SetUpWeaponsAndAmmo();
     }
 
-
     public override void UpdateComponent()
     {
-        //currentSelectedWeapon = inventory[currentSelectedWeaponID];
-
         switch (state)
         {
             case WeaponSystemState.Reloading:
 
                 if (Time.time > reloadingEndTime)
                 {
-                    EndReload();
+                    EndReloading();
                 }
 
                 break;
@@ -75,8 +77,8 @@ public class EC_HumanWeaponSystem : EntityComponent
                // Debug.Log("HidingWeapon");
                 if (Time.time > hideWeaponEndTime)
                 {   
-                    EndHideWeapon();
-                    DrawWeapon(currentSelectedWeapon);
+                    EndHidingWeapon();
+                    StartDrawingWeaponWeapon(currentSelectedWeapon);
                 }
 
                 break;
@@ -96,24 +98,6 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     }
 
-    public void ReloadWeapon()
-    {
-        if (state == WeaponSystemState.Default)
-        {
-            MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
-            if (mw != null)
-            {
-                if (!mw.infiniteMagazine)
-                {
-                    if (!mw.IsMagazineFull())
-                    {
-                        StartReload();
-                    }
-                }
-            }
-        }
-    }
-
     void SetUpWeaponsAndAmmo()
     {
         foreach (Weapon weapon in inventory)
@@ -125,7 +109,7 @@ public class EC_HumanWeaponSystem : EntityComponent
                 weapon.SetUp(this);
             }
         }
-        
+
         ChangeWeapon(0);
 
         ammo[AmmoType.Rocket] = startRocketAmmo;
@@ -133,21 +117,21 @@ public class EC_HumanWeaponSystem : EntityComponent
         ammo[AmmoType.ShockGrenade] = startShockGrenadeAmmo;
     }
 
+    #region ChangingWeapons
+
     public virtual void ChangeWeapon(int inventorySlot)
     {
         if(currentSelectedWeapon != inventory[inventorySlot])
         {
-            previousWeapon = currentSelectedWeapon;
-            currentSelectedWeaponID = inventorySlot;
-            currentSelectedWeapon = inventory[currentSelectedWeaponID];
-
+            
+            Weapon newWeapon = inventory[inventorySlot];
 
             if (state == WeaponSystemState.Reloading)
             {
                 Debug.Log("Change while reloading");
                 AbortReloading();
 
-                HideWeapon(previousWeapon);
+                StartHidingWeapon(currentSelectedWeapon);
             }
             else if(state == WeaponSystemState.HidingWeapon)
             {
@@ -156,28 +140,31 @@ public class EC_HumanWeaponSystem : EntityComponent
             else if(state == WeaponSystemState.DrawingWeapon)
             {
                 //if we are currently in the drawing process, we just restart the drawing process, without repeating the hiding process
-                EndHideWeapon();
-                DrawWeapon(currentSelectedWeapon);
+                EndHidingWeapon();
+                StartDrawingWeaponWeapon(newWeapon);
             }
             else if(state == WeaponSystemState.Default)
             {
                 if (previousWeapon != null)
                 {
                    // Debug.Log("current Selected: " + previousWeapon);
-                    HideWeapon(previousWeapon);
+                    StartHidingWeapon(currentSelectedWeapon);
 
                 }
                 else
                 {
                    // Debug.Log("current weapon was null pon changeWeapon");
 
-                    DrawWeapon(currentSelectedWeapon);
+                    StartDrawingWeaponWeapon(newWeapon);
                 }
-            }      
+            }
+
+            previousWeapon = currentSelectedWeapon;
+            currentSelectedWeapon = newWeapon;
         }
     }
 
-    protected virtual void DrawWeapon(Weapon weaponToDraw)
+    protected virtual void StartDrawingWeaponWeapon(Weapon weaponToDraw)
     {     
         state = WeaponSystemState.DrawingWeapon;
         drawWeaponEndTime = Time.time + drawOrHideTime;
@@ -207,7 +194,7 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     }
 
-    protected void HideWeapon(Weapon weaponToHide)
+    protected void StartHidingWeapon(Weapon weaponToHide)
     {
         state = WeaponSystemState.HidingWeapon;
         hideWeaponEndTime = Time.time + drawOrHideTime;
@@ -219,7 +206,7 @@ public class EC_HumanWeaponSystem : EntityComponent
         }
     }
 
-    protected void EndHideWeapon()
+    protected void EndHidingWeapon()
     {
         if (previousWeapon != null)
         {
@@ -227,8 +214,6 @@ public class EC_HumanWeaponSystem : EntityComponent
             previousWeapon.gameObject.SetActive(false);
         }    
     }
-
-
 
     //returns the current selected weapon
     public virtual Weapon SwapWeapon(Weapon newWeapon)
@@ -257,13 +242,35 @@ public class EC_HumanWeaponSystem : EntityComponent
         currentSelectedWeapon.SetUp(this);
         currentSelectedWeapon.teamID = myEntity.teamID;
 
-        DrawWeapon(currentSelectedWeapon);
+        StartDrawingWeaponWeapon(currentSelectedWeapon);
 
         return previousWeapon;
 
     }
 
-    public void StartReload()
+    #endregion
+
+    #region Reloading
+
+    public void ReloadWeapon()
+    {
+        if (state == WeaponSystemState.Default)
+        {
+            MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
+            if (mw != null)
+            {
+                if (!mw.infiniteMagazine)
+                {
+                    if (!mw.IsMagazineFull())
+                    {
+                        StartReloading();
+                    }
+                }
+            }
+        }
+    }
+
+    public void StartReloading()
     {
         state = WeaponSystemState.Reloading;
         MissileWeapon currentMW = currentSelectedWeapon as MissileWeapon;
@@ -286,8 +293,7 @@ public class EC_HumanWeaponSystem : EntityComponent
         }
     }
 
-
-    public void EndReload()
+    public void EndReloading()
     {
         state = WeaponSystemState.Default;
 
@@ -308,7 +314,9 @@ public class EC_HumanWeaponSystem : EntityComponent
         }
     }
 
+    #endregion
 
+    #region Getts n Setters
 
     //gets called by the weapons
     public int GetAmmo(AmmoType ammoType)
@@ -352,5 +360,5 @@ public class EC_HumanWeaponSystem : EntityComponent
         }
     }
 
-
+    #endregion
 }
