@@ -202,9 +202,14 @@ public class PlayerController : MonoBehaviour
         weaponSystem.ChangeWeapon(2);
     }
 
-    public void OnLookAroundFP(InputValue value)
+    void OnLookAroundFP(InputValue value)
     {
         mouseDelta = value.Get<Vector2>();
+    }
+
+    void OnToggleCamera()
+    {
+        ToogleCameraMode();
     }
 
 
@@ -216,16 +221,10 @@ public class PlayerController : MonoBehaviour
     {
         desiredLookVektor = playerEntity.transform.forward;
 
-        //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
-
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ToogleCameraMode();
-        }
         if (Input.GetKeyDown(KeyCode.J))
         {
             SwitchToFPMode();
@@ -382,19 +381,11 @@ public class PlayerController : MonoBehaviour
     {
         if (controlMode == PlayerControlMode.TopDown)
         {
-            controlMode = PlayerControlMode.FirstPerson;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            topdownCam.gameObject.SetActive(false);
-            fpCam.gameObject.SetActive(true);
+            SwitchToFPMode();
         }
         else if (controlMode == PlayerControlMode.FirstPerson)
         {
-            controlMode = PlayerControlMode.TopDown;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            topdownCam.gameObject.SetActive(true);
-            fpCam.gameObject.SetActive(false);
+            SwitchToTopdown();
         }
     }
 

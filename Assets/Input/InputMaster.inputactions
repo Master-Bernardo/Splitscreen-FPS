@@ -49,7 +49,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "d42fdf7c-7107-4fb9-9cad-23bea20912b8",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -57,7 +57,7 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "c764e45e-a2ec-4a07-bd94-556103daa7ef",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -138,6 +138,14 @@
                     "type": "Value",
                     "id": "cdccba8f-f0f3-411a-b548-152df39bcd27",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ToggleCamera",
+                    "type": "Button",
+                    "id": "02c9d139-a75c-49dd-acae-72919dd75d28",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 }
@@ -399,7 +407,7 @@
                 {
                     "name": "",
                     "id": "a5651bb2-ba9c-4f06-8af2-428f7222d228",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/#(F)",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
@@ -501,7 +509,7 @@
                     "path": "<Keyboard>/leftAlt",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad;Keyboard and Mouse",
+                    "groups": "Keyboard and Mouse",
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -580,6 +588,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "W2Release",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9f6bdde6-d72b-4f9e-bd60-0ca7e54748eb",
+                    "path": "<Keyboard>/#(P)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "ToggleCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0ae1c9d-c197-403f-a0ba-b955b7f58486",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ToggleCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

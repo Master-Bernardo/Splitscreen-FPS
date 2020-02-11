@@ -56,12 +56,15 @@ public class EC_MeleeWeaponController : EntityComponent
 
 
     float nextPrepareMeleeAttackTime;     //how fast can we attack?
-    float nextMeleeAttackTime;     //how long does it take for the swing to hit its target?
+    float nextMeleeAttackExecuteTime;     //how long does it take for the swing to hit its target?
     public bool meleeAttackInitiated;  //are we currently attacking?
 
     [Header("Animation")]
     public Animator handsAnimator;
     //TODO public SpineAimer spineAimier //a simple small script, which aims the spine to the current height- cnot necessary should work with or without it
+
+    [Tooltip("needs to be atleast the length of the attack_end animation clip")]
+    public float meleeAttackInterval; //time between attacks, move it elsewhere later into unit behaviour or something similar?
 
 
     public bool drawDamageGizmo;
@@ -89,7 +92,7 @@ public class EC_MeleeWeaponController : EntityComponent
     {
         if (meleeAttackInitiated)
         {
-            if (Time.time > nextMeleeAttackTime)
+            if (Time.time > nextMeleeAttackExecuteTime)
             {
                 ExecuteMeleeAttack();
                 meleeAttackInitiated = false;
@@ -139,12 +142,14 @@ public class EC_MeleeWeaponController : EntityComponent
         currentAttack = attackSets[currentAttackSet].attacks[attackID];
 
 
-        nextPrepareMeleeAttackTime = Time.time + currentAttack.meleeAttackInterval;
+        //nextPrepareMeleeAttackTime = Time.time + currentAttack.meleeAttackInterval;
+        nextPrepareMeleeAttackTime = Time.time + currentAttack.attackDuration + meleeAttackInterval;
 
         //target.TakeDamage(meleeDamage);
         meleeAttackInitiated = true;
-        nextMeleeAttackTime = Time.time + currentAttack.attackDuration;
+        nextMeleeAttackExecuteTime = Time.time + currentAttack.attackDuration;
         //Debug.Log("set trigger: " + currentAttack.animationName);
+
 
         handsAnimator.SetTrigger(currentAttack.animationName);
         //currentTarget = target;
@@ -154,12 +159,13 @@ public class EC_MeleeWeaponController : EntityComponent
 
     void ExecuteMeleeAttack()
     {
+        Debug.Log("Execute");
         // if (currentTarget != null) currentTarget.TakeDamage(meleeDamage);
 
         Collider[] visibleColliders = Physics.OverlapSphere(relativeTransform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
 
         //delete player from visible collliders
-
+       
         for (int i = 0; i < visibleColliders.Length; i++)
         {
             if (visibleColliders[i].gameObject != myEntity.gameObject) //so we dont hit ourselves, maybe change this to a better solution in the future

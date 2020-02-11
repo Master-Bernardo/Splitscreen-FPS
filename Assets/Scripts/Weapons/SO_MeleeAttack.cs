@@ -13,7 +13,7 @@ public class SO_MeleeAttack : ScriptableObject
     [Header("Attack")]
     public string attackName;
     public float damage;
-    public float meleeAttackInterval;
+    //public float meleeAttackInterval;
 
     //how long does it take for the swing to hit its target?
     public float attackDuration;

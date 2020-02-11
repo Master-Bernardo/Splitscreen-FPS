@@ -93,7 +93,7 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
                     {
                         meleeWeaponControler.MeleeAttack();
                     }
-                    else
+                    else if (actionID == 1)
                     {
                         meleeWeaponControler.AbortMeleeAttack();
                     }

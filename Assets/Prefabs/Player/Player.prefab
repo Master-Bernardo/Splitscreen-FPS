@@ -296,7 +296,9 @@ MonoBehaviour:
   attackSets:
   - {fileID: 11400000, guid: 077be150cf2c4cb44bab1046e2e4aeec, type: 2}
   currentAttackSet: 0
+  meleeAttackInitiated: 0
   handsAnimator: {fileID: 5623447747243153307}
+  meleeAttackInterval: 0.17
   drawDamageGizmo: 1
 --- !u!114 &7619780001613938120
 MonoBehaviour:
