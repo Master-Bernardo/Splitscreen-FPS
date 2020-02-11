@@ -14,9 +14,25 @@
                     "interactions": "Press"
                 },
                 {
+                    "name": "W2Press",
+                    "type": "Button",
+                    "id": "511ff7fc-7a25-4530-9de3-7649f5b53c20",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
                     "name": "W1Release",
                     "type": "Button",
                     "id": "b2b34a57-4b6c-4310-979b-382976f5c15e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)"
+                },
+                {
+                    "name": "W2Release",
+                    "type": "Button",
+                    "id": "c53e60f8-47be-48fe-b8bc-90e4fd6c9554",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=1)"
@@ -520,6 +536,50 @@
                     "processors": "ScaleVector2(x=5,y=5)",
                     "groups": "Gamepad",
                     "action": "LookAroundFP",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "703be57c-f0ea-49ce-98d3-a1dafad581a3",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "W2Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17578770-abdc-4adb-a154-727834ef72e3",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "W2Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d5156cf-f1f6-4cdf-a9a8-e9d2572edb64",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "W2Release",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f94a216b-d8d4-4c67-a834-52f48ea12ac7",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "W2Release",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -57,7 +57,7 @@ public class EC_MeleeWeaponController : EntityComponent
 
     float nextPrepareMeleeAttackTime;     //how fast can we attack?
     float nextMeleeAttackTime;     //how long does it take for the swing to hit its target?
-    bool meleeAttackInitiated;  //are we currently attacking?
+    public bool meleeAttackInitiated;  //are we currently attacking?
 
     [Header("Animation")]
     public Animator handsAnimator;
@@ -87,8 +87,6 @@ public class EC_MeleeWeaponController : EntityComponent
 
     public override void UpdateComponent()
     {
-
-
         if (meleeAttackInitiated)
         {
             if (Time.time > nextMeleeAttackTime)
@@ -229,6 +227,12 @@ public class EC_MeleeWeaponController : EntityComponent
             }
 
         }
+    }
+
+    public void AbortMeleeAttack()
+    {
+        meleeAttackInitiated = false;
+        handsAnimator.SetTrigger("AbortMeleeAttack");
     }
 
     void GiveDamage(IDamageable<DamageInfo> damageable, GameObject enemyTransform)

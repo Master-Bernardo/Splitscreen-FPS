@@ -43,7 +43,8 @@ public class PlayerController : MonoBehaviour
     Vector2 mouseDelta;
     //Vector2 mousePositionLastFrame;
 
-    bool weaponPressed = false;
+    bool weaponKey1Pressed = false;
+    bool weaponKey2Pressed = false;
     int pressedWeaponID;
 
     bool interacting = false;
@@ -52,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
     public float xSensitivity = 0.3f;
     public float ySensitivity = 0.1f;
+
+    public AimVisualiser aimVisualiser;
 
     #endregion
 
@@ -64,15 +67,31 @@ public class PlayerController : MonoBehaviour
 
     public void OnW1Press()
     {
-        if(controlMode == PlayerControlMode.TopDown) weaponSystem.UseWeaponStart(0);
+        //if(controlMode == PlayerControlMode.TopDown) weaponSystem.UseWeaponStart(0);
         pressedWeaponID = 0;
-        weaponPressed = true;
+        weaponKey1Pressed = true;
         weaponSystem.UseWeaponStart(pressedWeaponID);
     }
 
     public void OnW1Release()
     {
-        weaponPressed = false;
+        pressedWeaponID = 0;
+        weaponKey1Pressed = false;
+        weaponSystem.UseWeaponEnd(pressedWeaponID);
+    }
+
+    public void OnW2Press()
+    {
+        //if(controlMode == PlayerControlMode.TopDown) weaponSystem.UseWeaponStart(0);
+        pressedWeaponID = 1;
+        weaponKey2Pressed = true;
+        weaponSystem.UseWeaponStart(pressedWeaponID);
+    }
+
+    public void OnW2Release()
+    {
+        pressedWeaponID = 1;
+        weaponKey2Pressed = false;
         weaponSystem.UseWeaponEnd(pressedWeaponID);
     }
 
@@ -196,6 +215,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         desiredLookVektor = playerEntity.transform.forward;
+
+        aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
+
     }
 
     void Update()
@@ -308,8 +330,14 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         //weapon
-        if (weaponPressed)
+        if (weaponKey1Pressed)
         {
+            pressedWeaponID = 0;
+            weaponSystem.UseWeaponHold(pressedWeaponID);
+        }
+        if (weaponKey2Pressed)
+        {
+            pressedWeaponID = 1;
             weaponSystem.UseWeaponHold(pressedWeaponID);
         }
 
@@ -380,6 +408,8 @@ public class PlayerController : MonoBehaviour
 
         aimingCross.enabled = true;
         playerUICanvas.worldCamera = fpCam;
+
+        aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.FirstPerson);
     }
 
     void SwitchToTopdown()
@@ -393,6 +423,9 @@ public class PlayerController : MonoBehaviour
 
         aimingCross.enabled = false;
         playerUICanvas.worldCamera = topdownCam;
+
+        aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
+
     }
 
     void SwitchToRTSMode()
@@ -413,6 +446,9 @@ public class PlayerController : MonoBehaviour
 
         aimingCross.enabled = false;
         playerUICanvas.worldCamera = topdownCam;
+
+        aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
+
     }
 
     public void TeleportPlayer(Vector3 position)

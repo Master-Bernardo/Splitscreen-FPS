@@ -7,6 +7,7 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
 {
     [Header("Visualisation")]
     public AimVisualiser aimVisualiser;
+    public Vector3 aimLineStartPointOffset;
 
     public WeaponHUD weaponHUD;
 
@@ -19,6 +20,7 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
 
     public override void SetUpComponent(GameEntity entity)
     {
+
         ResetWeapons();
         base.SetUpComponent(entity);
        
@@ -33,8 +35,11 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
         {
             if (currentSelectedWeapon.usesAimingLine)
             {
-                MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
-                aimVisualiser.DrawLine(mw.GetProjectileSpawnPoint(), mw.transform.forward, 15, mw.bloom);
+                /*for special weapon dependant cone
+                //MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
+                //aimVisualiser.DrawCone(mw.GetProjectileSpawnPoint(), mw.transform.forward, 15, mw.bloom);
+                */
+                aimVisualiser.DrawLine(myEntity.transform.TransformPoint(aimLineStartPointOffset), myEntity.transform.forward, 15);
             }
         }
 
@@ -54,7 +59,15 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
             {
                 if(currentSelectedWeapon is MeleeWeapon)
                 {
-                    meleeWeaponControler.MeleeAttack();
+                    if(actionID == 0)
+                    {
+                        meleeWeaponControler.MeleeAttack();
+                    }
+                    else
+                    {
+                        meleeWeaponControler.AbortMeleeAttack();
+                    }
+                   
                 }
                 else
                 {
@@ -95,10 +108,14 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
     {
         if (currentSelectedWeaponID == inventory.Length - 1)
         {
+            Debug.Log("Go to first weapon");
+
             ChangeWeapon(0);
         }
         else
         {
+            //Debug.Log("currentID: " + current)
+            Debug.Log("next weapon");
             ChangeWeapon(currentSelectedWeaponID + 1);
         }
     }
@@ -107,10 +124,13 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
     {
         if (currentSelectedWeaponID == 0)
         {
+            Debug.Log("Go to last weapon");
+
             ChangeWeapon(inventory.Length - 1);
         }
         else
         {
+            Debug.Log("Go to previous weapon");
             ChangeWeapon(currentSelectedWeaponID - 1);
         }
     }

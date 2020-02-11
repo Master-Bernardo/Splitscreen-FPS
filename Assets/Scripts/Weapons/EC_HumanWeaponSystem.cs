@@ -30,6 +30,7 @@ public class EC_HumanWeaponSystem : EntityComponent
     [Tooltip("this value times 2 is the time it takes to change a weapon completely")]
     public float drawOrHideTime = 0.35f;
     Weapon previousWeapon;
+    Weapon weaponToHide; //sometimes the weapon we need to hide is not the previous weapon, because we switched weapons to fast
     float hideWeaponEndTime;
     float drawWeaponEndTime;
 
@@ -77,7 +78,7 @@ public class EC_HumanWeaponSystem : EntityComponent
                // Debug.Log("HidingWeapon");
                 if (Time.time > hideWeaponEndTime)
                 {   
-                    EndHidingWeapon();
+                    EndHidingWeapon(weaponToHide);
                     StartDrawingWeaponWeapon(currentSelectedWeapon);
                 }
 
@@ -121,9 +122,9 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     public virtual void ChangeWeapon(int inventorySlot)
     {
+        Debug.Log("changing to slot : " + inventorySlot);
         if(currentSelectedWeapon != inventory[inventorySlot])
         {
-            
             Weapon newWeapon = inventory[inventorySlot];
 
             if (state == WeaponSystemState.Reloading)
@@ -135,19 +136,34 @@ public class EC_HumanWeaponSystem : EntityComponent
             }
             else if(state == WeaponSystemState.HidingWeapon)
             {
+                //previousWeapon.gameObject.SetActive(false);
+                //previousWeapon.OnWeaponDeselect();
+                //weaponToHide = currentSelectedWeapon;
+                Debug.Log("changed while hiding");
                 //if we are in the hiding process, we continue it , without restarting it - so do nothing
             }
             else if(state == WeaponSystemState.DrawingWeapon)
             {
+                Debug.Log("changed while drawing");
                 //if we are currently in the drawing process, we just restart the drawing process, without repeating the hiding process
-                EndHidingWeapon();
+                EndHidingWeapon(currentSelectedWeapon);
                 StartDrawingWeaponWeapon(newWeapon);
             }
             else if(state == WeaponSystemState.Default)
             {
-                if (previousWeapon != null)
+                Debug.Log("changed default");
+
+                if (currentSelectedWeapon != null)
                 {
-                   // Debug.Log("current Selected: " + previousWeapon);
+                    // Debug.Log("current Selected: " + previousWeapon);
+                    if (meleeWeaponControler)
+                    {
+                        if (meleeWeaponControler.meleeAttackInitiated)
+                        {
+                            meleeWeaponControler.AbortMeleeAttack();
+                        }
+                    }
+
                     StartHidingWeapon(currentSelectedWeapon);
 
                 }
@@ -160,6 +176,7 @@ public class EC_HumanWeaponSystem : EntityComponent
             }
 
             previousWeapon = currentSelectedWeapon;
+            currentSelectedWeaponID = inventorySlot;
             currentSelectedWeapon = newWeapon;
         }
     }
@@ -194,11 +211,12 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     }
 
-    protected void StartHidingWeapon(Weapon weaponToHide)
+    protected void StartHidingWeapon(Weapon weapon)
     {
+        this.weaponToHide = weapon;
         state = WeaponSystemState.HidingWeapon;
         hideWeaponEndTime = Time.time + drawOrHideTime;
-        previousWeapon = weaponToHide;
+        //previousWeapon = weaponToHide;
 
         if (handsAnimator != null)
         {
@@ -206,12 +224,12 @@ public class EC_HumanWeaponSystem : EntityComponent
         }
     }
 
-    protected void EndHidingWeapon()
+    protected void EndHidingWeapon(Weapon weapon)
     {
-        if (previousWeapon != null)
+        if (weapon != null)
         {
-            previousWeapon.OnWeaponDeselect();
-            previousWeapon.gameObject.SetActive(false);
+            weapon.OnWeaponDeselect();
+            weapon.gameObject.SetActive(false);
         }    
     }
 
