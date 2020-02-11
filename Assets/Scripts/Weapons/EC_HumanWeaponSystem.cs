@@ -29,7 +29,7 @@ public class EC_HumanWeaponSystem : EntityComponent
     [Header("SwitchWeapon time")]
     [Tooltip("this value times 2 is the time it takes to change a weapon completely")]
     public float drawOrHideTime = 0.35f;
-    Weapon previousWeapon;
+    protected Weapon previousWeapon;
     Weapon weaponToHide; //sometimes the weapon we need to hide is not the previous weapon, because we switched weapons to fast
     float hideWeaponEndTime;
     float drawWeaponEndTime;
@@ -75,7 +75,6 @@ public class EC_HumanWeaponSystem : EntityComponent
                 break;
 
             case WeaponSystemState.HidingWeapon:
-               // Debug.Log("HidingWeapon");
                 if (Time.time > hideWeaponEndTime)
                 {   
                     EndHidingWeapon(weaponToHide);
@@ -85,11 +84,9 @@ public class EC_HumanWeaponSystem : EntityComponent
                 break;
 
             case WeaponSystemState.DrawingWeapon:
-               // Debug.Log("Drawing epaon------------------------");
                 if (Time.time > drawWeaponEndTime)
                 {
                     state = WeaponSystemState.Default;
-                    //Debug.Log("Weapon Draw Completed ..+......+...........+............+..........+............");
                 }
 
                 break;
@@ -122,40 +119,32 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     public virtual void ChangeWeapon(int inventorySlot)
     {
-        Debug.Log("changing to slot : " + inventorySlot);
+        //the new weapon gets selected instantly in code, only the visuals dont show it jet, because they are hiding the previous weapon
         if(currentSelectedWeapon != inventory[inventorySlot])
         {
             Weapon newWeapon = inventory[inventorySlot];
 
             if (state == WeaponSystemState.Reloading)
             {
-                Debug.Log("Change while reloading");
+                //Debug.Log("Change while reloading");
                 AbortReloading();
-
                 StartHidingWeapon(currentSelectedWeapon);
             }
             else if(state == WeaponSystemState.HidingWeapon)
             {
-                //previousWeapon.gameObject.SetActive(false);
-                //previousWeapon.OnWeaponDeselect();
-                //weaponToHide = currentSelectedWeapon;
-                Debug.Log("changed while hiding");
                 //if we are in the hiding process, we continue it , without restarting it - so do nothing
             }
             else if(state == WeaponSystemState.DrawingWeapon)
             {
-                Debug.Log("changed while drawing");
                 //if we are currently in the drawing process, we just restart the drawing process, without repeating the hiding process
                 EndHidingWeapon(currentSelectedWeapon);
                 StartDrawingWeaponWeapon(newWeapon);
             }
             else if(state == WeaponSystemState.Default)
             {
-                Debug.Log("changed default");
-
                 if (currentSelectedWeapon != null)
                 {
-                    // Debug.Log("current Selected: " + previousWeapon);
+                    //check if we havnt started a melee attack
                     if (meleeWeaponControler)
                     {
                         if (meleeWeaponControler.meleeAttackInitiated)
@@ -163,14 +152,10 @@ public class EC_HumanWeaponSystem : EntityComponent
                             meleeWeaponControler.AbortMeleeAttack();
                         }
                     }
-
                     StartHidingWeapon(currentSelectedWeapon);
-
                 }
                 else
                 {
-                   // Debug.Log("current weapon was null pon changeWeapon");
-
                     StartDrawingWeaponWeapon(newWeapon);
                 }
             }

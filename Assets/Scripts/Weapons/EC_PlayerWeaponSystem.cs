@@ -31,23 +31,53 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
     {
         base.UpdateComponent();
 
-        if (currentSelectedWeapon != null)
-        {
-            if (currentSelectedWeapon.usesAimingLine)
-            {
-                /*for special weapon dependant cone
-                //MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
-                //aimVisualiser.DrawCone(mw.GetProjectileSpawnPoint(), mw.transform.forward, 15, mw.bloom);
-                */
-                aimVisualiser.DrawLine(myEntity.transform.TransformPoint(aimLineStartPointOffset), myEntity.transform.forward, 15);
-            }
-        }
+        // if (currentSelectedWeapon != null)
+        //{
+        //if (currentSelectedWeapon.usesAimingLine)
+        //{
+        /*for special weapon dependant cone
+        //MissileWeapon mw = currentSelectedWeapon as MissileWeapon;
+        //aimVisualiser.DrawCone(mw.GetProjectileSpawnPoint(), mw.transform.forward, 15, mw.bloom);
+        */
 
+        // aimVisualiser.DrawLine(myEntity.transform.TransformPoint(aimLineStartPointOffset), myEntity.transform.forward, 15);
+        //}
+        //}
+        aimVisualiser.DrawLine(myEntity.transform.TransformPoint(aimLineStartPointOffset), myEntity.transform.forward, 15);
 
         if (weaponHUD != null)
         {
             weaponHUD.UpdateHUD(currentSelectedWeapon);
         }
+    }
+
+    public override void ChangeWeapon(int inventorySlot)
+    {
+        base.ChangeWeapon(inventorySlot);
+
+        if (currentSelectedWeapon)
+        {
+            if (!currentSelectedWeapon.usesAimingLine)
+            {
+                aimVisualiser.HideLine();
+            }
+            else if (previousWeapon)
+            {
+                if (currentSelectedWeapon.usesAimingLine && !previousWeapon.usesAimingLine)
+                {
+                    aimVisualiser.ShowLine();
+                }
+            }
+            else
+            {
+                if (currentSelectedWeapon.usesAimingLine)
+                {
+                    aimVisualiser.ShowLine();
+                }
+            }
+
+        }
+       
     }
 
     #region UseWeapon

@@ -10,11 +10,11 @@ public enum AimVisualisationType
     MeshPlacement //for scrtructures like barricades etc
 }
 
-public enum AimVisualisationMode
+/*public enum AimVisualisationMode
 {
     FirstPerson,
     TopDown
-}
+}*/
 
 public class AimVisualiser : MonoBehaviour
 {
@@ -23,26 +23,117 @@ public class AimVisualiser : MonoBehaviour
     public float lineStartWidth;
 
     public LayerMask lineLayerMask;
-    AimVisualisationMode currentAimVisualisationMode;
+    //AimVisualisationMode currentAimVisualisationMode;
+
+    Material lineMaterial;
     //works together with weaponSystem to visualise where the player is aiming with guns/grenades or where he wants to build a barricade
+
+    enum AnimationState //for appearing and dissapearing animation
+    {
+        Showing,
+        FullShown,
+        Hiding,
+        Hidden
+    }
+
+    AnimationState animationState  = AnimationState.Hidden;
+    public float appearAnimationSpeed;
 
 
 
     public void ShowLine()
     {
-        if (currentAimVisualisationMode == AimVisualisationMode.TopDown)
-        {
-            lineRenderer.enabled = true;
-            Debug.Log("show line");
-        }
+        //if (currentAimVisualisationMode == AimVisualisationMode.TopDown)
+        //{
+            lineMaterial = lineRenderer.material;
+            BeginnShowingAnimation();
+            //lineRenderer.enabled = true;
+        //}
     }
 
     public void HideLine()
     {
-        lineRenderer.enabled = false;
-        Debug.Log("hide line");
+        //if (currentAimVisualisationMode == AimVisualisationMode.TopDown)
+        //{
+            if (animationState == AnimationState.FullShown)
+            {
+                BeginnHidingAnimation();
+            }
+        //}
+        //    lineRenderer.enabled = false;
+        //Debug.Log("hide line");
 
     }
+
+    public void HideLineInstantly()
+    {
+        lineRenderer.enabled = false;
+    }
+
+    public void ShowLineInstantly()
+    {
+        lineRenderer.enabled = true;
+    }
+
+    void BeginnShowingAnimation()
+    {
+        animationState = AnimationState.Showing;
+        lineMaterial.color = new Color(1, 1, 1, 0);
+        //lineRenderer.enabled = true;
+
+    }
+
+    void EndShowingAnimation()
+    {
+        animationState = AnimationState.FullShown;
+        lineMaterial.color = new Color(1, 1, 1, 1);
+    }
+
+    void BeginnHidingAnimation()
+    {
+        animationState = AnimationState.Hiding;
+        lineMaterial.color = new Color(1, 1, 1, 1);
+    }
+
+    void EndHidingAnimation()
+    {
+        animationState = AnimationState.Hidden;
+        lineMaterial.color = new Color(1, 1, 1, 0);
+        //lineRenderer.enabled = false;
+    }
+
+
+    private void Update()
+    {
+        if(animationState == AnimationState.Showing)
+        {
+            float alpha = lineMaterial.color.a + appearAnimationSpeed * Time.deltaTime;
+            if (alpha >= 1)
+            {
+                EndShowingAnimation();
+            }
+            else
+            {
+                lineMaterial.color = new Color(1, 1, 1, alpha);
+            }
+            
+        }
+        else if(animationState == AnimationState.Hiding)
+        {
+            float alpha = lineMaterial.color.a - appearAnimationSpeed * Time.deltaTime;
+            if (alpha <= 0)
+            {
+                EndHidingAnimation();
+            }
+            else
+            {
+
+            }
+            lineMaterial.color = new Color(1, 1, 1, alpha);
+        }
+    }
+
+
 
     public void DrawCone(Vector3 start, Vector3 direction, float maxDistance, float spread)
     {
@@ -72,8 +163,8 @@ public class AimVisualiser : MonoBehaviour
 
     public void DrawLine(Vector3 start, Vector3 direction, float maxDistance)
     {
-        if (currentAimVisualisationMode == AimVisualisationMode.TopDown)
-        {
+       // if (currentAimVisualisationMode == AimVisualisationMode.TopDown)
+        //{
 
             lineRenderer.SetPosition(1, start);
             lineRenderer.startWidth = lineStartWidth;
@@ -98,11 +189,12 @@ public class AimVisualiser : MonoBehaviour
 
             lineRenderer.SetPosition(2, end);
             lineRenderer.startWidth = lineStartWidth;
-        }
+        //}
     }
 
 
-    public void ChangeVisualisationMode(AimVisualisationMode newMode)
+
+    /*public void ChangeVisualisationMode(AimVisualisationMode newMode)
     {
         currentAimVisualisationMode = newMode;
 
@@ -110,6 +202,6 @@ public class AimVisualiser : MonoBehaviour
         {
             HideLine();
         }
-    }
+    }*/
   
 }

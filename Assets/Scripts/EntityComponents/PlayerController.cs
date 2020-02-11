@@ -212,11 +212,11 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    void Start()
+    void Awake()
     {
         desiredLookVektor = playerEntity.transform.forward;
 
-        aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
+        //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
 
     }
 
@@ -409,7 +409,8 @@ public class PlayerController : MonoBehaviour
         aimingCross.enabled = true;
         playerUICanvas.worldCamera = fpCam;
 
-        aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.FirstPerson);
+        //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.FirstPerson);
+        aimVisualiser.HideLineInstantly();
     }
 
     void SwitchToTopdown()
@@ -424,8 +425,8 @@ public class PlayerController : MonoBehaviour
         aimingCross.enabled = false;
         playerUICanvas.worldCamera = topdownCam;
 
-        aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
-
+        //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
+        aimVisualiser.ShowLineInstantly();
     }
 
     void SwitchToRTSMode()
@@ -447,8 +448,8 @@ public class PlayerController : MonoBehaviour
         aimingCross.enabled = false;
         playerUICanvas.worldCamera = topdownCam;
 
-        aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
-
+        //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
+        aimVisualiser.HideLineInstantly();
     }
 
     public void TeleportPlayer(Vector3 position)
