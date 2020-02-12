@@ -15,7 +15,7 @@ MonoBehaviour:
   attackName: 1HSword_Slash_a
   damage: 10
   attackDuration: 0.3333334
-  hitPosition: {x: 0, y: 0.2, z: 1.3}
+  hitPosition: {x: 0, y: 0.6, z: 1.3}
   hitSphereRadius: 1
   pushes: 1
   pushForce: 300
@@ -23,3 +23,6 @@ MonoBehaviour:
   pushDirection: {x: 0, y: 0, z: 0}
   defaultDirection: 1
   animationName: 1HSword_Slash_a
+  swingSound: {fileID: 8300000, guid: 9fd43760a8d69c546a353d2ca225355f, type: 3}
+  swingSoundDelay: 0.2
+  hitSound: {fileID: 8300000, guid: c65e5743497a6e548a0c9b42767e3fcf, type: 3}

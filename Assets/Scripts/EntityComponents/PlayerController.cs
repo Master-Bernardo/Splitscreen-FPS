@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     public float ySensitivity = 0.1f;
 
     public AimVisualiser aimVisualiser;
+    public PlayerAudioListener playerAudioListener;
 
     #endregion
 
@@ -221,6 +222,7 @@ public class PlayerController : MonoBehaviour
     {
         desiredLookVektor = playerEntity.transform.forward;
 
+        SwitchToTopDownMode();
     }
 
     void Update()
@@ -231,7 +233,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
-            SwitchToTopdown();
+            SwitchToTopDownMode();
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -385,7 +387,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (controlMode == PlayerControlMode.FirstPerson)
         {
-            SwitchToTopdown();
+            SwitchToTopDownMode();
         }
     }
 
@@ -402,9 +404,10 @@ public class PlayerController : MonoBehaviour
 
         //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.FirstPerson);
         aimVisualiser.HideLineInstantly();
+        if (playerAudioListener) playerAudioListener.SwitchToFpMode();
     }
 
-    void SwitchToTopdown()
+    void SwitchToTopDownMode()
     {
         topdownCam.GetComponent<SmoothCameraFollow>().target = playerEntity.transform;
         controlMode = PlayerControlMode.TopDown;
@@ -418,6 +421,7 @@ public class PlayerController : MonoBehaviour
 
         //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
         aimVisualiser.ShowLineInstantly();
+        if(playerAudioListener) playerAudioListener.SwitchToTopDownMode();
     }
 
     void SwitchToRTSMode()
@@ -441,6 +445,8 @@ public class PlayerController : MonoBehaviour
 
         //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
         aimVisualiser.HideLineInstantly();
+        if (playerAudioListener) playerAudioListener.SwitchToTopDownMode();
+
     }
 
     public void TeleportPlayer(Vector3 position)

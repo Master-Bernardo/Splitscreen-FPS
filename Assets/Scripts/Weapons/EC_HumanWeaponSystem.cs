@@ -281,6 +281,7 @@ public class EC_HumanWeaponSystem : EntityComponent
         currentMW.StartReloading();
         if (handsAnimator != null)
         {
+            handsAnimator.SetFloat("ReloadSpeed" + currentSelectedWeapon.stanceAnimationTypeID, 1/currentMW.reloadTime);   //set the reload speed
             handsAnimator.SetTrigger("Reload");
         }
     }

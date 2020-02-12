@@ -69,6 +69,10 @@ public class EC_MeleeWeaponController : EntityComponent
 
     public bool drawDamageGizmo;
 
+    //sound
+    float playSwingSoundTime;
+    bool playSwingSoundDelayed = false;
+
 
 
     public override void SetUpComponent(GameEntity entity)
@@ -96,6 +100,17 @@ public class EC_MeleeWeaponController : EntityComponent
             {
                 ExecuteMeleeAttack();
                 meleeAttackInitiated = false;
+            }
+            if (playSwingSoundDelayed)
+            {
+                if (Time.time > playSwingSoundTime)
+                {
+                    playSwingSoundDelayed = false;
+
+                    //(currentWeapon as MeleeWeapon).audioSource.Stop();
+                    (currentWeapon as MeleeWeapon).audioSource.clip = currentAttack.swingSound;
+                    (currentWeapon as MeleeWeapon).audioSource.Play();
+                }
             }
         }
     }
@@ -143,6 +158,8 @@ public class EC_MeleeWeaponController : EntityComponent
 
 
         //nextPrepareMeleeAttackTime = Time.time + currentAttack.meleeAttackInterval;
+        playSwingSoundTime = Time.time + currentAttack.swingSoundDelay;
+        playSwingSoundDelayed = true;
         nextPrepareMeleeAttackTime = Time.time + currentAttack.attackDuration + meleeAttackInterval;
 
         //target.TakeDamage(meleeDamage);
@@ -163,11 +180,17 @@ public class EC_MeleeWeaponController : EntityComponent
         // if (currentTarget != null) currentTarget.TakeDamage(meleeDamage);
 
         Collider[] visibleColliders = Physics.OverlapSphere(relativeTransform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
-
+        if (visibleColliders.Length > 0)
+        {
+            (currentWeapon as MeleeWeapon).audioSource.Stop();
+            (currentWeapon as MeleeWeapon).audioSource.clip = currentAttack.hitSound;
+            (currentWeapon as MeleeWeapon).audioSource.Play();
+        }
         //delete player from visible collliders
        
         for (int i = 0; i < visibleColliders.Length; i++)
         {
+            Debug.Log("collides with: " + visibleColliders[i]);
             if (visibleColliders[i].gameObject != myEntity.gameObject) //so we dont hit ourselves, maybe change this to a better solution in the future
             {
                 IDamageable<DamageInfo> damageable = visibleColliders[i].gameObject.GetComponent<IDamageable<DamageInfo>>();

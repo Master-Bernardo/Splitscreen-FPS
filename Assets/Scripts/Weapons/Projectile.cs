@@ -73,11 +73,10 @@ public class Projectile : MonoBehaviour
         }
     }
 
-
-    protected virtual void OnCollisionEnter(Collision collision)
+    protected void PlayImpactSound()
     {
         if (audioSource != null)
-        {         
+        {
             if (impactSound != null)
             {
                 impactSoundDisableController.Deparent();
@@ -87,6 +86,12 @@ public class Projectile : MonoBehaviour
                 audioSource.Play();
             }
         }
+    }
+
+
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        PlayImpactSound();
 
 
 

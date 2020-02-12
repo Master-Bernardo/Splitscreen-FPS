@@ -32,4 +32,9 @@ public class SO_MeleeAttack : ScriptableObject
 
     public string animationName;
 
+    [Header("Sound")]
+    public AudioClip swingSound;//can be overriden later by special attack sounds
+    public float swingSoundDelay;
+    public AudioClip hitSound;//can be overriden later by special attack sounds, also maybe dependant on surface it hits, check the damage info
+
 }

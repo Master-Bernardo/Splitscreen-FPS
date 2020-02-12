@@ -13,10 +13,12 @@ public class ExplosiveProjectile : Projectile
 
     protected override void OnCollisionEnter(Collision collision)
     {
+        PlayImpactSound();
+
         //make a sphereCast in the explosionRADIUS
         Collider[] collidersInRange = Physics.OverlapSphere(transform.position, explosionRadius);
         float squaredMaxDistance = explosionRadius * explosionRadius;
-        Debug.Log("maxDistanceSquared: " + squaredMaxDistance);
+        //Debug.Log("maxDistanceSquared: " + squaredMaxDistance);
 
 
         for (int i = 0; i < collidersInRange.Length; i++)

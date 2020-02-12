@@ -20,7 +20,6 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
 
     public override void SetUpComponent(GameEntity entity)
     {
-
         ResetWeapons();
         base.SetUpComponent(entity);
        
