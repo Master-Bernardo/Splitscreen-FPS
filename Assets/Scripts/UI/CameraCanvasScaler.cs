@@ -8,12 +8,14 @@ public class CameraCanvasScaler : CanvasScaler
 {
     // The log base doesn't have any influence on the results whatsoever, as long as the same base is used everywhere.
     public const float kLogBase = 2;
+    Camera referenceCam;
 
     private Canvas mm_Canvas;
 
     protected override void OnEnable()
     {
         mm_Canvas = GetComponent<Canvas>();
+        referenceCam = GetComponent<CanvasScalerCameraReference>().referenceCam;
         base.OnEnable();
     }
 
@@ -25,6 +27,13 @@ public class CameraCanvasScaler : CanvasScaler
             screenSize.x *= mm_Canvas.worldCamera.rect.width;
             screenSize.y *= mm_Canvas.worldCamera.rect.height;
         }
+        /*
+        if (referenceCam)
+        {
+            mm_Canvas.worldCamera = referenceCam;
+            screenSize.x *= referenceCam.rect.width;
+            screenSize.y *= referenceCam.rect.height;
+        }*/
 
         float scaleFactor = 0;
         switch (m_ScreenMatchMode)
@@ -57,5 +66,6 @@ public class CameraCanvasScaler : CanvasScaler
 
         SetScaleFactor(scaleFactor);
         SetReferencePixelsPerUnit(m_ReferencePixelsPerUnit);
+
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 //is responsible for diffeent music played in the background
 public class MusicManager : MonoBehaviour
 {
-    public AudioSourceCustom audioSource;
+    public AudioSource audioSource;
 
     AudioClip currentClip;
     bool loop;
@@ -27,14 +27,14 @@ public class MusicManager : MonoBehaviour
     {
         if (loop)
         {
-            audioSource.SetLoop(true);
+            audioSource.loop = true;
         }
         else
         {
-            audioSource.SetLoop(false);
+            audioSource.loop = false;
         }
 
-        audioSource.SetSound(currentClip);
+        audioSource.clip = currentClip;
         audioSource.Play();
     }
 }

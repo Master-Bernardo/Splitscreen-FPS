@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
     [Header("Sound")]
     public AudioClip flySound; //TODO implement this for fireballs or similar
     public AudioClip impactSound;
-    public AudioSourceCustom audioSource;
+    public AudioSource audioSource;
     //public Transform audioSourceTransform;
     public ProjectileImpactSound impactSoundDisableController;
 
@@ -53,8 +53,8 @@ public class Projectile : MonoBehaviour
         {
             if (flySound != null)
             {
-                audioSource.SetLoop(true);
-                audioSource.SetSound(flySound);
+                audioSource.loop = true;
+                audioSource.clip = flySound;
                 audioSource.Play();
             }
             impactSoundDisableController.ResetPosition(transform);
@@ -81,8 +81,8 @@ public class Projectile : MonoBehaviour
             {
                 impactSoundDisableController.Deparent();
 
-                audioSource.SetLoop(false);
-                audioSource.SetSound(impactSound);
+                audioSource.loop = false;
+                audioSource.clip = impactSound;
                 audioSource.Play();
             }
         }

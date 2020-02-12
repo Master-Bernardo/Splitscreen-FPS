@@ -5,7 +5,7 @@ using UnityEngine;
 public class EC_UnitSoundManager : EntityComponent
 {
     public VoicelinesSO voicelineSO;
-    public AudioSourceCustom audioSource;
+    public AudioSource audioSource;
    
     public int currentStateID = 0;
 
@@ -40,7 +40,7 @@ public class EC_UnitSoundManager : EntityComponent
                 VoicelineState currentState = voicelineSO.states[currentStateID];
                 nextPlayVoicelineSoundTime = Time.time + currentState.soundInterval + Random.Range(-currentState.soundIntervallRandomiser, currentState.soundIntervallRandomiser);
 
-                audioSource.SetSound(currentState.stateSounds[Random.Range(0, currentState.stateSounds.Length)]);
+                audioSource.clip = currentState.stateSounds[Random.Range(0, currentState.stateSounds.Length)];
                 audioSource.Play();
             }
         }
@@ -70,7 +70,7 @@ public class EC_UnitSoundManager : EntityComponent
     {
         if (damageSound != null)
         {
-            audioSource.SetSound(damageSound);
+            audioSource.clip = damageSound;
             audioSource.Play();
         }    
     }
@@ -80,7 +80,7 @@ public class EC_UnitSoundManager : EntityComponent
     {
         transform.SetParent(null);
         if (!isPlayer) Destroy(gameObject, 10); //let the die sound stay a while  - but what should we do with the player?
-        audioSource.SetSound(deathSound);
+        audioSource.clip = deathSound;
         audioSource.Play();
     }
 

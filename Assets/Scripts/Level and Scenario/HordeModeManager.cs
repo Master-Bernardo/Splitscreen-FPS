@@ -56,7 +56,7 @@ public class HordeModeManager : MonoBehaviour
     public AudioClip defeatSound;
     public AudioClip victorySound;
 
-    public AudioSourceCustom audioSource;
+    public AudioSource audioSource;
 
     public AudioClip waveMusic;
     public AudioClip pauseMusic;
@@ -142,7 +142,9 @@ public class HordeModeManager : MonoBehaviour
 
                     //sound wave start
                     musicManager.StopMusic();
-                    audioSource.PlaySound(waveStartSound, false);
+                    //audioSource.loop = false;
+                    audioSource.clip = waveStartSound;
+                    audioSource.Play();
                     musicManager.PlayMusic(waveMusic, true, 2);
 
                 }
@@ -181,7 +183,9 @@ public class HordeModeManager : MonoBehaviour
 
                         //sound 
                         musicManager.StopMusic();
-                        audioSource.PlaySound(waveEndSound, false);
+                        //audioSource.loop = false;
+                        audioSource.clip = waveEndSound;
+                        audioSource.Play();
                         musicManager.PlayMusic(pauseMusic, true, 4);
                     }
 
@@ -371,7 +375,8 @@ public class HordeModeManager : MonoBehaviour
         }
 
         //sound
-        audioSource.PlaySound(playerDiesSound, false);
+        audioSource.clip = playerDiesSound;
+        audioSource.Play();
     }
 
     public void RespawnPlayers()
@@ -397,7 +402,8 @@ public class HordeModeManager : MonoBehaviour
 
         //sound
         musicManager.StopMusic();
-        audioSource.PlaySound(victorySound, false);
+        audioSource.clip = victorySound;
+        audioSource.Play();
 
     }
 
@@ -411,7 +417,8 @@ public class HordeModeManager : MonoBehaviour
 
         //sound
         musicManager.StopMusic();
-        audioSource.PlaySound(defeatSound, false);
+        audioSource.clip = defeatSound;
+        audioSource.Play();
     }
 
     #endregion
