@@ -367,8 +367,8 @@ MonoBehaviour:
   currentMagazineAmmo: 0
   customAudioSource: {fileID: 2836432248963486307}
   shootSound: {fileID: 8300000, guid: f6cb1f581b7444b23a05b613a16420d5, type: 3}
-  reloadSound: {fileID: 8300000, guid: 519f4dd5f9d49584ea724d79d0e5e1af, type: 3}
-  reloadSoundDelay: 0.5
+  reloadSound: {fileID: 8300000, guid: fcd5ab11260798b45b53d356438f11c0, type: 3}
+  reloadSoundDelay: 0.05
   splitSounds: 0
   shootSoundStart: {fileID: 0}
   shootSoundMid: {fileID: 0}
@@ -398,7 +398,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.06
+  m_Volume: 0.198
   m_Pitch: 1
   Loop: 0
   Mute: 0

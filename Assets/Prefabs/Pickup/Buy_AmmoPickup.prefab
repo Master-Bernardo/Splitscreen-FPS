@@ -277,6 +277,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1611628558357525829}
     m_Modifications:
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: cost
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1611628558357525834}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Interactable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 9120424410632753002}
+    - target: {fileID: 4330297645942981621, guid: 9309be58de3ac8545895d692b90a4a96,
+        type: 3}
+      propertyPath: m_Name
+      value: BuyInteractable
+      objectReference: {fileID: 0}
     - target: {fileID: 6539607019033645686, guid: 9309be58de3ac8545895d692b90a4a96,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -332,51 +392,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4330297645942981621, guid: 9309be58de3ac8545895d692b90a4a96,
-        type: 3}
-      propertyPath: m_Name
-      value: BuyInteractable
-      objectReference: {fileID: 0}
-    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
-        type: 3}
-      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
-        type: 3}
-      propertyPath: cost
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
-        type: 3}
-      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
-        type: 3}
-      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
-        type: 3}
-      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1611628558357525834}
-    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
-        type: 3}
-      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnPickup
-      objectReference: {fileID: 0}
-    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
-        type: 3}
-      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: Interactable, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3082272070393813000, guid: 9309be58de3ac8545895d692b90a4a96,
-        type: 3}
-      propertyPath: OnSucessfullyInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 9120424410632753002}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9309be58de3ac8545895d692b90a4a96, type: 3}
 --- !u!4 &1050876227723298068 stripped
