@@ -21,16 +21,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1362219360397472217, guid: 12da2c4986dfbe34599cd7385e5b05d6,
-        type: 3}
-      propertyPath: m_Name
-      value: Shooter Horde
-      objectReference: {fileID: 0}
     - target: {fileID: -7568736579957523176, guid: 12da2c4986dfbe34599cd7385e5b05d6,
         type: 3}
       propertyPath: type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 651446857378753757, guid: 12da2c4986dfbe34599cd7385e5b05d6,
+        type: 3}
+      propertyPath: components.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 651446857378753757, guid: 12da2c4986dfbe34599cd7385e5b05d6,
+        type: 3}
+      propertyPath: teamID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 651446857378753757, guid: 12da2c4986dfbe34599cd7385e5b05d6,
+        type: 3}
+      propertyPath: components.Array.data[7]
+      value: 
+      objectReference: {fileID: 6005904616755660474}
     - target: {fileID: 1362219360397472216, guid: 12da2c4986dfbe34599cd7385e5b05d6,
         type: 3}
       propertyPath: m_RootOrder
@@ -51,25 +61,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 651446857378753757, guid: 12da2c4986dfbe34599cd7385e5b05d6,
+    - target: {fileID: 1362219360397472217, guid: 12da2c4986dfbe34599cd7385e5b05d6,
         type: 3}
-      propertyPath: components.Array.size
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 651446857378753757, guid: 12da2c4986dfbe34599cd7385e5b05d6,
-        type: 3}
-      propertyPath: teamID
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 651446857378753757, guid: 12da2c4986dfbe34599cd7385e5b05d6,
-        type: 3}
-      propertyPath: components.Array.data[7]
-      value: 
-      objectReference: {fileID: 6005904616755660474}
-    - target: {fileID: 8446360440123459573, guid: 12da2c4986dfbe34599cd7385e5b05d6,
-        type: 3}
-      propertyPath: teamID
-      value: 1
+      propertyPath: m_Name
+      value: Shooter Horde
       objectReference: {fileID: 0}
     - target: {fileID: 1652365931639793758, guid: 12da2c4986dfbe34599cd7385e5b05d6,
         type: 3}
@@ -77,6 +72,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     - target: {fileID: 7784719811065085507, guid: 12da2c4986dfbe34599cd7385e5b05d6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
+    - target: {fileID: 8446360440123459573, guid: 12da2c4986dfbe34599cd7385e5b05d6,
+        type: 3}
+      propertyPath: teamID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767518191276132579, guid: 12da2c4986dfbe34599cd7385e5b05d6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

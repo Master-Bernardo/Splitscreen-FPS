@@ -80,7 +80,7 @@ MonoBehaviour:
       size: 1
     unitsPointsMultiplier: 1
   - bossUnits:
-    - unitPrefab: {fileID: 6634331409286886171, guid: 032455b755bc3b445b78f3650dcad480,
+    - unitPrefab: {fileID: 4770193190491562167, guid: fbbc87ee284d1ac4b8ef95b47d56a3bf,
         type: 3}
       fixedNumber: 0
       number: 1
@@ -129,7 +129,7 @@ MonoBehaviour:
       size: 1
     unitsPointsMultiplier: 1
   - bossUnits:
-    - unitPrefab: {fileID: 6634331409286886171, guid: 032455b755bc3b445b78f3650dcad480,
+    - unitPrefab: {fileID: 4770193190491562167, guid: fbbc87ee284d1ac4b8ef95b47d56a3bf,
         type: 3}
       fixedNumber: 0
       number: 3
@@ -145,7 +145,7 @@ MonoBehaviour:
       size: 1
     unitsPointsMultiplier: 0.5
   - bossUnits:
-    - unitPrefab: {fileID: 6634331409286886171, guid: 032455b755bc3b445b78f3650dcad480,
+    - unitPrefab: {fileID: 4770193190491562167, guid: fbbc87ee284d1ac4b8ef95b47d56a3bf,
         type: 3}
       fixedNumber: 0
       number: 1
