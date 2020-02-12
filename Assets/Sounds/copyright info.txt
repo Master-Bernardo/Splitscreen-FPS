@@ -1,3 +1,8 @@
 sword_swing_a - https://freesound.org/people/qubodup/sounds/59992/ - full rights
 sword_hit_a - https://freesound.org/people/florianreichelt/sounds/460509/ - full rights
 buy_sound_a - https://freesound.org/people/kiddpark/sounds/201159/ - free to use commercially
+sword_unsheath_a - https://freesound.org/people/Streety/sounds/30244/ - full rights
+sword_unsheath_b - https://freesound.org/people/giddster/sounds/484298/ - free to use commercially
+sword_sheath_a - https://freesound.org/people/32cheeseman32/sounds/180836/ - free to use commercialy
+drop_smth_a - https://freesound.org/people/Christopherderp/sounds/342452/ - full rights
+open_pickup_smth_a - https://freesound.org/people/SilverIllusionist/sounds/411177/ - free to commercially

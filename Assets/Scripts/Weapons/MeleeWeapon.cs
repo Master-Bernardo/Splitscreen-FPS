@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class MeleeWeapon : Weapon
 {
+    [Header("-----------------Melee Weapon---------------")]
     [Tooltip("which set of attacks is possible with this weapon? - communicates with meleeWeaponsController")]
     public int attackSetID;
 
-    [Header("Sound")]
-    public AudioSource audioSource;
 }
 

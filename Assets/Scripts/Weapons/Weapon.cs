@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [Header("Base Weapon")]
+    [Header("------------Base Weapon------------")]
     public string weaponName;
     public int teamID;
     protected EC_HumanWeaponSystem weaponSystem;
@@ -14,7 +14,13 @@ public class Weapon : MonoBehaviour
     public bool usesAimingLine;
     [Tooltip("the animation which is right for this weapon - 1 is sword, 2 is rifle, 3 is pistol")]
     public int stanceAnimationTypeID;
-    //public AimingLine aimingLine;
+
+    [Header("Sound")]
+    public AudioSource audioSource;
+    public AudioClip selectWeaponSound;
+    public AudioClip deselectWeaponSound;
+
+
 
     public void SetUp(EC_HumanWeaponSystem weaponSystem)
     {
@@ -24,11 +30,21 @@ public class Weapon : MonoBehaviour
     public virtual void OnWeaponSelect(GameEntity selectingEntity)
     {
         weaponWieldingEntity = selectingEntity;
+        if (selectWeaponSound)
+        {
+            audioSource.clip = selectWeaponSound;
+            audioSource.Play();
+        }
     }
 
     public virtual void OnWeaponDeselect()
     {
-
+        Debug.Log("deselect");
+        if (deselectWeaponSound)
+        {
+            audioSource.clip = deselectWeaponSound;
+            audioSource.Play();
+        }
     }
 
     public virtual void HandleWeaponKeyDown(int weaponKey)

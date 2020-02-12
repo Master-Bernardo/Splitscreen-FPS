@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MissileWeapon : Weapon
 {
-    [Header("Missile Wapon")]
+    #region Fields
+
+    [Header("----------Missile Wapon---------")]
     [SerializeField]
     protected Transform shootPoint; //point from which the projectiles are being shot
     [Tooltip("in rounds per second")]
@@ -26,8 +28,7 @@ public class MissileWeapon : Weapon
     float nextShootTime;
     float shootingInterval;
 
-    [Header("Sound")]
-    public AudioSourceCustom customAudioSource;
+    [Header("Sound - Missile Weapon")]
     public AudioClip shootSound;
     public AudioClip reloadSound;
     [Tooltip("the reload sound is a bit delayed to allow the shooting sound to be heared decay more naturally")]
@@ -41,10 +42,7 @@ public class MissileWeapon : Weapon
     public AudioClip shootSoundMid;
     public AudioClip shootSoundEnd;
 
-    
-
-
-
+    #endregion
 
 
     private void Start()
@@ -54,7 +52,6 @@ public class MissileWeapon : Weapon
         shootingInterval = 1 / fireRate;
         nextShootTime = Time.time + Random.Range(0, shootingInterval);
     }
-
 
     protected virtual void Shoot()
     {
@@ -77,17 +74,17 @@ public class MissileWeapon : Weapon
                 Shoot();
 
                 //audio
-                if (customAudioSource != null)
+                if (audioSource != null)
                 {
                     if (!splitSounds)
                     {
-                        customAudioSource.SetSound(shootSound);
-                        customAudioSource.Play();
+                        audioSource.clip = shootSound;
+                        audioSource.Play();
                     }
                     else
                     {
-                        customAudioSource.SetSound(shootSoundStart);
-                        customAudioSource.Play();
+                        audioSource.clip = shootSoundStart;
+                        audioSource.Play();
                     }
                 }
                
@@ -103,7 +100,6 @@ public class MissileWeapon : Weapon
         }
     }
 
-   
 
     public override void HandleWeaponKeyHold(int weaponKey)
     {
@@ -116,21 +112,21 @@ public class MissileWeapon : Weapon
                 {
                     Shoot();
 
-                    if (customAudioSource != null)
+                    if (audioSource != null)
                     {
                         if (splitSounds)
                         {
                             if (!loppingMiddleSound)
                             {
-                                customAudioSource.SetSound(shootSoundMid);
-                                customAudioSource.Play();
-                                customAudioSource.SetLoop(true);
+                                audioSource.clip = shootSoundMid;
+                                audioSource.Play();
+                                audioSource.loop = true;
                             }
                         }
                         else
                         {
-                            customAudioSource.SetSound(shootSound);
-                            customAudioSource.Play();
+                            audioSource.clip = shootSound;
+                            audioSource.Play();
                         }
                     }
                     
@@ -144,13 +140,13 @@ public class MissileWeapon : Weapon
                         {
                             weaponSystem.StartReloading();
 
-                            if (customAudioSource != null)
+                            if (audioSource != null)
                             {
                                 if (splitSounds)
                                 {
-                                    customAudioSource.SetLoop(false);
-                                    customAudioSource.SetSound(shootSoundEnd);
-                                    customAudioSource.Play();
+                                    audioSource.loop = false;
+                                    audioSource.clip = shootSoundEnd;
+                                    audioSource.Play();
                                 }
                             }
                         }
@@ -164,19 +160,16 @@ public class MissileWeapon : Weapon
 
     public override void HandleWeaponKeyUp(int weaponKey)
     {
-        if (customAudioSource != null)
+        if (audioSource != null)
         {
             if (splitSounds)
             {
-                customAudioSource.SetLoop(false);
-                customAudioSource.SetSound(shootSoundEnd);
-                customAudioSource.Play();
+                audioSource.loop = false;
+                audioSource.clip = shootSoundEnd;
+                audioSource.Play();
             }
         }
     }
-
-
-
 
 
     public Vector3 GetProjectileSpawnPoint()
@@ -195,32 +188,32 @@ public class MissileWeapon : Weapon
         //Debug.Log("startReload");
         if (splitSounds)
         {
-            customAudioSource.SetLoop(false);
-            customAudioSource.SetSound(shootSoundEnd);
-            customAudioSource.Play();
+            audioSource.loop = false;
+            audioSource.clip = shootSoundEnd;
+            audioSource.Play();
         }
         Invoke("PlayStartReloadSoundDelayed", reloadSoundDelay);
     }
 
     void PlayStartReloadSoundDelayed()
     {
-        if (customAudioSource)
+        if (audioSource)
         {
-            customAudioSource.SetSound(reloadSound);
-            customAudioSource.Play();
+            audioSource.clip = reloadSound;
+            audioSource.Play();
         }
       
     }
 
     public virtual void AbortReloading()
     {
-       if(customAudioSource!=null) customAudioSource.Stop();
+       if(audioSource != null) audioSource.Stop();
     }
 
     public virtual void EndReloading(int value)
     {
         currentMagazineAmmo = value;
-        customAudioSource.Stop();
+        audioSource.Stop();
 
     }
 

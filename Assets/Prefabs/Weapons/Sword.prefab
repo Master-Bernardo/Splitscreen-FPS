@@ -211,8 +211,10 @@ MonoBehaviour:
   automaticTrigger: 0
   usesAimingLine: 0
   stanceAnimationTypeID: 1
-  attackSetID: 0
   audioSource: {fileID: 6885476522256763734}
+  selectWeaponSound: {fileID: 8300000, guid: e1154960f31b7164aa98dd1969359607, type: 3}
+  deselectWeaponSound: {fileID: 8300000, guid: de8795d4159d5f94ba62332c9aa058f3, type: 3}
+  attackSetID: 0
 --- !u!82 &6885476522256763734
 AudioSource:
   m_ObjectHideFlags: 0

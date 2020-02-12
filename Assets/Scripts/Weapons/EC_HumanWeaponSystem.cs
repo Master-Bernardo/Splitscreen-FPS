@@ -202,7 +202,7 @@ public class EC_HumanWeaponSystem : EntityComponent
         state = WeaponSystemState.HidingWeapon;
         hideWeaponEndTime = Time.time + drawOrHideTime;
         //previousWeapon = weaponToHide;
-
+        weapon.OnWeaponDeselect();
         if (handsAnimator != null)
         {
             handsAnimator.SetTrigger("HideWeapon");
@@ -213,7 +213,7 @@ public class EC_HumanWeaponSystem : EntityComponent
     {
         if (weapon != null)
         {
-            weapon.OnWeaponDeselect();
+            
             weapon.gameObject.SetActive(false);
         }    
     }
