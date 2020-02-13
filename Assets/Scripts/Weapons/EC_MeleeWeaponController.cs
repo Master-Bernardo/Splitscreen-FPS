@@ -176,7 +176,7 @@ public class EC_MeleeWeaponController : EntityComponent
 
     void ExecuteMeleeAttack()
     {
-        Debug.Log("Execute");
+       // Debug.Log("Execute");
         // if (currentTarget != null) currentTarget.TakeDamage(meleeDamage);
 
         Collider[] visibleColliders = Physics.OverlapSphere(relativeTransform.TransformPoint(currentAttack.hitPosition), currentAttack.hitSphereRadius);
@@ -190,7 +190,7 @@ public class EC_MeleeWeaponController : EntityComponent
        
         for (int i = 0; i < visibleColliders.Length; i++)
         {
-            Debug.Log("collides with: " + visibleColliders[i]);
+            //Debug.Log("collides with: " + visibleColliders[i]);
             if (visibleColliders[i].gameObject != myEntity.gameObject) //so we dont hit ourselves, maybe change this to a better solution in the future
             {
                 IDamageable<DamageInfo> damageable = visibleColliders[i].gameObject.GetComponent<IDamageable<DamageInfo>>();
