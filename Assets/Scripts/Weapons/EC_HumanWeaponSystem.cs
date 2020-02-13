@@ -93,7 +93,7 @@ public class EC_HumanWeaponSystem : EntityComponent
                 if (Time.time > hideWeaponEndTime)
                 {   
                     EndHidingWeapon(weaponToHide);
-                    StartDrawingWeaponWeapon(currentSelectedWeapon);
+                    StartDrawingWeapon(currentSelectedWeapon);
                 }
 
                 break;
@@ -153,7 +153,7 @@ public class EC_HumanWeaponSystem : EntityComponent
             {
                 //if we are currently in the drawing process, we just restart the drawing process, without repeating the hiding process
                 EndHidingWeapon(currentSelectedWeapon);
-                StartDrawingWeaponWeapon(newWeapon);
+                StartDrawingWeapon(newWeapon);
             }
             else if(state == WeaponSystemState.Default)
             {
@@ -171,7 +171,7 @@ public class EC_HumanWeaponSystem : EntityComponent
                 }
                 else
                 {
-                    StartDrawingWeaponWeapon(newWeapon);
+                    StartDrawingWeapon(newWeapon);
                 }
             }
 
@@ -181,7 +181,7 @@ public class EC_HumanWeaponSystem : EntityComponent
         }
     }
 
-    protected virtual void StartDrawingWeaponWeapon(Weapon weaponToDraw)
+    protected virtual void StartDrawingWeapon(Weapon weaponToDraw)
     {
         state = WeaponSystemState.DrawingWeapon;
         drawWeaponEndTime = Time.time + drawOrHideTime;
@@ -233,37 +233,55 @@ public class EC_HumanWeaponSystem : EntityComponent
         }    
     }
 
-    //returns the current selected weapon
-    public virtual Weapon SwapWeapon(Weapon newWeapon)
+    //returns the current selected weapon if all slots are null, else it returns null
+    public virtual Weapon PickUpWeapon(Weapon newWeapon)
     {
-        if (state == WeaponSystemState.Reloading)
+        bool hasEmpthyInventorySlot = false;
+        int empthyInventorySlotID = 0 ;
+
+        for (int i = 0; i < inventory.Length; i++)
         {
-            AbortReloading();
+            if (!inventory[i])
+            {
+                hasEmpthyInventorySlot = true;
+                empthyInventorySlotID = i;
+            }
         }
 
-        previousWeapon = currentSelectedWeapon;
-        if (previousWeapon != null)
+        newWeapon.gameObject.SetActive(false);
+        newWeapon.transform.SetParent(rightHand.transform);
+        newWeapon.transform.localPosition = new Vector3(0, 0, 0);
+        newWeapon.transform.forward = rightHand.transform.forward;
+        newWeapon.SetUp(this);
+        newWeapon.teamID = myEntity.teamID;
+
+        if (!currentSelectedWeapon)
         {
-            previousWeapon.OnWeaponDeselect();
-            //aimVisualiser.HideLine();
+            inventory[currentSelectedWeaponID] = newWeapon;
+
+            ChangeWeapon(currentSelectedWeaponID);
+
+            return null;
         }
+        else
+        {
+            if (hasEmpthyInventorySlot)
+            {
+                inventory[empthyInventorySlotID] = newWeapon;
 
-        currentSelectedWeapon = newWeapon;
-        currentSelectedWeapon.OnWeaponSelect(myEntity);
-        //aimVisualiser.ShowLine();
+                ChangeWeapon(empthyInventorySlotID);
 
-        inventory[currentSelectedWeaponID] = currentSelectedWeapon;
-
-        currentSelectedWeapon.transform.SetParent(rightHand.transform);
-        currentSelectedWeapon.transform.localPosition = new Vector3(0, 0, 0);
-        currentSelectedWeapon.transform.forward = rightHand.transform.forward;
-        currentSelectedWeapon.SetUp(this);
-        currentSelectedWeapon.teamID = myEntity.teamID;
-
-        StartDrawingWeaponWeapon(currentSelectedWeapon);
-
-        return previousWeapon;
-
+                return null;
+            }
+            else
+            {
+                Weapon weaponToDrop = currentSelectedWeapon;
+                inventory[currentSelectedWeaponID] = newWeapon;
+                currentSelectedWeapon = null;
+                ChangeWeapon(currentSelectedWeaponID);
+                return weaponToDrop;
+            }
+        }
     }
 
     #endregion
