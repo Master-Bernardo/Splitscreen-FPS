@@ -65,6 +65,21 @@ public class EC_HumanWeaponSystem : EntityComponent
     {
         switch (state)
         {
+            case WeaponSystemState.Default:
+
+                if (currentSelectedWeapon)
+                {
+                    MissileWeapon currentSelectedMissileWeapon = currentSelectedWeapon as MissileWeapon;
+                    if (currentSelectedMissileWeapon)
+                    {
+                        if(currentSelectedMissileWeapon.currentMagazineAmmo == 0)
+                        {
+                            ReloadWeapon();
+                        }
+                    }
+                }
+
+                break;
             case WeaponSystemState.Reloading:
 
                 if (Time.time > reloadingEndTime)

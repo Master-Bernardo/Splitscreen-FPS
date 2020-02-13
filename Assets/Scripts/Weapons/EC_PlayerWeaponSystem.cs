@@ -135,32 +135,51 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
 
     public void SelectNextWeapon()
     {
-        if (currentSelectedWeaponID == inventory.Length - 1)
-        {
-            Debug.Log("Go to first weapon");
+        bool nextWeaponFound = false;
 
-            ChangeWeapon(0);
-        }
-        else
+        int iterator = currentSelectedWeaponID + 1;
+        while (!nextWeaponFound)
         {
-            //Debug.Log("currentID: " + current)
-            Debug.Log("next weapon");
-            ChangeWeapon(currentSelectedWeaponID + 1);
+            if (iterator == inventory.Length) iterator = 0;
+            if (inventory[iterator])
+            {
+                if (currentSelectedWeaponID != iterator)
+                {
+                    ChangeWeapon(iterator);
+                    nextWeaponFound = true;
+                }
+                else
+                {
+                    nextWeaponFound = true;
+                }
+
+            }
+            iterator++;
         }
     }
 
     public void SelectPreviousWeapon()
     {
-        if (currentSelectedWeaponID == 0)
-        {
-            Debug.Log("Go to last weapon");
+        bool previousWeaponFound = false;
 
-            ChangeWeapon(inventory.Length - 1);
-        }
-        else
+        int iterator = currentSelectedWeaponID - 1;
+        while (!previousWeaponFound)
         {
-            Debug.Log("Go to previous weapon");
-            ChangeWeapon(currentSelectedWeaponID - 1);
+            if (iterator == -1) iterator = inventory.Length-1;
+            if (inventory[iterator])
+            {
+                if (currentSelectedWeaponID != iterator)
+                {
+                    ChangeWeapon(iterator);
+                    previousWeaponFound = true;
+                }
+                else
+                {
+                    previousWeaponFound = true;
+                }
+
+            }
+            iterator--;
         }
     }
 

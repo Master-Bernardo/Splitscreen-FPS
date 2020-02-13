@@ -39,7 +39,6 @@ public class Weapon : MonoBehaviour
 
     public virtual void OnWeaponDeselect()
     {
-        Debug.Log("deselect");
         if (deselectWeaponSound)
         {
             audioSource.clip = deselectWeaponSound;
