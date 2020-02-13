@@ -41,7 +41,10 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //bool isBeingPushed = false;
     [Tooltip("under which velocity is the pushed agent not considered pushed anymore")]
     [SerializeField]
-    float pushTreshold;
+    float pushEndTreshold;
+    [Tooltip("a force must be larger than this force to initiate a push")]
+    [SerializeField]
+    float pushBeginnTreshold;
     float velocityLastTime;
     bool movementOrderIssuedWhileBeingPushed = false;
     Vector3 targetMovePositionNotYetOrdered;
@@ -75,7 +78,8 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         //optimisation
         nextMovementUpdateTime = Time.time + Random.Range(0, movementUpdateIntervall);
 
-        pushTreshold *= pushTreshold; //because we cheking against squared values for optimisation
+        pushEndTreshold *= pushEndTreshold; //because we cheking against squared values for optimisation
+        pushBeginnTreshold *= pushBeginnTreshold;
     }
 
     //update is only for looks- the rotation is important for logic but it can be a bit jaggy if far away or not on screen - lod this script, only call it every x seconds
@@ -132,7 +136,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
             //because of the start of the push the velocity can also be like 0, so we only check against the treshold, when the velocity is getting smaller
             if (velocityThisTime < velocityLastTime)
             {
-                if (velocityThisTime < pushTreshold)
+                if (velocityThisTime < pushEndTreshold)
                 {
                     //the unit can only move back to normal movement - if it is grounded -> raycast against navmesh
                     
@@ -169,7 +173,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
                 //dashBrake = true;
                 if (agent != null)
                 {
-                    if (rb.velocity.sqrMagnitude < pushTreshold)
+                    if (rb.velocity.sqrMagnitude < pushEndTreshold)
                     {
                         movementState = MovementState.Default;
 
@@ -210,20 +214,25 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     {
         if (canBePushed)
         {
-            if (agent.destination != null)
+            //Debug.Log("push force is: " + force.sqrMagnitude);
+            //Debug.Log("must be higher than: " + pushBeginnTreshold);
+            if (force.sqrMagnitude > pushBeginnTreshold)
             {
-                movementOrderIssuedWhileBeingPushed = true;
-                targetMovePositionNotYetOrdered = agent.destination;
+                if (agent.destination != null)
+                {
+                    movementOrderIssuedWhileBeingPushed = true;
+                    targetMovePositionNotYetOrdered = agent.destination;
+                }
+
+                movementState = MovementState.BeingPushed;
+                Vector3 agentVelocity = agent.velocity;
+                agent.enabled = false;
+                rb.isKinematic = false;
+                rb.velocity = agentVelocity;
+
+                rb.AddForce(force, ForceMode.Impulse);
+                velocityLastTime = 0;
             }
-
-            movementState = MovementState.BeingPushed;
-            Vector3 agentVelocity = agent.velocity;
-            agent.enabled = false;
-            rb.isKinematic = false;
-            rb.velocity = agentVelocity;
-
-            rb.AddForce(force, ForceMode.Impulse);
-            velocityLastTime = 0;   
         }
     }
 

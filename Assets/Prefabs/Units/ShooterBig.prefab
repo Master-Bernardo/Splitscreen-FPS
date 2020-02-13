@@ -139,7 +139,8 @@ MonoBehaviour:
   movementUpdateIntervall: 0
   rb: {fileID: 6754178515157054542}
   canBePushed: 1
-  pushTreshold: 5
+  pushEndTreshold: 5
+  pushBeginnTreshold: 0
   dashForce: 100
   dashTime: 0.125
   dashMultiplier: 0.75

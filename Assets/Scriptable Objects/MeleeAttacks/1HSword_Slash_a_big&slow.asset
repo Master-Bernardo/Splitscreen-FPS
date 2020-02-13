@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1HSword_Slash_a_big&slow
   m_EditorClassIdentifier: 
   attackName: 1HSword_Slash_a
-  damage: 10
+  damage: 65
   attackDuration: 0.7
   hitPosition: {x: 0, y: 0.6, z: 1.3}
   hitSphereRadius: 2

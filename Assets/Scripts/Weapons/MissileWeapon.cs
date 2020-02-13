@@ -92,14 +92,9 @@ public class MissileWeapon : Weapon
 
 
                 nextShootTime = Time.time + shootingInterval;
-                if (currentMagazineAmmo == 0)
-                {
-                    if (weaponSystem != null) weaponSystem.StartReloading();
-                }
             }
         }
     }
-
 
     public override void HandleWeaponKeyHold(int weaponKey)
     {

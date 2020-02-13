@@ -299,7 +299,14 @@ public class EC_HumanWeaponSystem : EntityComponent
                 {
                     if (!mw.IsMagazineFull())
                     {
-                        StartReloading();
+                        if(mw.ammoType == AmmoType.Infinite)
+                        {
+                            StartReloading();
+                        }
+                        else if (ammo[mw.ammoType] > 0)
+                        {
+                            StartReloading();
+                        }
                     }
                 }
             }

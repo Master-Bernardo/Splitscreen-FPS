@@ -28,11 +28,13 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     public float groundedCheckCapsuleHeight;
     public bool drawRaycastGizmo;
 
+    [Header("Dash")]
     public bool useDashPoints;
     [Tooltip("like stamina - replenishes itself after time, only for player because of performance optimisation")]
     public float maxDashPoints;
     float currentDashPoints;
     public float dashPointReplenishmentSpeed;
+    public DashPointsUI dashUI;
 
     #endregion
 
@@ -45,6 +47,8 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
         maxDecceleration *= Settings.Instance.forceMultiplier;
         jumpForce *= Settings.Instance.forceMultiplier;
         angularSpeed = playerAngularSpeed;
+
+        if(dashUI) dashUI.SetUp((int)maxDashPoints);
     }
 
     public override void UpdateComponent()
@@ -137,6 +141,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
 
         currentDashPoints += dashPointReplenishmentSpeed * Time.deltaTime;
         if (currentDashPoints > maxDashPoints) currentDashPoints = maxDashPoints;
+        dashUI.UpdateDashPoints((int)currentDashPoints);
         #endregion
     }
 

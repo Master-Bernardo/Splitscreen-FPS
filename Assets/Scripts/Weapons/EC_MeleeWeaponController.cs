@@ -167,8 +167,9 @@ public class EC_MeleeWeaponController : EntityComponent
         nextMeleeAttackExecuteTime = Time.time + currentAttack.attackDuration;
         //Debug.Log("set trigger: " + currentAttack.animationName);
 
-
+        handsAnimator.SetFloat("MeleeWeaponSpeed" + currentWeapon.stanceAnimationTypeID, 1 / currentAttack.attackDuration);
         handsAnimator.SetTrigger(currentAttack.animationName);
+        
         //currentTarget = target;
 
 

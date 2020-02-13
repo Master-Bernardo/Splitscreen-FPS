@@ -28,7 +28,6 @@ public class BuyInteractable : Interactable
         //Debug.Log("the overriden start");
         this.interactingPlayer = interactingPlayer;
         // Debug.Log("Horde manager2: " + hordeModeManager);
-        Debug.Log("interact: " + interactingPlayer);
         if (playerRessources.DoesPlayerHaveEnoughPoints((interactingPlayer as PlayerEntity).playerID, cost))
         {
            // Debug.Log("enough");

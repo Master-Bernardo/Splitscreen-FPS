@@ -108,7 +108,7 @@ MonoBehaviour:
   maxDistanceToPlayer: 10
   movement: {fileID: 1362219360397472218}
   sensing: {fileID: -7568736579957523176}
-  weapon: {fileID: 775508951138762637}
+  weaponController: {fileID: 0}
 --- !u!114 &1362219360397472218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,11 +124,14 @@ MonoBehaviour:
   movementUpdateIntervall: 0
   rb: {fileID: 3583093012250160441}
   canBePushed: 1
-  pushTreshold: 5
+  pushEndTreshold: 5
+  pushBeginnTreshold: 0
   dashForce: 100
   dashTime: 0.125
   dashMultiplier: 0.75
   showGizmo: 0
+  useSpine: 0
+  spine: {fileID: 0}
 --- !u!114 &-7568736579957523176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,9 +169,9 @@ MonoBehaviour:
   changeColorOnDamage: 1
   damageMaterial: {fileID: 2100000, guid: 8297e0eb55f729243a4875f7b5ffdd3c, type: 2}
   renderersToTint:
-  - {fileID: 4672430540321412694}
-  - {fileID: 3734641105251542954}
-  - {fileID: 2075905972073420398}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   changeColorTime: 0.2
   instantateDeathEffect: 0
   deathEffect: {fileID: 5604096991553550271}
@@ -322,29 +325,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: HumanModel
       objectReference: {fileID: 0}
+    - target: {fileID: 8802928292075680608, guid: 83d591f793407114883b120b4c8a1a6f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83d591f793407114883b120b4c8a1a6f, type: 3}
 --- !u!4 &1968762341632216360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 162194869008924412, guid: 83d591f793407114883b120b4c8a1a6f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1806587440313234388}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &4672430540321412694 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 6468725314796529026, guid: 83d591f793407114883b120b4c8a1a6f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1806587440313234388}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &3734641105251542954 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3082245522138485886, guid: 83d591f793407114883b120b4c8a1a6f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1806587440313234388}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &2075905972073420398 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 422582790819751354, guid: 83d591f793407114883b120b4c8a1a6f,
     type: 3}
   m_PrefabInstance: {fileID: 1806587440313234388}
   m_PrefabAsset: {fileID: 0}
@@ -355,11 +345,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6657814215442124280}
     m_Modifications:
-    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
-        type: 3}
-      propertyPath: m_Name
-      value: Sword
-      objectReference: {fileID: 0}
     - target: {fileID: 6527649046478672803, guid: a3d7ea4283f824548be4fe5a48a704cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -414,6 +399,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
+        type: 3}
+      propertyPath: m_Name
+      value: Sword
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3d7ea4283f824548be4fe5a48a704cb, type: 3}
@@ -423,18 +413,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4492958187423979552}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &775508951138762637 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3790087924391094189, guid: a3d7ea4283f824548be4fe5a48a704cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 4492958187423979552}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 397fa643e07bbad488c3e5fd08ce05a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7700439921991753360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -442,6 +420,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1362219360397472216}
     m_Modifications:
+    - target: {fileID: 425685759070711666, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534006784972985309, guid: df929418312630c41bb6aa5be091ddb3,
+        type: 3}
+      propertyPath: m_Name
+      value: DeathEffect
+      objectReference: {fileID: 0}
     - target: {fileID: 1951498148723590908, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -497,15 +485,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1534006784972985309, guid: df929418312630c41bb6aa5be091ddb3,
+    - target: {fileID: 2580345955104155060, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}
-      propertyPath: m_Name
-      value: DeathEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 425685759070711666, guid: df929418312630c41bb6aa5be091ddb3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8296518528344457898, guid: df929418312630c41bb6aa5be091ddb3,
         type: 3}
