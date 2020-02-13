@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
 {
     #region Fields
     public Camera topdownCam;
+    public Camera topDownUICam;
     public Camera fpCam;
+    public Camera fpUICam;
     public Canvas playerUICanvas;
     public Canvas aimingCross;
 
@@ -400,7 +402,7 @@ public class PlayerController : MonoBehaviour
         fpCam.gameObject.SetActive(true);
 
         aimingCross.enabled = true;
-        playerUICanvas.worldCamera = fpCam;
+        playerUICanvas.worldCamera = fpUICam;
 
         //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.FirstPerson);
         aimVisualiser.HideLineInstantly();
@@ -417,7 +419,7 @@ public class PlayerController : MonoBehaviour
         fpCam.gameObject.SetActive(false);
 
         aimingCross.enabled = false;
-        playerUICanvas.worldCamera = topdownCam;
+        playerUICanvas.worldCamera = topDownUICam;
 
         //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
         aimVisualiser.ShowLineInstantly();
@@ -441,7 +443,7 @@ public class PlayerController : MonoBehaviour
         fpCam.gameObject.SetActive(false);
 
         aimingCross.enabled = false;
-        playerUICanvas.worldCamera = topdownCam;
+        playerUICanvas.worldCamera = topDownUICam;
 
         //aimVisualiser.ChangeVisualisationMode(AimVisualisationMode.TopDown);
         aimVisualiser.HideLineInstantly();

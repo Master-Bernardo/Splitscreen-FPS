@@ -98,6 +98,16 @@ MonoBehaviour:
   - {fileID: 8948881170086137277}
   - {fileID: 8948881169513393302}
   - {fileID: 8948881169723191906}
+  UICamerasTopDown:
+  - {fileID: 5054184635317517445}
+  - {fileID: 5054184635764529064}
+  - {fileID: 5054184634587739779}
+  - {fileID: 5054184634243983479}
+  UICamerasFirstPerson:
+  - {fileID: 5355753330856784030}
+  - {fileID: 5355753331504995251}
+  - {fileID: 5355753329992792728}
+  - {fileID: 5355753329783383148}
   playerContainers:
   - {fileID: 7045396466032994993}
   - {fileID: 7045396465318707612}
@@ -152,12 +162,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6762744256916064483}
     m_Modifications:
+    - target: {fileID: 1696006948206232285, guid: 2e3f464a818f22d48ab60f4990a76446,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 16384
+      objectReference: {fileID: 0}
     - target: {fileID: 1701779341657673273, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
         type: 2}
+    - target: {fileID: 2017060918397914822, guid: 2e3f464a818f22d48ab60f4990a76446,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 16384
+      objectReference: {fileID: 0}
     - target: {fileID: 2247986519993652855, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -241,7 +261,7 @@ PrefabInstance:
     - target: {fileID: 4605563049055598836, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -569.8001
+      value: -569.80005
       objectReference: {fileID: 0}
     - target: {fileID: 4605563049730725578, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
@@ -270,12 +290,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e3f464a818f22d48ab60f4990a76446, type: 3}
---- !u!1 &7045396465318707612 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4331441205604276466, guid: 2e3f464a818f22d48ab60f4990a76446,
-    type: 3}
-  m_PrefabInstance: {fileID: 6762744256182688110}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4821221901001264921 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2247986519993652855, guid: 2e3f464a818f22d48ab60f4990a76446,
@@ -300,9 +314,27 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 6762744256182688110}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &5054184635764529064 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2017060918397914822, guid: 2e3f464a818f22d48ab60f4990a76446,
+    type: 3}
+  m_PrefabInstance: {fileID: 6762744256182688110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &8948881170086137277 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2443985722483381459, guid: 2e3f464a818f22d48ab60f4990a76446,
+    type: 3}
+  m_PrefabInstance: {fileID: 6762744256182688110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &5355753331504995251 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1696006948206232285, guid: 2e3f464a818f22d48ab60f4990a76446,
+    type: 3}
+  m_PrefabInstance: {fileID: 6762744256182688110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7045396465318707612 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4331441205604276466, guid: 2e3f464a818f22d48ab60f4990a76446,
     type: 3}
   m_PrefabInstance: {fileID: 6762744256182688110}
   m_PrefabAsset: {fileID: 0}
@@ -324,6 +356,16 @@ PrefabInstance:
     - target: {fileID: 0}
       propertyPath: m_UiScaleMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1696006948206232285, guid: 2e3f464a818f22d48ab60f4990a76446,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 8192
+      objectReference: {fileID: 0}
+    - target: {fileID: 2017060918397914822, guid: 2e3f464a818f22d48ab60f4990a76446,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 8192
       objectReference: {fileID: 0}
     - target: {fileID: 2247986519993652855, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
@@ -380,6 +422,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2277629024169186441, guid: 2e3f464a818f22d48ab60f4990a76446,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 2381381121616985054, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -408,7 +455,7 @@ PrefabInstance:
     - target: {fileID: 4605563049055598836, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -569.8001
+      value: -569.80005
       objectReference: {fileID: 0}
     - target: {fileID: 4605563049730725578, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
@@ -455,11 +502,6 @@ PrefabInstance:
       propertyPath: m_TargetDisplay
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6183753401972804381, guid: 2e3f464a818f22d48ab60f4990a76446,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 401207
-      objectReference: {fileID: 0}
     - target: {fileID: 6183753401972804579, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_Name
@@ -502,9 +544,21 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 6762744256612807235}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &5054184635317517445 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2017060918397914822, guid: 2e3f464a818f22d48ab60f4990a76446,
+    type: 3}
+  m_PrefabInstance: {fileID: 6762744256612807235}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &8948881170796881552 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2443985722483381459, guid: 2e3f464a818f22d48ab60f4990a76446,
+    type: 3}
+  m_PrefabInstance: {fileID: 6762744256612807235}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &5355753330856784030 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1696006948206232285, guid: 2e3f464a818f22d48ab60f4990a76446,
     type: 3}
   m_PrefabInstance: {fileID: 6762744256612807235}
   m_PrefabAsset: {fileID: 0}
@@ -515,12 +569,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6762744256916064483}
     m_Modifications:
+    - target: {fileID: 1696006948206232285, guid: 2e3f464a818f22d48ab60f4990a76446,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 65536
+      objectReference: {fileID: 0}
     - target: {fileID: 1701779341657673273, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
         type: 2}
+    - target: {fileID: 2017060918397914822, guid: 2e3f464a818f22d48ab60f4990a76446,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 65536
+      objectReference: {fileID: 0}
     - target: {fileID: 2247986519993652855, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -599,7 +663,7 @@ PrefabInstance:
     - target: {fileID: 4605563049055598836, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -569.8001
+      value: -569.80005
       objectReference: {fileID: 0}
     - target: {fileID: 4605563049730725578, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
@@ -610,11 +674,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -55.799927
-      objectReference: {fileID: 0}
-    - target: {fileID: 6183753401972804381, guid: 2e3f464a818f22d48ab60f4990a76446,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 466743
       objectReference: {fileID: 0}
     - target: {fileID: 6183753401972804579, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
@@ -658,9 +717,21 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 6762744257686529713}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &5054184634243983479 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2017060918397914822, guid: 2e3f464a818f22d48ab60f4990a76446,
+    type: 3}
+  m_PrefabInstance: {fileID: 6762744257686529713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &8948881169723191906 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2443985722483381459, guid: 2e3f464a818f22d48ab60f4990a76446,
+    type: 3}
+  m_PrefabInstance: {fileID: 6762744257686529713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &5355753329783383148 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1696006948206232285, guid: 2e3f464a818f22d48ab60f4990a76446,
     type: 3}
   m_PrefabInstance: {fileID: 6762744257686529713}
   m_PrefabAsset: {fileID: 0}
@@ -671,12 +742,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6762744256916064483}
     m_Modifications:
+    - target: {fileID: 1696006948206232285, guid: 2e3f464a818f22d48ab60f4990a76446,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 32768
+      objectReference: {fileID: 0}
     - target: {fileID: 1701779341657673273, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
         type: 2}
+    - target: {fileID: 2017060918397914822, guid: 2e3f464a818f22d48ab60f4990a76446,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 32768
+      objectReference: {fileID: 0}
     - target: {fileID: 2247986519993652855, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -760,7 +841,7 @@ PrefabInstance:
     - target: {fileID: 4605563049055598836, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -569.8001
+      value: -569.80005
       objectReference: {fileID: 0}
     - target: {fileID: 4605563049730725578, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
@@ -777,11 +858,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c11752497994cac44bf98f1fc79343e0, type: 2}
-    - target: {fileID: 6183753401972804381, guid: 2e3f464a818f22d48ab60f4990a76446,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 40247
-      objectReference: {fileID: 0}
     - target: {fileID: 6183753401972804579, guid: 2e3f464a818f22d48ab60f4990a76446,
         type: 3}
       propertyPath: m_Name
@@ -824,9 +900,21 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 6762744258030516293}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &5054184634587739779 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2017060918397914822, guid: 2e3f464a818f22d48ab60f4990a76446,
+    type: 3}
+  m_PrefabInstance: {fileID: 6762744258030516293}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &8948881169513393302 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2443985722483381459, guid: 2e3f464a818f22d48ab60f4990a76446,
+    type: 3}
+  m_PrefabInstance: {fileID: 6762744258030516293}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &5355753329992792728 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1696006948206232285, guid: 2e3f464a818f22d48ab60f4990a76446,
     type: 3}
   m_PrefabInstance: {fileID: 6762744258030516293}
   m_PrefabAsset: {fileID: 0}

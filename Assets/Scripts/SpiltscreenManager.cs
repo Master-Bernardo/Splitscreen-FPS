@@ -9,6 +9,8 @@ public class SpiltscreenManager : MonoBehaviour
 {
     public Camera[] topDownCameras;
     public Camera[] firstPersonCameras;
+    public Camera[] UICamerasTopDown;
+    public Camera[] UICamerasFirstPerson;
     public GameObject[] playerContainers;
     public int playerNumber;
     public bool useMultipleMonitors;
@@ -38,6 +40,9 @@ public class SpiltscreenManager : MonoBehaviour
 
                 topDownCameras[0].rect = new Rect(0, 0, 1, 1);
                 firstPersonCameras[0].rect = new Rect(0, 0, 1, 1);
+                UICamerasTopDown[0].rect = new Rect(0, 0, 1, 1);
+                UICamerasFirstPerson[0].rect = new Rect(0, 0, 1, 1);
+
 
                 //playerInputManager.JoinPlayer(1,1, playerInputs[0].controlScheme, playerInputs[0].par)
                 //playerInputManager.JoinPlayer(1);
@@ -55,8 +60,14 @@ public class SpiltscreenManager : MonoBehaviour
 
                 topDownCameras[0].rect = new Rect(0, 0, 0.5f, 1);
                 firstPersonCameras[0].rect = new Rect(0, 0, 0.5f, 1);
+                UICamerasTopDown[0].rect = new Rect(0, 0, 0.5f, 1);
+                UICamerasFirstPerson[0].rect = new Rect(0, 0, 0.5f, 1);
+
                 topDownCameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
                 firstPersonCameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+                UICamerasTopDown[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+                UICamerasFirstPerson[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+
 
                 topDownCameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
                 topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
@@ -73,11 +84,19 @@ public class SpiltscreenManager : MonoBehaviour
                         Display.displays[1].Activate();
                         topDownCameras[1].targetDisplay = 1;
                         firstPersonCameras[1].targetDisplay = 1;
+                        UICamerasTopDown[1].targetDisplay = 1;
+                        UICamerasFirstPerson[1].targetDisplay = 1;
 
                         topDownCameras[0].rect = new Rect(0, 0, 1, 1);
                         firstPersonCameras[0].rect = new Rect(0, 0, 1, 1);
+                        UICamerasTopDown[0].rect = new Rect(0, 0, 1, 1);
+                        UICamerasFirstPerson[0].rect = new Rect(0, 0, 1, 1);
+
                         topDownCameras[1].rect = new Rect(0, 0, 1, 1);
                         firstPersonCameras[1].rect = new Rect(0, 0, 1, 1);
+                        UICamerasTopDown[1].rect = new Rect(0, 0, 1, 1);
+                        UICamerasFirstPerson[1].rect = new Rect(0, 0, 1, 1);
+
                     }
                 }
 
@@ -92,10 +111,18 @@ public class SpiltscreenManager : MonoBehaviour
 
                 topDownCameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
                 firstPersonCameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                UICamerasTopDown[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                UICamerasFirstPerson[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+
                 topDownCameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
                 firstPersonCameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                UICamerasTopDown[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                UICamerasFirstPerson[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+
                 topDownCameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
                 firstPersonCameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
+                UICamerasTopDown[2].rect = new Rect(0, 0, 0.5f, 0.5f);
+                UICamerasFirstPerson[2].rect = new Rect(0, 0, 0.5f, 0.5f);
 
                 topDownCameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
                 topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
@@ -117,13 +144,26 @@ public class SpiltscreenManager : MonoBehaviour
                         firstPersonCameras[1].targetDisplay = 1;
                         topDownCameras[2].targetDisplay = 1;
                         firstPersonCameras[2].targetDisplay = 1;
+                        UICamerasTopDown[1].targetDisplay = 1;
+                        UICamerasFirstPerson[1].targetDisplay = 1;
+                        UICamerasTopDown[2].targetDisplay = 1;
+                        UICamerasFirstPerson[2].targetDisplay = 1;
 
                         topDownCameras[0].rect = new Rect(0, 0, 1, 1);
                         firstPersonCameras[0].rect = new Rect(0, 0, 1, 1);
+                        UICamerasTopDown[0].rect = new Rect(0, 0, 1, 1);
+                        UICamerasFirstPerson[0].rect = new Rect(0, 0, 1, 1);
+
                         topDownCameras[1].rect = new Rect(0, 0, 0.5f, 1);
                         firstPersonCameras[1].rect = new Rect(0, 0, 0.5f, 1);
+                        UICamerasTopDown[1].rect = new Rect(0, 0, 0.5f, 1);
+                        UICamerasFirstPerson[1].rect = new Rect(0, 0, 0.5f, 1);
+
                         topDownCameras[2].rect = new Rect(0.5f, 0, 0.5f, 1);
                         firstPersonCameras[2].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        UICamerasTopDown[2].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        UICamerasFirstPerson[2].rect = new Rect(0.5f, 0, 0.5f, 1);
+
 
                         topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
                         topDownCameras[2].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
@@ -141,12 +181,23 @@ public class SpiltscreenManager : MonoBehaviour
 
                 topDownCameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
                 firstPersonCameras[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                UICamerasTopDown[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                UICamerasFirstPerson[0].rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+
                 topDownCameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
                 firstPersonCameras[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                UICamerasTopDown[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                UICamerasFirstPerson[1].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+
                 topDownCameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
                 firstPersonCameras[2].rect = new Rect(0, 0, 0.5f, 0.5f);
+                UICamerasTopDown[2].rect = new Rect(0, 0, 0.5f, 0.5f);
+                UICamerasFirstPerson[2].rect = new Rect(0, 0, 0.5f, 0.5f);
+
                 topDownCameras[3].rect = new Rect(0.5f, 0, 0.5f, 0.5f);
                 firstPersonCameras[3].rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+                UICamerasTopDown[3].rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+                UICamerasFirstPerson[3].rect = new Rect(0.5f, 0, 0.5f, 0.5f);
 
                 topDownCameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
                 topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
@@ -167,17 +218,32 @@ public class SpiltscreenManager : MonoBehaviour
                         Display.displays[1].Activate();
                         topDownCameras[2].targetDisplay = 1;
                         firstPersonCameras[2].targetDisplay = 1;
+                        UICamerasTopDown[2].targetDisplay = 1;
+                        UICamerasFirstPerson[2].targetDisplay = 1;
                         topDownCameras[3].targetDisplay = 1;
                         firstPersonCameras[3].targetDisplay = 1;
+                        UICamerasTopDown[3].targetDisplay = 1;
+                        UICamerasFirstPerson[3].targetDisplay = 1;
 
                         topDownCameras[0].rect = new Rect(0, 0, 0.5f, 1);
                         firstPersonCameras[0].rect = new Rect(0, 0, 0.5f, 1);
+                        UICamerasTopDown[0].rect = new Rect(0, 0, 0.5f, 1);
+                        UICamerasFirstPerson[0].rect = new Rect(0, 0, 0.5f, 1);
+
                         topDownCameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
                         firstPersonCameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        UICamerasTopDown[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        UICamerasFirstPerson[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+
                         topDownCameras[2].rect = new Rect(0, 0, 0.5f, 1);
                         firstPersonCameras[2].rect = new Rect(0, 0, 0.5f, 1);
+                        UICamerasTopDown[2].rect = new Rect(0, 0, 0.5f, 1);
+                        UICamerasFirstPerson[2].rect = new Rect(0, 0, 0.5f, 1);
+
                         topDownCameras[3].rect = new Rect(0.5f, 0, 0.5f, 1);
                         firstPersonCameras[3].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        UICamerasTopDown[3].rect = new Rect(0.5f, 0, 0.5f, 1);
+                        UICamerasFirstPerson[3].rect = new Rect(0.5f, 0, 0.5f, 1);
 
                         topDownCameras[0].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
                         topDownCameras[1].GetComponent<SmoothCameraFollow>().SetUpForSplitscreen();
