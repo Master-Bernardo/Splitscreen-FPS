@@ -111,7 +111,7 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     }
 
-    void SetUpWeaponsAndAmmo()
+    public void SetUpWeaponsAndAmmo()
     {
         foreach (Weapon weapon in inventory)
         {
@@ -122,8 +122,8 @@ public class EC_HumanWeaponSystem : EntityComponent
                 weapon.SetUp(this);
             }
         }
-
-        ChangeWeapon(0);
+        currentSelectedWeapon = null;
+        ChangeWeapon(currentSelectedWeaponID);
 
         ammo[AmmoType.Rocket] = startRocketAmmo;
         ammo[AmmoType.Grenade] = startGrenadeAmmo;
@@ -182,7 +182,7 @@ public class EC_HumanWeaponSystem : EntityComponent
     }
 
     protected virtual void StartDrawingWeaponWeapon(Weapon weaponToDraw)
-    {     
+    {
         state = WeaponSystemState.DrawingWeapon;
         drawWeaponEndTime = Time.time + drawOrHideTime;
 

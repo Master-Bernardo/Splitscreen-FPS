@@ -2884,7 +2884,7 @@ MonoBehaviour:
   weaponSystem: {fileID: 5236994713935607823}
   interactableShower: {fileID: 6220837482008393363}
   desiredLookVektor: {x: 0, y: 0, z: 0}
-  looseWeaponOnDeactivate: 1
+  looseWeaponOnDeath: 0
   xSensitivity: 0.25
   ySensitivity: 0.24
   aimVisualiser: {fileID: 5702295977884363389}

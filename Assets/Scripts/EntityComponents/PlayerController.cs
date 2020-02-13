@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     int pressedWeaponID;
 
     bool interacting = false;
-    public bool looseWeaponOnDeactivate = true;
+    public bool looseWeaponOnDeath = true;
 
 
     public float xSensitivity = 0.3f;
@@ -70,139 +70,172 @@ public class PlayerController : MonoBehaviour
 
     public void OnW1Press()
     {
-        //if(controlMode == PlayerControlMode.TopDown) weaponSystem.UseWeaponStart(0);
-        pressedWeaponID = 0;
-        weaponKey1Pressed = true;
-        weaponSystem.UseWeaponStart(pressedWeaponID);
+        if (controlMode != PlayerControlMode.RTS)
+        {
+            pressedWeaponID = 0;
+            weaponKey1Pressed = true;
+            weaponSystem.UseWeaponStart(pressedWeaponID);
+        }            
     }
 
     public void OnW1Release()
     {
-        pressedWeaponID = 0;
-        weaponKey1Pressed = false;
-        weaponSystem.UseWeaponEnd(pressedWeaponID);
+        if (controlMode != PlayerControlMode.RTS)
+        {
+            pressedWeaponID = 0;
+            weaponKey1Pressed = false;
+            weaponSystem.UseWeaponEnd(pressedWeaponID);
+        }
     }
 
     public void OnW2Press()
     {
-        //if(controlMode == PlayerControlMode.TopDown) weaponSystem.UseWeaponStart(0);
-        pressedWeaponID = 1;
-        weaponKey2Pressed = true;
-        weaponSystem.UseWeaponStart(pressedWeaponID);
+        if (controlMode != PlayerControlMode.RTS)
+        {
+            pressedWeaponID = 1;
+            weaponKey2Pressed = true;
+            weaponSystem.UseWeaponStart(pressedWeaponID);
+        }
     }
 
     public void OnW2Release()
     {
-        pressedWeaponID = 1;
-        weaponKey2Pressed = false;
-        weaponSystem.UseWeaponEnd(pressedWeaponID);
+        if (controlMode != PlayerControlMode.RTS)
+        {
+            pressedWeaponID = 1;
+            weaponKey2Pressed = false;
+            weaponSystem.UseWeaponEnd(pressedWeaponID);
+        }
     }
 
     public void OnReload()
     {
-        weaponSystem.ReloadWeapon();
+        if (controlMode != PlayerControlMode.RTS)
+        {
+            weaponSystem.ReloadWeapon();
+        }
     }
 
     public void OnInteractStart()
     {
-        interacting = true;
-        interactableShower.StartInteract();
+        if (controlMode != PlayerControlMode.RTS)
+        {
+            interacting = true;
+            interactableShower.StartInteract();
+        }
     }
 
     public void OnInteractStop()
     {
-        interacting = false;
-        interactableShower.StopInteract();
+        if (controlMode != PlayerControlMode.RTS)
+        {
+            interacting = false;
+            interactableShower.StopInteract();
+        }
     }
 
     public void OnJump()
     {
-        playerMovement.Jump();
+        if (controlMode != PlayerControlMode.RTS)
+        {
+            playerMovement.Jump();
+        }
     }
 
     //we dash in the direction our wasd or left stick is facing, if their diection is null, we dash in the current look direction
     public void OnDash()
     {
-
-        if (movementVector != new Vector3(0, 0, 0))
+        if (controlMode != PlayerControlMode.RTS)
         {
-            playerMovement.Dash(movementVector.normalized);
-            //Debug.Log("dash no move");
-        }
-        else
-        {
-            playerMovement.Dash(desiredLookVektor.normalized);
-            //Debug.Log("dash MMove");
+            if (movementVector != new Vector3(0, 0, 0))
+            {
+                playerMovement.Dash(movementVector.normalized);
+                //Debug.Log("dash no move");
+            }
+            else
+            {
+                playerMovement.Dash(desiredLookVektor.normalized);
+                //Debug.Log("dash MMove");
+            }
         }
     }
 
     void OnRotateTowards(InputValue value)
     {
-        //Debug.Log("control sheme: " + playerInput.controlScheme);
-        if(playerInput.controlScheme == "Gamepad")
+        if (controlMode != PlayerControlMode.RTS)
         {
-            lookInputVector = value.Get<Vector2>();
-            //Debug.Log("gamepad");
-            if(lookInputVector != new Vector2(0,0))
+            //Debug.Log("control sheme: " + playerInput.controlScheme);
+            if (playerInput.controlScheme == "Gamepad")
             {
-                lookInputVectorUsed = lookInputVector;
-                //lookInputVector = lookInputVectorLastFrame;
+                lookInputVector = value.Get<Vector2>();
+                //Debug.Log("gamepad");
+                if (lookInputVector != new Vector2(0, 0))
+                {
+                    lookInputVectorUsed = lookInputVector;
+                    //lookInputVector = lookInputVectorLastFrame;
+                }
             }
-        }
-        else
-        {      
-            if(controlMode == PlayerControlMode.TopDown)
+            else
             {
-                currentMousePosition = value.Get<Vector2>();
+                if (controlMode == PlayerControlMode.TopDown)
+                {
+                    currentMousePosition = value.Get<Vector2>();
+
+                }
 
             }
-
         }
     }
 
     void OnNextWeapon(InputValue value)
     {
-        if (playerInput.controlScheme == "Gamepad")
+        if (controlMode != PlayerControlMode.RTS)
         {
-            weaponSystem.SelectNextWeapon();
-        }
-        else
-        {
-            if (value.Get<float>() > 0)
+            if (playerInput.controlScheme == "Gamepad")
             {
                 weaponSystem.SelectNextWeapon();
+            }
+            else
+            {
+                if (value.Get<float>() > 0)
+                {
+                    weaponSystem.SelectNextWeapon();
+                }
             }
         }
     }
 
     void OnPreviousWeapon(InputValue value)
     {
-        if (playerInput.controlScheme == "Gamepad")
+        if (controlMode != PlayerControlMode.RTS)
         {
-            weaponSystem.SelectPreviousWeapon();
-        }
-        else
-        {
-            if (value.Get<float>() < 0)
+            if (playerInput.controlScheme == "Gamepad")
             {
                 weaponSystem.SelectPreviousWeapon();
+            }
+            else
+            {
+                if (value.Get<float>() < 0)
+                {
+                    weaponSystem.SelectPreviousWeapon();
+                }
             }
         }
     }
 
     void OnSelectWeapon1()
     {
-        weaponSystem.ChangeWeapon(0);
+        if(controlMode != PlayerControlMode.RTS)  weaponSystem.ChangeWeapon(0);
     }
 
     void OnSelectWeapon2()
     {
-        weaponSystem.ChangeWeapon(1);
+        if (controlMode != PlayerControlMode.RTS) weaponSystem.ChangeWeapon(1);
     }
 
     void OnSelectWeapon3()
     {
-        weaponSystem.ChangeWeapon(2);
+        if (controlMode != PlayerControlMode.RTS) weaponSystem.ChangeWeapon(2);
     }
 
     void OnLookAroundFP(InputValue value)
@@ -212,7 +245,7 @@ public class PlayerController : MonoBehaviour
 
     void OnToggleCamera()
     {
-        ToogleCameraMode();
+        if (controlMode != PlayerControlMode.RTS) ToogleCameraMode();
     }
 
 
@@ -368,16 +401,24 @@ public class PlayerController : MonoBehaviour
         playerEntity.gameObject.SetActive(true);
         topdownCam.GetComponent<SmoothCameraFollow>().target = playerEntity.transform;
 
+        if (looseWeaponOnDeath)
+        {
+            playerEntity.GetComponent<EC_PlayerWeaponSystem>().ResetWeaponsToStartingWeapons();
+            playerEntity.GetComponent<EC_PlayerWeaponSystem>().SetUpWeaponsAndAmmo();
+        }
+        else
+        {
+            playerEntity.GetComponent<EC_PlayerWeaponSystem>().ResetWeaponsRespawn();
+        }
+
         controlMode = PlayerControlMode.TopDown;
 
     }
 
     public void DeactivatePlayer()
     {
-        if (looseWeaponOnDeactivate) playerEntity.GetComponent<EC_PlayerWeaponSystem>().ResetWeapons();
-
         playerEntity.gameObject.SetActive(false);
-
+        playerEntity.GetComponent<EC_PlayerWeaponSystem>().SetCurrentWeaponToNull();
         SwitchToRTSMode();
     }
 

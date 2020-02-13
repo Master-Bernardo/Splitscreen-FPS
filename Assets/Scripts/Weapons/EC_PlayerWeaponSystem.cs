@@ -20,8 +20,8 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
 
     public override void SetUpComponent(GameEntity entity)
     {
-        ResetWeapons();
         base.SetUpComponent(entity);
+        ResetWeaponsToStartingWeapons();
        
         if (weaponHUD != null) weaponHUD.SetUp(this);
     }
@@ -185,7 +185,8 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
 
     #endregion
 
-    public void ResetWeapons()
+    //resets all weapons and ammo to player starting weapons and ammo
+    public void ResetWeaponsToStartingWeapons()
     {
         //first delete all weapons currently there
         foreach(Transform transform in rightHand)
@@ -214,8 +215,30 @@ public class EC_PlayerWeaponSystem : EC_HumanWeaponSystem
             weapon3 = Instantiate(startingWeapon3, rightHand);
             inventory[2] = weapon3.GetComponent<Weapon>();
         }
+        currentSelectedWeaponID = 0;
 
- 
+        SetUpWeaponsAndAmmo();
+    }
+
+    //just changes weapon again? for animation
+    public void ResetWeaponsRespawn()
+    {
+        ChangeWeapon(currentSelectedWeaponID);
+        /*foreach (Weapon weapon in inventory)
+        {
+            MissileWeapon mw = weapon as MissileWeapon;
+            if (mw)
+            {
+                mw.Reset();
+            }
+        }*/
+
+
+    }
+
+    public void SetCurrentWeaponToNull()
+    {
+        currentSelectedWeapon = null;
     }
 
     
