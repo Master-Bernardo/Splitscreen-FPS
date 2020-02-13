@@ -381,10 +381,15 @@ public class HordeModeManager : MonoBehaviour
 
     public void RespawnPlayers()
     {
+        //determine respawn position - just randomly among live players?
+        Vector3 spawnPoint = playersAlive[Random.Range(0,playersAlive.Count)].playerEntity.transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+        
+
         Debug.Log("Respawn");
         foreach(PlayerController player in playersDead)
         {
-            player.TeleportPlayer(playerSpawnPoint.position + new Vector3(Random.Range(-1,1),0, Random.Range(-1, 1)));
+            //player.TeleportPlayer(playerSpawnPoint.position + new Vector3(Random.Range(-1,1),0, Random.Range(-1, 1)));
+            player.TeleportPlayer(spawnPoint);
             playersAlive.Add(player);
             player.ActivatePlayer();
         }
