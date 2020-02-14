@@ -73,6 +73,9 @@ public class HordeModeManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        //set all the global settings
+        unitsMultiplier = GlobalSettings.hordeModeHardness;
     }
 
     private void Start()

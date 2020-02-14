@@ -23,6 +23,12 @@ public class SpiltscreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //set global settings
+        playerNumber = GlobalSettings.playerNumber;
+        useMultipleMonitors = GlobalSettings.twoMonitors;
+        Debug.Log("use multiplae: " + useMultipleMonitors);
+
+
         //Display.displays[1].Activate();
         //Display.displays[2].Activate();
 
