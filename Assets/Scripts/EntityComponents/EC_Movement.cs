@@ -85,8 +85,8 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     //update is only for looks- the rotation is important for logic but it can be a bit jaggy if far away or not on screen - lod this script, only call it every x seconds
     public override void UpdateComponent()
     {
-       // Debug.Log("mov update");
-        if (Input.GetKeyDown(KeyCode.I))
+        // Debug.Log("mov update");
+        /*if (Input.GetKeyDown(KeyCode.I))
         {
             if(agent!=null)MoveTo(transform.position + new Vector3(0, 0, 15));
         }
@@ -102,7 +102,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         if (Input.GetKeyDown(KeyCode.O))
         {
             Dash(Vector3.right);
-        }
+        }*/
 
         if (!lookAt)
         {

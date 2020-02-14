@@ -582,3 +582,108 @@ public class B_ElectrocuterDrone : Behaviour
         inRange = false;
     }
 }
+
+
+[System.Serializable]
+public class B_Tick : Behaviour
+{
+    EC_Sensing enemySensing;
+    EC_Movement movement;
+    Explosives explosives;
+
+    public float distanceCheckingInterval;
+    float nextDistanceCheckTime;
+
+    //explodes at this distance  
+    public float explosionDistance;
+
+    float myWidth;
+    float enemyWidth;
+
+
+
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing, Explosives explosives)//, EC_ElectroField )
+    {
+        this.entity = entity;
+        this.movement = movement;
+        this.enemySensing = enemySensing;
+        this.explosives = explosives;
+
+        nextDistanceCheckTime = UnityEngine.Random.Range(0, distanceCheckingInterval);
+        explosionDistance *= explosionDistance;
+    }
+
+
+    protected override void Update()
+    {
+        //movement.LookAt(enemySensing.nearestEnemy.GetPositionForAiming() - entity.GetPositionForAiming());
+
+        if (Time.time > nextDistanceCheckTime)
+        {
+            nextDistanceCheckTime += distanceCheckingInterval;
+
+            myWidth = entity.width;
+            enemyWidth = enemySensing.nearestEnemy.width;
+
+            Vector3 nearestEnemyPosition = enemySensing.nearestEnemy.transform.position;
+            Vector3 myPosition = entity.transform.position;
+
+            float widthFactor = myWidth + enemyWidth; //multiply the resulting distanceVectorBythisFactor to also use width
+            Vector3 distanceVector = nearestEnemyPosition - myPosition;
+            float distanceToEnemySquared = (distanceVector - distanceVector.normalized * widthFactor).sqrMagnitude;
+           
+            movement.MoveTo(nearestEnemyPosition + (myPosition - nearestEnemyPosition).normalized * (myWidth + enemyWidth));
+
+            //if the enemy is moving, we move to the position he will be at the time we arrive
+            // EC_Movement enemyMovement = enemySensing.nearestEnemy.GetComponent<EC_Movement>();
+
+
+            /* no heuristic for now
+            if (enemyMovement.IsMoving())
+            {
+                //heuristically calculae future position
+                //1. how long will it take for me to reach the enemy?
+                float timeToReachEnemy = distanceToEnemy / movement.GetMaxSpeed();
+                //2. where will the enemy be after this time
+                Vector3 futurePosition = nearestEnemyPosition + enemyMovement.GetCurrentVelocity() * timeToReachEnemy;
+
+                //if the future positionof the target is behind the follower, he should not run backward
+
+                if (Vector3.Angle((futurePosition - myPosition), (nearestEnemyPosition - myPosition)) > 90)
+                {
+                    movement.MoveTo(nearestEnemyPosition + (myPosition - nearestEnemyPosition).normalized * (perfectMeleeDistance + myWidth + enemyWidth));
+                }
+                else
+                {
+                    movement.MoveTo(futurePosition);
+                }
+
+
+            }
+            else
+            {
+                movement.MoveTo(nearestEnemyPosition + (myPosition - nearestEnemyPosition).normalized * (perfectMeleeDistance + myWidth + enemyWidth));
+            }*/
+            Debug.Log("distance" + distanceToEnemySquared);
+            Debug.Log("explosion disatnce: " + explosionDistance);
+
+            if (distanceToEnemySquared < explosionDistance)
+            {
+                explosives.Explode();
+            }
+        }
+
+
+    }
+
+    public override void OnBehaviourEnter()
+    {
+        //movement.ActivateLookAt();
+    }
+
+    public override void OnBehaviourExit()
+    {
+        movement.Stop();
+        //movement.StopLookAt();
+    }
+}
