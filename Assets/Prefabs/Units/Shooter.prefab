@@ -259,7 +259,7 @@ MonoBehaviour:
   movement: {fileID: 1362219360397472218}
   weapon: {fileID: 8446360440123459573}
   gravityProjectile: 0
-  shootingError: 0
+  shootingError: 5
   handsAnimator: {fileID: 4387909223804606813}
   alternativeShootPoint: {fileID: 0}
 --- !u!1001 &3353940218050023428

@@ -160,7 +160,10 @@ public class EC_MissileWeaponController : EntityComponent
     {
         //add random rotation based on skill
         //- solve this by adding a different disturmance to the perfect aiming vector every x seconds
+        Quaternion rotationBefore = weapon.transform.rotation;
+        weapon.transform.rotation = weapon.transform.rotation * Quaternion.Euler(Random.Range(-shootingError, shootingError), Random.Range(-shootingError, shootingError), 0f);
         weapon.HandleWeaponKeyDown(0);
+        weapon.transform.rotation = rotationBefore;
     }
 
     public bool HasEnoughAmmoLoaded()

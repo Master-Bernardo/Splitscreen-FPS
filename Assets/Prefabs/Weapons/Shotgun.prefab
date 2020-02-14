@@ -361,7 +361,7 @@ MonoBehaviour:
   bloom: 10
   bulletNumber: 12
   reloadTime: 2.5
-  initialLaunchSpeed: 20
+  initialLaunchSpeed: 40
   ammoType: 3
   projectileTag: ShotgunBullet
   magazineSize: 9
