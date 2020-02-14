@@ -76,8 +76,8 @@ public class EC_Health : EntityComponent
                     instantiatedDeathEffect.OnDie();
                 }
             }
-           
 
+            Debug.Log("calling on Die: health");
             myEntity.Die(damageInfo.damageGiver);
         }
 

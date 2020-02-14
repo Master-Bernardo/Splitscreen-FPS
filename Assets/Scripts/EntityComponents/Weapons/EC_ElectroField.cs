@@ -14,7 +14,9 @@ public class EC_ElectroField : EntityComponent
     public float getBackToIdleSoundDelay;
 
     public float damageperSecond;
-    HashSet<IDamageable<DamageInfo>> targetsInsideCollider = new HashSet<IDamageable<DamageInfo>>();
+    //HashSet<IDamageable<DamageInfo>> targetsInsideCollider = new HashSet<IDamageable<DamageInfo>>();
+    HashSet<GameEntity> targetsInsideCollider = new HashSet<GameEntity>();
+    HashSet<GameEntity> targetsToRemove = new HashSet<GameEntity>();
 
     bool startedPlayingElectrocuteSound = false;
     float beginnPlayLoopSoundTime;
@@ -33,10 +35,29 @@ public class EC_ElectroField : EntityComponent
 
     public override void UpdateComponent()
     {
-        foreach(IDamageable<DamageInfo> damageable in targetsInsideCollider)
+        foreach(GameEntity  entity in targetsInsideCollider)
         {
-            damageable.TakeDamage(new DamageInfo(damageperSecond*Time.deltaTime, myEntity));
+            if (entity!=null) //check if not dead
+            {
+                entity.GetComponent<IDamageable<DamageInfo>>().TakeDamage(new DamageInfo(damageperSecond * Time.deltaTime, myEntity));
+            }
+            else
+            {
+                targetsToRemove.Add(entity);   
+            }
         }
+
+        foreach(GameEntity entityToRemove in targetsToRemove)
+        {
+            targetsInsideCollider.Remove(entityToRemove);
+        }
+
+        if (targetsToRemove.Count > 0)
+        {
+            targetsToRemove.Clear();
+            if (targetsInsideCollider.Count == 0) StopPlayingElectrocuteSound();
+        }
+        
 
         if (startedPlayingElectrocuteSound)
         {
@@ -79,19 +100,19 @@ private void OnTriggerEnter(Collider collider)
                     if (diplomacyStatus == DiplomacyStatus.War)
                     {
                         if (targetsInsideCollider.Count == 0) StartPlayingElectrocuteSound();
-                        targetsInsideCollider.Add(damageable);
+                        targetsInsideCollider.Add(entity);
                     }
                 }
                 else
                 {
                     if (targetsInsideCollider.Count == 0) StartPlayingElectrocuteSound();
-                    targetsInsideCollider.Add(damageable);
+                    targetsInsideCollider.Add(entity);
                 }
             }
             else
             {
                 if (targetsInsideCollider.Count == 0) StartPlayingElectrocuteSound();
-                targetsInsideCollider.Add(damageable);
+                targetsInsideCollider.Add(entity);
             }
 
         }
@@ -100,18 +121,11 @@ private void OnTriggerEnter(Collider collider)
 
     private void OnTriggerExit(Collider collider)
     {
-        IDamageable<DamageInfo> damageable = collider.gameObject.GetComponent<IDamageable<DamageInfo>>();
-
-        if (damageable != null)
+        GameEntity entity = collider.gameObject.GetComponent<GameEntity>();
+        if (targetsInsideCollider.Contains(entity))
         {
-            if (targetsInsideCollider.Contains(damageable))
-            {
-                targetsInsideCollider.Remove(damageable);
-                if (targetsInsideCollider.Count == 0) StopPlayingElectrocuteSound();
-            }
-            
-
-
+            targetsInsideCollider.Remove(entity);
+            if (targetsInsideCollider.Count == 0) StopPlayingElectrocuteSound();
         }
     }
 

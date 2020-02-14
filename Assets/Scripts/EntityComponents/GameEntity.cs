@@ -23,6 +23,7 @@ public class GameEntity : MonoBehaviour
     public bool destroyOnDie = true;
     public float width;
 
+
     private void Start()
     {
         foreach (EntityComponent component in components)
@@ -69,6 +70,6 @@ public class GameEntity : MonoBehaviour
         {
             component.OnDie(killer);
         }
-        if(destroyOnDie)Destroy(gameObject);
+        if (destroyOnDie) Destroy(gameObject, 0.01f);
     }
 }
