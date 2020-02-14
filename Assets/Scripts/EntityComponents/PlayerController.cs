@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     bool interacting = false;
     public bool looseWeaponOnDeath = true;
 
-
+    public float lookAroundSensitivityMultiplayer = 1;
     public float xSensitivity = 0.3f;
     public float ySensitivity = 0.1f;
 
@@ -240,12 +240,22 @@ public class PlayerController : MonoBehaviour
 
     void OnLookAroundFP(InputValue value)
     {
-        mouseDelta = value.Get<Vector2>();
+        mouseDelta = value.Get<Vector2>() * lookAroundSensitivityMultiplayer;
     }
 
     void OnToggleCamera()
     {
         if (controlMode != PlayerControlMode.RTS) ToogleCameraMode();
+    }
+
+    void OnRaiseLookAroundSensitivityMultiplier()
+    {
+        lookAroundSensitivityMultiplayer += 0.4f;
+    }
+
+    void OnLowerLookAroundSensitivityMultiplier()
+    {
+        lookAroundSensitivityMultiplayer -= 0.4f;
     }
 
 

@@ -148,6 +148,22 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "RaiseLookAroundSensitivityMultiplier",
+                    "type": "Button",
+                    "id": "c8302830-db6f-4d46-81bb-8331a5d1e2b9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LowerLookAroundSensitivityMultiplier",
+                    "type": "Button",
+                    "id": "04dc4a44-9f23-44eb-9588-7b531d531751",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -541,7 +557,7 @@
                     "id": "1c43b62d-ede4-43bf-bd07-b84f3c64026c",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "ScaleVector2(x=5,y=5)",
+                    "processors": "ScaleVector2(x=7,y=7)",
                     "groups": "Gamepad",
                     "action": "LookAroundFP",
                     "isComposite": false,
@@ -610,6 +626,50 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ToggleCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4df194dc-0416-4826-938e-7176e1f909b0",
+                    "path": "<Keyboard>/#(9)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "RaiseLookAroundSensitivityMultiplier",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0493a3b1-46bd-4c4d-af48-a8157d3c46de",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RaiseLookAroundSensitivityMultiplier",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d4720fc-08e5-477a-bd6b-55c3e51152e2",
+                    "path": "<Keyboard>/0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "LowerLookAroundSensitivityMultiplier",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0783f66c-3abc-40d4-95dd-828ec755bb11",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LowerLookAroundSensitivityMultiplier",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

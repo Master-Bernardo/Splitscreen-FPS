@@ -13,6 +13,8 @@ public class MainMenuUIController : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         playerNumberText.text = GlobalSettings.playerNumber.ToString();
         hordeModeHardnessText.text = GlobalSettings.hordeModeHardness.ToString();
         twoMonitorsText.text = GlobalSettings.twoMonitors.ToString();

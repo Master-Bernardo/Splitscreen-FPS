@@ -13,6 +13,8 @@ public class SpiltscreenManager : MonoBehaviour
     public Camera[] UICamerasFirstPerson;
     public GameObject[] playerContainers;
     public int playerNumber;
+    [Tooltip("overwrite global player number settings for testing purposes")]
+    public bool overwriteGlobalSettings;
     public bool useMultipleMonitors;
 
     public PlayerInput[] playerInputs;
@@ -24,7 +26,7 @@ public class SpiltscreenManager : MonoBehaviour
     void Awake()
     {
         //set global settings
-        playerNumber = GlobalSettings.playerNumber;
+        if(!overwriteGlobalSettings)playerNumber = GlobalSettings.playerNumber;
         useMultipleMonitors = GlobalSettings.twoMonitors;
         Debug.Log("use multiplae: " + useMultipleMonitors);
 
