@@ -5,7 +5,7 @@ using UnityEngine;
 public class UAI_MissileFighter : EC_UnitAI
 {
     public B_MissileFighter missileBehaviour;
-    public B_Idle idleBehaviour;
+    public B_HumanoidIdle idleBehaviour;
 
     public EC_Movement movement;
     public EC_Sensing sensing;

@@ -441,7 +441,7 @@ public class B_MissileFighter : Behaviour
 }
 
 [System.Serializable]
-public class B_Idle : Behaviour
+public class B_HumanoidIdle : Behaviour
 {
     Animator handsAnimator;
 
@@ -467,5 +467,118 @@ public class B_Idle : Behaviour
 
            // Debug.Log("enter idle stance");
         }
+    }
+}
+
+[System.Serializable]
+public class B_ElectrocuterDrone : Behaviour
+{
+    EC_Sensing enemySensing;
+    EC_Movement movement;
+    // ElectrocutterEffect - use it onAttack
+
+    public float distanceCheckingInterval;
+    float nextDistanceCheckTime;
+
+    //the fighter will be between this distances, he does not need to stop to attack
+    public float perfectMeleeDistance;
+    public float maxMeleeDistance;
+
+    float myWidth;
+    float enemyWidth;
+
+
+   // EC_ElectroField
+    [SerializeField]
+    bool inRange;
+
+    public void SetUpBehaviour(GameEntity entity, EC_Movement movement, EC_Sensing enemySensing)//, EC_ElectroField )
+    {
+        this.entity = entity;
+        this.movement = movement;
+        this.enemySensing = enemySensing;
+
+        nextDistanceCheckTime = UnityEngine.Random.Range(0, distanceCheckingInterval);
+        maxMeleeDistance *= maxMeleeDistance;
+    }
+
+
+    protected override void Update()
+    {
+        movement.LookAt(enemySensing.nearestEnemy.GetPositionForAiming() - entity.GetPositionForAiming());
+
+        if (Time.time > nextDistanceCheckTime)
+        {
+            nextDistanceCheckTime += distanceCheckingInterval;
+
+            myWidth = entity.width;
+            enemyWidth = enemySensing.nearestEnemy.width;
+
+            Vector3 nearestEnemyPosition = enemySensing.nearestEnemy.transform.position;
+            Vector3 myPosition = entity.transform.position;
+
+            float widthFactor = myWidth + enemyWidth; //multiply the resulting distanceVectorBythisFactor to also use width
+            Vector3 distanceVector = nearestEnemyPosition - myPosition;
+            float distanceToEnemy = (distanceVector - distanceVector.normalized * widthFactor).magnitude;
+
+            //if the enemy is moving, we move to the position he will be at the time we arrive
+            EC_Movement enemyMovement = enemySensing.nearestEnemy.GetComponent<EC_Movement>();
+
+
+
+            if (enemyMovement.IsMoving())
+            {
+                //heuristically calculae future position
+                //1. how long will it take for me to reach the enemy?
+                float timeToReachEnemy = distanceToEnemy / movement.GetMaxSpeed();
+                //2. where will the enemy be after this time
+                Vector3 futurePosition = nearestEnemyPosition + enemyMovement.GetCurrentVelocity() * timeToReachEnemy;
+
+                //if the future positionof the target is behind the follower, he should not run backward
+
+                if (Vector3.Angle((futurePosition - myPosition), (nearestEnemyPosition - myPosition)) > 90)
+                {
+                    movement.MoveTo(nearestEnemyPosition + (myPosition - nearestEnemyPosition).normalized * (perfectMeleeDistance + myWidth + enemyWidth));
+                }
+                else
+                {
+                    movement.MoveTo(futurePosition);
+                }
+
+
+            }
+            else
+            {
+                movement.MoveTo(nearestEnemyPosition + (myPosition - nearestEnemyPosition).normalized * (perfectMeleeDistance + myWidth + enemyWidth));
+            }
+
+            if ((nearestEnemyPosition - myPosition).sqrMagnitude > maxMeleeDistance)
+            {
+                inRange = false;
+            }
+            else
+            {
+                inRange = true;
+            }
+        }
+
+        /*if (inRange)
+        {
+
+            //electrofield does the job on itself - do we need it at the bahaviour?
+        }*/
+
+    }
+
+    public override void OnBehaviourEnter()
+    {
+        movement.ActivateLookAt();
+    }
+
+    public override void OnBehaviourExit()
+    {
+        movement.Stop();
+        movement.StopLookAt();
+        inRange = false;
     }
 }

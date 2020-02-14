@@ -5,7 +5,7 @@ using UnityEngine;
 public class UAI_MeleeFighter : EC_UnitAI
 {
     public B_MeleeFighter meleeBehaviour;
-    public B_Idle idleBehaviour;
+    public B_HumanoidIdle idleBehaviour;
 
 
     public EC_Movement movement;

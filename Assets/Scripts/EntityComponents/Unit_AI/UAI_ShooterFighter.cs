@@ -6,7 +6,7 @@ public class UAI_ShooterFighter : EC_UnitAI
 {
     public B_MissileFighter missileBehaviour;
     public B_MeleeFighter meleeBehaviour;
-    public B_Idle idleBehaviour;
+    public B_HumanoidIdle idleBehaviour;
     public EC_HumanWeaponSystem weaponSystem;
 
 
