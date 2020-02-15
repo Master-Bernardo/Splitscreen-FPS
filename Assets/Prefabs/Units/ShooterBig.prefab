@@ -117,7 +117,7 @@ MonoBehaviour:
   inventory:
   - {fileID: 8446360440123459573}
   meleeWeaponControler: {fileID: 0}
-  missileWeaponController: {fileID: 0}
+  missileWeaponController: {fileID: 6698582988817642302}
   rightHand: {fileID: 6360832723503046307}
   startRocketAmmo: 0
   startGrenadeAmmo: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
   rb: {fileID: 6754178515157054542}
   canBePushed: 1
   pushEndTreshold: 5
-  pushBeginnTreshold: 0
+  pushBeginnTreshold: 1000
   dashForce: 100
   dashTime: 0.125
   dashMultiplier: 0.75
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1e94b20821bc34391fb8306b0336a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   nearestEnemy: {fileID: 0}
   layerMask:
     serializedVersion: 2
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 20
+  maxHealth: 200
   healthBarFill: {fileID: 0}
   changeColorOnDamage: 1
   damageMaterial: {fileID: 2100000, guid: 8297e0eb55f729243a4875f7b5ffdd3c, type: 2}
@@ -201,7 +201,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1362219360397472217}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
@@ -210,7 +210,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 4
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -224,8 +224,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 1
+  m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &6754178515157054542
@@ -259,7 +259,7 @@ MonoBehaviour:
   movement: {fileID: 1362219360397472218}
   weapon: {fileID: 8446360440123459573}
   gravityProjectile: 0
-  shootingError: 0
+  shootingError: 10
   handsAnimator: {fileID: 4387909223804606813}
   alternativeShootPoint: {fileID: 0}
 --- !u!1001 &3353940218050023428

@@ -396,7 +396,7 @@ public class B_MissileFighter : Behaviour
                 else if (!weaponSystem.IsReloading())
                 {
                     //Debug.Log("not enough ammo");
-                    weaponSystem.StartReloading();
+                    //weaponSystem.StartReloading();
                     //Debug.Log("reload");
                 }
             }

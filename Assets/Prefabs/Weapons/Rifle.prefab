@@ -283,9 +283,9 @@ MonoBehaviour:
   bloom: 0.5
   bulletNumber: 1
   reloadTime: 1
-  initialLaunchSpeed: 150
+  initialLaunchSpeed: 100
   ammoType: 3
-  projectileTag: StandardBullet
+  projectileTag: RifleBullet
   magazineSize: 1
   infiniteMagazine: 0
   currentMagazineAmmo: 0

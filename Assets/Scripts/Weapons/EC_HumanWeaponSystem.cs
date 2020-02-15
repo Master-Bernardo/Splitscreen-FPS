@@ -63,8 +63,10 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     public override void UpdateComponent()
     {
+        Debug.Log("state: " + state);
         switch (state)
         {
+            
             case WeaponSystemState.Default:
 
                 if (currentSelectedWeapon)
@@ -74,6 +76,7 @@ public class EC_HumanWeaponSystem : EntityComponent
                     {
                         if(currentSelectedMissileWeapon.currentMagazineAmmo == 0)
                         {
+                            Debug.Log("was 0 so reload");
                             ReloadWeapon();
                         }
                     }

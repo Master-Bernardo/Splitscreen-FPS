@@ -222,7 +222,7 @@ MonoBehaviour:
   projectileTeamID: 0
   shooterEntity: {fileID: 0}
   rb: {fileID: 2573830092429471737}
-  pushes: 1
+  pushes: 0
   pushForce: 250
   defaultPushForce: 0
   killPushForce: 500
@@ -288,7 +288,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: db27712629a4d2f49bc938ae13c52d21, type: 2}
+  - {fileID: 2100000, guid: f6c17a1ea13dcb04c9af6cdb7414b181, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

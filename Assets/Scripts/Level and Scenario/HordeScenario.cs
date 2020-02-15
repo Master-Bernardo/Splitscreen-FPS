@@ -11,6 +11,7 @@ public class HordeUnitBoss
     public bool fixedNumber;
     [Tooltip("How many of them will be spawned")]
     public int number;
+    [Tooltip("how big is this unit in size- width")]
     public int size;
 }
 
@@ -20,6 +21,7 @@ public class HordeUnit
     //normal Horde units get spawned randomly as long as there is enough points left
     public GameObject unitPrefab;
     public int recruitmentCost;
+    [Tooltip("how big is this unit in size- width")]
     public int size;
 }
 
