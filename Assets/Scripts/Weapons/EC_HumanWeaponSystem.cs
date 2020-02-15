@@ -63,7 +63,6 @@ public class EC_HumanWeaponSystem : EntityComponent
 
     public override void UpdateComponent()
     {
-        Debug.Log("state: " + state);
         switch (state)
         {
             

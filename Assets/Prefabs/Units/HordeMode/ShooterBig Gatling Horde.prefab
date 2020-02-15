@@ -163,6 +163,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShooterBig Gatling Horde
       objectReference: {fileID: 0}
+    - target: {fileID: 1652365931639793758, guid: 2b2bfb19a9078634593061861e53edc5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     - target: {fileID: 4995563317465234240, guid: 2b2bfb19a9078634593061861e53edc5,
         type: 3}
       propertyPath: m_IsActive
@@ -173,6 +178,11 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 7107426928865098856}
+    - target: {fileID: 8767518191276132579, guid: 2b2bfb19a9078634593061861e53edc5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94b05493e25b874439b55dd4690a60dc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b2bfb19a9078634593061861e53edc5, type: 3}
 --- !u!4 &3742544406941207971 stripped

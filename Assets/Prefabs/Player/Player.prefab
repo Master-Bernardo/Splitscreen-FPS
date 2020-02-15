@@ -199,7 +199,8 @@ MonoBehaviour:
   movementUpdateIntervall: 0
   rb: {fileID: 2366190835090200061}
   canBePushed: 1
-  pushTreshold: 0
+  pushEndTreshold: 0
+  pushBeginnTreshold: 0
   dashForce: 100
   dashTime: 0.125
   dashMultiplier: 1
@@ -222,6 +223,7 @@ MonoBehaviour:
   useDashPoints: 0
   maxDashPoints: 2
   dashPointReplenishmentSpeed: 0.5
+  dashUI: {fileID: 0}
 --- !u!114 &695186444330799899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +280,8 @@ MonoBehaviour:
   startingWeapon1: {fileID: 7771058485830626116, guid: 3e43726cdc0c10545acf9950acfc5a74,
     type: 3}
   startingWeapon2: {fileID: 0}
-  startingWeapon3: {fileID: 0}
+  startingWeapon3: {fileID: 7659392283760347961, guid: a3d7ea4283f824548be4fe5a48a704cb,
+    type: 3}
 --- !u!114 &2925194330110016660
 MonoBehaviour:
   m_ObjectHideFlags: 0

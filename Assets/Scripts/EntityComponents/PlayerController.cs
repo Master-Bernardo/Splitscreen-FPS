@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
 
     enum PlayerControlMode
     {
-        TopDown,
         FirstPerson,
+        TopDown,   
         RTS //we can move around the world as a dead ghost - also RTS Mode
     }
 
@@ -59,147 +59,196 @@ public class PlayerController : MonoBehaviour
     public AimVisualiser aimVisualiser;
     public PlayerAudioListener playerAudioListener;
 
+    bool movementInputBlocked;
+    bool playerInputBlocked;
+
     #endregion
 
-    #region Controls
+    #region Input Controls
 
     public void OnMovement(InputValue value)
     {
-        movementInputVector = value.Get<Vector2>();
+        if (!playerInputBlocked)
+        {
+            if (!movementInputBlocked)
+            {
+                movementInputVector = value.Get<Vector2>();
+            }
+        }
+       
     }
 
     public void OnW1Press()
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            pressedWeaponID = 0;
-            weaponKey1Pressed = true;
-            weaponSystem.UseWeaponStart(pressedWeaponID);
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                pressedWeaponID = 0;
+                weaponKey1Pressed = true;
+                weaponSystem.UseWeaponStart(pressedWeaponID);
+            }
         }            
     }
 
     public void OnW1Release()
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            pressedWeaponID = 0;
-            weaponKey1Pressed = false;
-            weaponSystem.UseWeaponEnd(pressedWeaponID);
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                pressedWeaponID = 0;
+                weaponKey1Pressed = false;
+                weaponSystem.UseWeaponEnd(pressedWeaponID);
+            }
         }
     }
 
     public void OnW2Press()
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            pressedWeaponID = 1;
-            weaponKey2Pressed = true;
-            weaponSystem.UseWeaponStart(pressedWeaponID);
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                pressedWeaponID = 1;
+                weaponKey2Pressed = true;
+                weaponSystem.UseWeaponStart(pressedWeaponID);
+            }
         }
     }
 
     public void OnW2Release()
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            pressedWeaponID = 1;
-            weaponKey2Pressed = false;
-            weaponSystem.UseWeaponEnd(pressedWeaponID);
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                pressedWeaponID = 1;
+                weaponKey2Pressed = false;
+                weaponSystem.UseWeaponEnd(pressedWeaponID);
+            }
         }
     }
 
     public void OnReload()
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            weaponSystem.ReloadWeapon();
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                weaponSystem.ReloadWeapon();
+            }
         }
     }
 
     public void OnInteractStart()
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            interacting = true;
-            interactableShower.StartInteract();
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                interacting = true;
+                interactableShower.StartInteract();
+            }
         }
     }
 
     public void OnInteractStop()
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            interacting = false;
-            interactableShower.StopInteract();
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                interacting = false;
+                interactableShower.StopInteract();
+            }
         }
     }
 
     public void OnJump()
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            playerMovement.Jump();
+            if (!movementInputBlocked)
+            {
+                if (controlMode != PlayerControlMode.RTS)
+                {
+                    playerMovement.Jump();
+                }
+            }  
         }
     }
 
     //we dash in the direction our wasd or left stick is facing, if their diection is null, we dash in the current look direction
     public void OnDash()
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            if (movementVector != new Vector3(0, 0, 0))
+            if (!movementInputBlocked)
             {
-                playerMovement.Dash(movementVector.normalized);
-                //Debug.Log("dash no move");
-            }
-            else
-            {
-                playerMovement.Dash(desiredLookVektor.normalized);
-                //Debug.Log("dash MMove");
-            }
+                if (controlMode != PlayerControlMode.RTS)
+                {
+                    if (movementVector != new Vector3(0, 0, 0))
+                    {
+                        playerMovement.Dash(movementVector.normalized);
+                        //Debug.Log("dash no move");
+                    }
+                    else
+                    {
+                        playerMovement.Dash(desiredLookVektor.normalized);
+                        //Debug.Log("dash MMove");
+                    }
+                }
+            }     
         }
     }
 
     void OnRotateTowards(InputValue value)
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            //Debug.Log("control sheme: " + playerInput.controlScheme);
-            if (playerInput.controlScheme == "Gamepad")
+            if (controlMode != PlayerControlMode.RTS)
             {
-                lookInputVector = value.Get<Vector2>();
-                //Debug.Log("gamepad");
-                if (lookInputVector != new Vector2(0, 0))
+                //Debug.Log("control sheme: " + playerInput.controlScheme);
+                if (playerInput.controlScheme == "Gamepad")
                 {
-                    lookInputVectorUsed = lookInputVector;
-                    //lookInputVector = lookInputVectorLastFrame;
+                    lookInputVector = value.Get<Vector2>();
+                    //Debug.Log("gamepad");
+                    if (lookInputVector != new Vector2(0, 0))
+                    {
+                        lookInputVectorUsed = lookInputVector;
+                        //lookInputVector = lookInputVectorLastFrame;
+                    }
                 }
-            }
-            else
-            {
-                if (controlMode == PlayerControlMode.TopDown)
+                else
                 {
-                    currentMousePosition = value.Get<Vector2>();
+                    if (controlMode == PlayerControlMode.TopDown)
+                    {
+                        currentMousePosition = value.Get<Vector2>();
+
+                    }
 
                 }
-
             }
         }
     }
 
     void OnNextWeapon(InputValue value)
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            if (playerInput.controlScheme == "Gamepad")
+            if (controlMode != PlayerControlMode.RTS)
             {
-                weaponSystem.SelectNextWeapon();
-            }
-            else
-            {
-                if (value.Get<float>() > 0)
+                if (playerInput.controlScheme == "Gamepad")
                 {
                     weaponSystem.SelectNextWeapon();
+                }
+                else
+                {
+                    if (value.Get<float>() > 0)
+                    {
+                        weaponSystem.SelectNextWeapon();
+                    }
                 }
             }
         }
@@ -207,17 +256,20 @@ public class PlayerController : MonoBehaviour
 
     void OnPreviousWeapon(InputValue value)
     {
-        if (controlMode != PlayerControlMode.RTS)
+        if (!playerInputBlocked)
         {
-            if (playerInput.controlScheme == "Gamepad")
+            if (controlMode != PlayerControlMode.RTS)
             {
-                weaponSystem.SelectPreviousWeapon();
-            }
-            else
-            {
-                if (value.Get<float>() < 0)
+                if (playerInput.controlScheme == "Gamepad")
                 {
                     weaponSystem.SelectPreviousWeapon();
+                }
+                else
+                {
+                    if (value.Get<float>() < 0)
+                    {
+                        weaponSystem.SelectPreviousWeapon();
+                    }
                 }
             }
         }
@@ -225,27 +277,54 @@ public class PlayerController : MonoBehaviour
 
     void OnSelectWeapon1()
     {
-        if(controlMode != PlayerControlMode.RTS)  weaponSystem.ChangeWeapon(0);
+        if (!playerInputBlocked)
+        {
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                weaponSystem.ChangeWeapon(0);
+            }
+        }
     }
 
     void OnSelectWeapon2()
     {
-        if (controlMode != PlayerControlMode.RTS) weaponSystem.ChangeWeapon(1);
+        if (!playerInputBlocked)
+        {
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                weaponSystem.ChangeWeapon(1);
+            }
+        }
     }
 
     void OnSelectWeapon3()
     {
-        if (controlMode != PlayerControlMode.RTS) weaponSystem.ChangeWeapon(2);
+        if (!playerInputBlocked)
+        {
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                weaponSystem.ChangeWeapon(2);
+            }
+        }
     }
 
     void OnLookAroundFP(InputValue value)
     {
-        mouseDelta = value.Get<Vector2>() * lookAroundSensitivityMultiplayer;
+        if (!playerInputBlocked)
+        {
+            mouseDelta = value.Get<Vector2>() * lookAroundSensitivityMultiplayer;
+        }
     }
 
     void OnToggleCamera()
     {
-        if (controlMode != PlayerControlMode.RTS) ToogleCameraMode();
+        if (!playerInputBlocked)
+        {
+            if (controlMode != PlayerControlMode.RTS)
+            {
+                ToogleCameraMode();
+            }
+        }
     }
 
     void OnRaiseLookAroundSensitivityMultiplier()
@@ -267,7 +346,8 @@ public class PlayerController : MonoBehaviour
     {
         desiredLookVektor = playerEntity.transform.forward;
 
-        SwitchToTopDownMode();
+        //SwitchToTopDownMode();
+        SwitchToFPMode();
     }
 
     void Update()
@@ -447,8 +527,7 @@ public class PlayerController : MonoBehaviour
     void SwitchToFPMode()
     {
         controlMode = PlayerControlMode.FirstPerson;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+   
         topdownCam.gameObject.SetActive(false);
         fpCam.gameObject.SetActive(true);
 
@@ -464,8 +543,7 @@ public class PlayerController : MonoBehaviour
     {
         topdownCam.GetComponent<SmoothCameraFollow>().target = playerEntity.transform;
         controlMode = PlayerControlMode.TopDown;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = false;
+    
         topdownCam.gameObject.SetActive(true);
         fpCam.gameObject.SetActive(false);
 
@@ -488,8 +566,6 @@ public class PlayerController : MonoBehaviour
         rtsGhostTransform.gameObject.SetActive(true);
         topdownCam.GetComponent<SmoothCameraFollow>().target = rtsGhostTransform;
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         topdownCam.gameObject.SetActive(true);
         fpCam.gameObject.SetActive(false);
 
@@ -524,5 +600,25 @@ public class PlayerController : MonoBehaviour
         {
             return topdownCam;
         }
+    }
+
+    public void BlockMovementInput()
+    {
+        movementInputBlocked = true;
+    }
+
+    public void UnBlockMovementInput()
+    {
+        movementInputBlocked = false;
+    }
+
+    public void BlockAllPlayerInput()
+    {
+        playerInputBlocked = true;
+    }
+
+    public void UnBlockAllPlayerInput()
+    {
+        playerInputBlocked = false;
     }
 }

@@ -119,6 +119,32 @@ public class HordeModeManager : MonoBehaviour
         {
             // RespawnPlayers();
             //AddPlayerPoints(activePlayerControllers[1].playerEntity, 200);
+
+
+            HashSet<GameEntity> enemiesToKill = new HashSet<GameEntity>(currentWaveEnemies);
+            foreach(GameEntity enemy in enemiesToKill)
+            {
+                enemy.Die(null);
+            }
+            //wave won
+            RespawnPlayers();
+            state = HordeModeState.Pause;
+            nextWaveTime = Time.time + pauseTime;
+
+            for (int i = 0; i < hordeUI.Length; i++)
+            {
+                hordeUI[i].StartPause();
+                playerRessources.AddPlayerPoints(i, pointsForFirstWave * Mathf.Pow(pointsMultiplier, currentWaveNumber - 1));
+                // hordeUI[i].UpdatePlayerScore((int)playerPoints[i]);
+                //Debug.Log("add: " + pointsForFirstWave * Mathf.Pow(pointsMultiplier, waveNumber-1));
+            }
+
+            //sound 
+            musicManager.StopMusic();
+            //audioSource.loop = false;
+            audioSource.clip = waveEndSound;
+            audioSource.Play();
+            musicManager.PlayMusic(pauseMusic, true, 4);
         }
 
 

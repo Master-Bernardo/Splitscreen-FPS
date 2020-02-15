@@ -664,8 +664,6 @@ public class B_Tick : Behaviour
             {
                 movement.MoveTo(nearestEnemyPosition + (myPosition - nearestEnemyPosition).normalized * (perfectMeleeDistance + myWidth + enemyWidth));
             }*/
-            Debug.Log("distance" + distanceToEnemySquared);
-            Debug.Log("explosion disatnce: " + explosionDistance);
 
             if (distanceToEnemySquared < explosionDistance)
             {
