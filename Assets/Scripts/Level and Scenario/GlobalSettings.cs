@@ -9,4 +9,6 @@ public static class GlobalSettings
     public static float hordeModeHardness = 1;
 
     public static bool twoMonitors = false;
+
+    public static bool enablePlayerRessourcesInVersus;
 }

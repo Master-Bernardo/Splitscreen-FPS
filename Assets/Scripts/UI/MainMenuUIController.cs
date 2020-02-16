@@ -9,6 +9,14 @@ public class MainMenuUIController : MonoBehaviour
     public Text playerNumberText;
     public Text hordeModeHardnessText;
     public Text twoMonitorsText;
+    public Text enablePlayerRessourcesInVersusText;
+
+    [Header("SubMenus")]
+    public Canvas mainCanvas;
+    public Canvas scenarioModeCanvas;
+    public Canvas hordeModeCanvas;
+    public Canvas versusModeCanvas;
+    public Canvas controlsCanvas;
 
 
     void Start()
@@ -21,14 +29,53 @@ public class MainMenuUIController : MonoBehaviour
     }
   
 
-    public void GoToHordeMode()
+    public void StartHordeMode()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+    public void StartVersusMode()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void StartScenarioMode()
     {
         SceneManager.LoadScene(1);
     }
 
-    public void GoToVersusMode()
+    public void GoBackToMainMenuPanel()
     {
-        SceneManager.LoadScene(2);
+        scenarioModeCanvas.enabled = false;
+        hordeModeCanvas.enabled = false;
+        versusModeCanvas.enabled = false;
+        controlsCanvas.enabled = false;
+
+        mainCanvas.enabled = true;
+    }
+
+    public void GoToScenarioModeSubmenu()
+    {
+        mainCanvas.enabled = false;
+        scenarioModeCanvas.enabled = true;
+    }
+
+    public void GoToVersusModeSubmenu()
+    {
+        mainCanvas.enabled = false;
+        versusModeCanvas.enabled = true;
+    }
+
+    public void GoToHordeModeSubmenu()
+    {
+        mainCanvas.enabled = false;
+        hordeModeCanvas.enabled = true;
+    }
+
+    public void GoToControlsModeSubmenu()
+    {
+        mainCanvas.enabled = false;
+        controlsCanvas.enabled = true;
     }
 
     public void RaisePlayerNumber()
@@ -56,6 +103,12 @@ public class MainMenuUIController : MonoBehaviour
         if (GlobalSettings.hordeModeHardness > 0.3f) GlobalSettings.hordeModeHardness -= 0.2f;
         
         hordeModeHardnessText.text = GlobalSettings.hordeModeHardness.ToString();
+    }
+
+    public void ToogleEnableRessourcesInVersus()
+    {
+        GlobalSettings.enablePlayerRessourcesInVersus = !GlobalSettings.enablePlayerRessourcesInVersus;
+        enablePlayerRessourcesInVersusText.text = GlobalSettings.enablePlayerRessourcesInVersus.ToString();
     }
 
     public void ToogleTwoMonitors()
