@@ -632,7 +632,7 @@
                 {
                     "name": "",
                     "id": "4df194dc-0416-4826-938e-7176e1f909b0",
-                    "path": "<Keyboard>/#(9)",
+                    "path": "<Keyboard>/0",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
@@ -654,7 +654,7 @@
                 {
                     "name": "",
                     "id": "6d4720fc-08e5-477a-bd6b-55c3e51152e2",
-                    "path": "<Keyboard>/0",
+                    "path": "<Keyboard>/9",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
@@ -668,7 +668,7 @@
                     "path": "<Gamepad>/dpad/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "LowerLookAroundSensitivityMultiplier",
                     "isComposite": false,
                     "isPartOfComposite": false

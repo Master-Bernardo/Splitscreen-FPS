@@ -34,7 +34,9 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     public float maxDashPoints;
     float currentDashPoints;
     public float dashPointReplenishmentSpeed;
-    public DashPointsUI dashUI;
+    public DashVisualsUI dashUI;
+
+
 
     #endregion
 
@@ -199,6 +201,7 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
             {
                 base.Dash(direction);
                 currentDashPoints--;
+                dashUI.OnDash();
             }
         } 
     }

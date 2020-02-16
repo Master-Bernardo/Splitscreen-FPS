@@ -68,6 +68,11 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
     public bool useSpine;
     public Transform spine;
 
+    [Header("Audio")]
+    public AudioSource movementAudioSource;
+    public AudioClip dashSound;
+    public AudioClip defaultFootsteps;
+
     #endregion
 
     public override void SetUpComponent(GameEntity entity)
@@ -257,6 +262,15 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         dashDirection = direction;
         nextDashEndTime = Time.time + dashTime;
         movementState = MovementState.Dashing;
+
+
+        //audio
+        if (movementAudioSource)
+        {
+            movementAudioSource.loop = false;
+            movementAudioSource.clip = dashSound;
+            movementAudioSource.Play();
+        } 
     }
 
     //sets the agent to rotate 
