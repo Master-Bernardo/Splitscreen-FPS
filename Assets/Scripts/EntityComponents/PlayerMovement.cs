@@ -169,14 +169,21 @@ public class PlayerMovement : EC_Movement, IPusheable<Vector3>
     {
         float deltaTime = Time.time - lastRotationTime;
 
-        if (useSpine)
+        /*if (useSpine)
         {
             spine.rotation = Quaternion.LookRotation(new Vector3(spine.transform.forward.x, direction.y, spine.transform.forward.z));
-        }
+        }*/
 
         direction.y = 0;
         transform.rotation = Quaternion.LookRotation(direction);
         lastRotationTime = Time.time;
+    }
+
+    //not the nicest name
+    public void InstanctCameraRotateFP(float xRot)
+    {
+        float newRot = spine.localEulerAngles.x + xRot;
+        spine.localEulerAngles = new Vector3(newRot, 0, 0);
     }
 
     public void Jump()

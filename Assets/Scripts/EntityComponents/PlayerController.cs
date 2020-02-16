@@ -421,36 +421,23 @@ public class PlayerController : MonoBehaviour
         } 
         else if (controlMode == PlayerControlMode.FirstPerson)
         {
-            if (playerInput.controlScheme == "Gamepad")
-            {
+            /*
+            Vector3 desiredLookVektorHorizontal = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity * Time.deltaTime, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
+            Vector3 desiredLookVektorVertical = (Quaternion.AngleAxis(-mouseDelta.y * ySensitivity * Time.deltaTime, fpCam.transform.right) * fpCam.transform.forward).normalized;
+            desiredLookVektor = new Vector3(desiredLookVektorHorizontal.x, desiredLookVektorVertical.y, desiredLookVektorHorizontal.z);
 
-                //TODO
 
-                /*if (lookInputVector != new Vector2(0, 0))
-                {
-                    currentLookVector = Quaternion.Euler(0, topdownCam.transform.localEulerAngles.y, 0) * new Vector3(lookInputVectorUsed.x, 0f, lookInputVectorUsed.y);
-                }
-                else
-                {
-                    if (movementVector != new Vector3(0, 0, 0))
-                    {
-                        currentLookVector = movementVector;
-                    }
-                }*/
-                Vector3 desiredLookVektorHorizontal = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity*Time.deltaTime, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
-                Vector3 desiredLookVektorVertical = (Quaternion.AngleAxis(-mouseDelta.y * ySensitivity * Time.deltaTime, fpCam.transform.right) * fpCam.transform.forward).normalized;
-                desiredLookVektor = new Vector3(desiredLookVektorHorizontal.x, desiredLookVektorVertical.y, desiredLookVektorHorizontal.z);
+            //first person mode gets rotation applied directly in update, not in fixedUpdate
+            playerMovement.InstantRotateTo(desiredLookVektor);*/
 
-            }
-            else
-            {
-                Vector3 desiredLookVektorHorizontal = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity * Time.deltaTime, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
-                Vector3 desiredLookVektorVertical = (Quaternion.AngleAxis(-mouseDelta.y * ySensitivity * Time.deltaTime, fpCam.transform.right) * fpCam.transform.forward).normalized;
-                desiredLookVektor = new Vector3(desiredLookVektorHorizontal.x, desiredLookVektorVertical.y, desiredLookVektorHorizontal.z);
-            }
+            Vector3 desiredLookVektorHorizontal = (Quaternion.AngleAxis(mouseDelta.x * xSensitivity * Time.deltaTime, playerEntity.transform.up) * playerEntity.transform.forward).normalized;
+            desiredLookVektor = new Vector3(desiredLookVektorHorizontal.x, 0, desiredLookVektorHorizontal.z);
 
             //first person mode gets rotation applied directly in update, not in fixedUpdate
             playerMovement.InstantRotateTo(desiredLookVektor);
+
+            float cameraRotX = -mouseDelta.y * ySensitivity * Time.deltaTime;
+            playerMovement.InstanctCameraRotateFP(cameraRotX);
         }
 
         #endregion

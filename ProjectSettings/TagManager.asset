@@ -25,10 +25,10 @@ TagManager:
   - Player4UI
   - BulletsNoCollision
   - Bullets
-  - 
-  - 
-  - 
-  - 
+  - Player1ModelToHideInFP
+  - Player2ModelToHideInFP
+  - Player3ModelToHideInFP
+  - Player4ModelToHideInFP
   - 
   - 
   - 

@@ -3176,8 +3176,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topdownCam: {fileID: 6183753401972804381}
   topDownUICam: {fileID: 2017060918397914822}
-  fpCam: {fileID: 2443985722483381459}
-  fpUICam: {fileID: 1696006948206232285}
+  fpCam: {fileID: 8888386354509974030}
+  fpUICam: {fileID: 5564831819199536128}
   playerUICanvas: {fileID: 4974359946225021757}
   aimingCross: {fileID: 5170006447082219390}
   onDieEvent:
@@ -3192,8 +3192,9 @@ MonoBehaviour:
   interactableShower: {fileID: 6220837482008393363}
   desiredLookVektor: {x: 0, y: 0, z: 0}
   looseWeaponOnDeath: 0
-  xSensitivity: 0.25
-  ySensitivity: 0.24
+  lookAroundSensitivityMultiplayer: 1
+  xSensitivity: 15
+  ySensitivity: 14.4
   aimVisualiser: {fileID: 5702295977884363389}
   playerAudioListener: {fileID: 0}
 --- !u!114 &2644841294179210046
@@ -4393,7 +4394,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 401207
+    m_Bits: 8265527
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6218,15 +6219,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dddb5cb12874cc4a9d89b833270d30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!20 &2443985722483381459 stripped
+--- !u!20 &8888386354509974030 stripped
 Camera:
-  m_CorrespondingSourceObject: {fileID: 2161999544909750152, guid: b2747a8075c85994cbcb010e96f3b09e,
+  m_CorrespondingSourceObject: {fileID: 4950541735406485845, guid: b2747a8075c85994cbcb010e96f3b09e,
     type: 3}
   m_PrefabInstance: {fileID: 4605563049805957979}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &1696006948206232285 stripped
+--- !u!20 &5564831819199536128 stripped
 Camera:
-  m_CorrespondingSourceObject: {fileID: 2910260374235515270, guid: b2747a8075c85994cbcb010e96f3b09e,
+  m_CorrespondingSourceObject: {fileID: 8273251324736608091, guid: b2747a8075c85994cbcb010e96f3b09e,
     type: 3}
   m_PrefabInstance: {fileID: 4605563049805957979}
   m_PrefabAsset: {fileID: 0}
