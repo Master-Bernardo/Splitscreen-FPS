@@ -32,6 +32,9 @@ public class Projectile : MonoBehaviour
     //public Transform audioSourceTransform;
     public ProjectileImpactSound impactSoundDisableController;
 
+    [Header("ImpactVisuals")]
+    public ParticleSystem visualsParticleSystem;
+
 
 
     public void SetVelocity(float startVelocity)
@@ -51,13 +54,16 @@ public class Projectile : MonoBehaviour
         
         if (audioSource != null)
         {
+            impactSoundDisableController.ResetPosition(transform);
+
             if (flySound != null)
             {
                 audioSource.loop = true;
                 audioSource.clip = flySound;
                 audioSource.Play();
+                
             }
-            impactSoundDisableController.ResetPosition(transform);
+            
            
         }
 
@@ -80,7 +86,7 @@ public class Projectile : MonoBehaviour
             if (impactSound != null)
             {
                 impactSoundDisableController.Deparent();
-
+                if(visualsParticleSystem)visualsParticleSystem.Play(); //TODO do sound and visuzals speratelylater
                 if (audioSource)
                 {
                     audioSource.loop = false;
