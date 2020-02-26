@@ -488,7 +488,8 @@ public class PlayerController : MonoBehaviour
             playerEntity.GetComponent<EC_PlayerWeaponSystem>().ResetWeaponsRespawn();
         }
 
-        controlMode = PlayerControlMode.TopDown;
+        //controlMode = PlayerControlMode.TopDown;
+        SwitchToFPMode();
 
     }
 

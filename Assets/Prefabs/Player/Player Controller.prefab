@@ -6244,6 +6244,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3848495773967573341, guid: b2747a8075c85994cbcb010e96f3b09e,
         type: 3}
+      propertyPath: onDieEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3848495773967573341, guid: b2747a8075c85994cbcb010e96f3b09e,
+        type: 3}
       propertyPath: onTakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -6265,6 +6270,31 @@ PrefabInstance:
     - target: {fileID: 3848495773967573341, guid: b2747a8075c85994cbcb010e96f3b09e,
         type: 3}
       propertyPath: onTakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3848495773967573341, guid: b2747a8075c85994cbcb010e96f3b09e,
+        type: 3}
+      propertyPath: onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3848495773967573341, guid: b2747a8075c85994cbcb010e96f3b09e,
+        type: 3}
+      propertyPath: onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3848495773967573341, guid: b2747a8075c85994cbcb010e96f3b09e,
+        type: 3}
+      propertyPath: onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 613556850185081196}
+    - target: {fileID: 3848495773967573341, guid: b2747a8075c85994cbcb010e96f3b09e,
+        type: 3}
+      propertyPath: onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDie
+      objectReference: {fileID: 0}
+    - target: {fileID: 3848495773967573341, guid: b2747a8075c85994cbcb010e96f3b09e,
+        type: 3}
+      propertyPath: onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4476750716165585789, guid: b2747a8075c85994cbcb010e96f3b09e,

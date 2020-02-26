@@ -22,9 +22,10 @@ public class Weapon : MonoBehaviour
 
 
 
-    public void SetUp(EC_HumanWeaponSystem weaponSystem)
+    public void SetUp(EC_HumanWeaponSystem weaponSystem, int teamID)
     {
         this.weaponSystem = weaponSystem;
+        this.teamID = teamID;
     }
 
     public virtual void OnWeaponSelect(GameEntity selectingEntity)

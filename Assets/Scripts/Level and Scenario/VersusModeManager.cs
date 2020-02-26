@@ -60,7 +60,7 @@ public class VersusModeManager : MonoBehaviour
         playerStatus = new bool[activePlayerControllers.Count];
         
         nextRespawnTime = new float[activePlayerControllers.Count];
-
+        SetUpTeams();
         RespawnPlayers();
     }
 
@@ -154,6 +154,19 @@ public class VersusModeManager : MonoBehaviour
         else
         {
             AddPoints(0, 1);
+        }
+    }
+
+    void SetUpTeams()
+    {
+        int team = 0;
+
+        for (int i = 0; i < playerEntities.Count; i++)
+        {
+            (playerEntities[i] as PlayerEntity).SetTeam(team);
+
+            if (team == 0) team = 1;
+            else team = 0;
         }
     }
 

@@ -116,12 +116,15 @@ MonoBehaviour:
   canBePushed: 1
   pushEndTreshold: 5
   pushBeginnTreshold: 0
-  dashForce: 100
+  dashForce: 40
   dashTime: 0.125
   dashMultiplier: 0.75
   showGizmo: 0
   useSpine: 1
   spine: {fileID: 8266468409923373655}
+  movementAudioSource: {fileID: 0}
+  dashSound: {fileID: 0}
+  defaultFootsteps: {fileID: 0}
 --- !u!114 &-7568736579957523176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +143,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   scanInterval: 0.5
-  scanRadius: 15
+  scanRadius: 30
 --- !u!114 &2569533055694648825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 40
+  maxHealth: 300
   healthBarFill: {fileID: 0}
   changeColorOnDamage: 1
   damageMaterial: {fileID: 2100000, guid: 8297e0eb55f729243a4875f7b5ffdd3c, type: 2}

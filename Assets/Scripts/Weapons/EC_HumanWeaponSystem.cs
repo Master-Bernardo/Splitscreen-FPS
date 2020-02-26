@@ -121,7 +121,7 @@ public class EC_HumanWeaponSystem : EntityComponent
             {
                 weapon.teamID = myEntity.teamID;
                 weapon.gameObject.SetActive(false);
-                weapon.SetUp(this);
+                weapon.SetUp(this, myEntity.teamID);
             }
         }
         currentSelectedWeapon = null;
@@ -254,7 +254,7 @@ public class EC_HumanWeaponSystem : EntityComponent
         newWeapon.transform.SetParent(rightHand.transform);
         newWeapon.transform.localPosition = new Vector3(0, 0, 0);
         newWeapon.transform.forward = rightHand.transform.forward;
-        newWeapon.SetUp(this);
+        newWeapon.SetUp(this, myEntity.teamID);
         newWeapon.teamID = myEntity.teamID;
 
         if (!currentSelectedWeapon)

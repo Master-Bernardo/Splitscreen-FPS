@@ -81,9 +81,13 @@ public class Projectile : MonoBehaviour
             {
                 impactSoundDisableController.Deparent();
 
-                audioSource.loop = false;
-                audioSource.clip = impactSound;
-                audioSource.Play();
+                if (audioSource)
+                {
+                    audioSource.loop = false;
+                    audioSource.clip = impactSound;
+                    audioSource.Play();
+                }
+              
             }
         }
     }

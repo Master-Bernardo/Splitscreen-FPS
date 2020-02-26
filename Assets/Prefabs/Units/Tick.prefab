@@ -50,7 +50,7 @@ MonoBehaviour:
   explosionVisualsPrefab: {fileID: 417003689332000338, guid: 028c91d132e5ee846aee27632369f0cd,
     type: 3}
   explosionVisualsDestroyDelay: 5
-  damage: 80
+  damage: 800
   pushes: 1
   pushForce: 300
   killPushForce: 300
@@ -282,6 +282,9 @@ MonoBehaviour:
   showGizmo: 0
   useSpine: 0
   spine: {fileID: 0}
+  movementAudioSource: {fileID: 0}
+  dashSound: {fileID: 0}
+  defaultFootsteps: {fileID: 0}
 --- !u!114 &7796497638840252230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +303,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   scanInterval: 0.5
-  scanRadius: 15
+  scanRadius: 30
 --- !u!114 &6443555773624844199
 MonoBehaviour:
   m_ObjectHideFlags: 0

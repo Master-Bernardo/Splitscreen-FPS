@@ -147,6 +147,9 @@ MonoBehaviour:
   showGizmo: 0
   useSpine: 1
   spine: {fileID: 3270906461379974078}
+  movementAudioSource: {fileID: 0}
+  dashSound: {fileID: 0}
+  defaultFootsteps: {fileID: 0}
 --- !u!114 &-7568736579957523176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +168,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   scanInterval: 0.5
-  scanRadius: 15
+  scanRadius: 30
 --- !u!114 &8466272924457072801
 MonoBehaviour:
   m_ObjectHideFlags: 0
