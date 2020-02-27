@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public static class GlobalSettings 
 {
     public static int playerNumber = 1;
@@ -10,5 +11,7 @@ public static class GlobalSettings
 
     public static bool twoMonitors = false;
 
-    public static bool enablePlayerRessourcesInVersus;
+    public static bool enableAIInVersus = true;
+
+    public static float versusUnitsAmount = 1;
 }

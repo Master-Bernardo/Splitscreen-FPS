@@ -9,7 +9,8 @@ public class MainMenuUIController : MonoBehaviour
     public Text playerNumberText;
     public Text hordeModeHardnessText;
     public Text twoMonitorsText;
-    public Text enablePlayerRessourcesInVersusText;
+    public Text enablePlayerMinionsInVersusText;
+    public Text minionsMultiplierText;
 
     [Header("SubMenus")]
     public Canvas mainCanvas;
@@ -26,6 +27,7 @@ public class MainMenuUIController : MonoBehaviour
         playerNumberText.text = GlobalSettings.playerNumber.ToString();
         hordeModeHardnessText.text = GlobalSettings.hordeModeHardness.ToString();
         twoMonitorsText.text = GlobalSettings.twoMonitors.ToString();
+        minionsMultiplierText.text = GlobalSettings.versusUnitsAmount.ToString();
     }
   
 
@@ -105,15 +107,27 @@ public class MainMenuUIController : MonoBehaviour
         hordeModeHardnessText.text = GlobalSettings.hordeModeHardness.ToString();
     }
 
-    public void ToogleEnableRessourcesInVersus()
+    public void ToogleEnableMinionsInVersus()
     {
-        GlobalSettings.enablePlayerRessourcesInVersus = !GlobalSettings.enablePlayerRessourcesInVersus;
-        enablePlayerRessourcesInVersusText.text = GlobalSettings.enablePlayerRessourcesInVersus.ToString();
+        GlobalSettings.enableAIInVersus = !GlobalSettings.enableAIInVersus;
+        enablePlayerMinionsInVersusText.text = GlobalSettings.enableAIInVersus.ToString();
     }
 
     public void ToogleTwoMonitors()
     {
         GlobalSettings.twoMonitors = !GlobalSettings.twoMonitors;
         twoMonitorsText.text = GlobalSettings.twoMonitors.ToString();
+    }
+
+    public void RaiseMinionNumber()
+    {
+        GlobalSettings.versusUnitsAmount += 0.2f;
+        minionsMultiplierText.text = GlobalSettings.versusUnitsAmount.ToString();
+    }
+
+    public void LowerMinionNumber()
+    {
+        GlobalSettings.versusUnitsAmount -= 0.2f;
+        minionsMultiplierText.text = GlobalSettings.versusUnitsAmount.ToString();
     }
 }

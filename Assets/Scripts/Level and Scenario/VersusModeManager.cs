@@ -40,7 +40,20 @@ public class VersusModeManager : MonoBehaviour
 
     public Transform[] spawnPoints;
 
-    // Start is called before the first frame update
+    public static VersusModeManager Instance;
+
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            DestroyImmediate(Instance);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
         UpdatePointsUI();
@@ -194,6 +207,28 @@ public class VersusModeManager : MonoBehaviour
         player.ActivatePlayer();
         Debug.Log("respan");
         playerStatus[playerID] = true;
+
+    }
+
+    public GameEntity GetNearestEnemyPlayer(Vector3 searchingEntityPosition, int searchingEntityTeamID)
+    {
+        GameEntity nearestEnemyPlayer = null;
+        float nearestDistance = Mathf.Infinity;
+
+        foreach (GameEntity playerEntity in playerEntities)
+        {
+            if(playerEntity.teamID != searchingEntityTeamID)
+            {
+                float currentDistance = (searchingEntityPosition - playerEntity.transform.position).sqrMagnitude;
+                if (currentDistance < nearestDistance)
+                {
+                    nearestEnemyPlayer = playerEntity;
+                    nearestDistance = currentDistance;
+                }
+            }
+        }
+
+        return nearestEnemyPlayer;
 
     }
 }

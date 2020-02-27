@@ -9,7 +9,8 @@ public class EC_Sensing : EntityComponent
     public enum SensingType
     {
         RadiusSensing,
-        HordeSensing //radiusSensing + get player form hordemanager
+        HordeSensing, //radiusSensing + get player form hordemanager
+        VersusSensing //radius sensing + get player from versus manager, if no enemy units present
     }
 
     public SensingType type;
@@ -73,6 +74,13 @@ public class EC_Sensing : EntityComponent
             if (nearestEnemy == null)
             {
                 nearestEnemy = HordeModeManager.Instance.GetNearestPlayer(transform.position);
+            }
+        }
+        else if(type == SensingType.VersusSensing)
+        {
+            if (nearestEnemy == null)
+            {
+                nearestEnemy = VersusModeManager.Instance.GetNearestEnemyPlayer(transform.position, myEntity.teamID);
             }
         }
 
