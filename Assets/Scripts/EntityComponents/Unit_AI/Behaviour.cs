@@ -685,3 +685,119 @@ public class B_Tick : Behaviour
         //movement.StopLookAt();
     }
 }
+
+[System.Serializable]
+public class B_MissileFighterInCover : Behaviour
+{
+    //refactor and add distance checking with width
+
+    //EC_Movement movement;
+    EC_Sensing enemySensing;
+    EC_MissileWeaponController weaponController;
+    Animator handsAnimator;
+    EC_HumanWeaponSystem weaponSystem;
+    //goes to nearest enemy, shoots  and looks at them when in range, tries not to get too close
+
+    /*public float perfectShootingDistance;
+    public float maxShootingDistance;
+    bool inRange;
+
+    float myWidth;
+    float enemyWidth;
+
+
+    public float distanceCheckingInterval;
+    float nextDistanceCheckTime;*/
+
+    [Tooltip("to make the bahaviour more realistical, the unit starts shooting after a small delay after entering this behaviour")]
+    public float shootingStartDelay;
+    float shootingStartTime;
+    bool shootingStarted;
+
+    public void SetUpBehaviour(GameEntity entity, EC_Sensing enemySensing, EC_MissileWeaponController weapon)
+    {
+        this.enemySensing = enemySensing;
+        this.entity = entity;
+        //this.movement = movement;
+        this.weaponController = weapon;
+    }
+
+    public void SetUpBehaviour(GameEntity entity, EC_Sensing enemySensing, EC_MissileWeaponController weapon, Animator handsAnimator, EC_HumanWeaponSystem weaponSystem)
+    {
+        this.enemySensing = enemySensing;
+        this.entity = entity;
+        //this.movement = movement;
+        this.weaponController = weapon;
+        this.handsAnimator = handsAnimator;
+        this.weaponSystem = weaponSystem;
+    }
+
+    protected override void Update()
+    {
+     
+        //weaponController.StopAiming();
+
+        weaponController.AimAt(enemySensing.nearestEnemy);
+
+
+        if (!shootingStarted)
+        {
+            if (Time.time > shootingStartTime) shootingStarted = true;
+        }
+         else
+         {
+
+                 if (weaponController.HasEnoughAmmoLoaded())
+                 {
+                     if (weaponSystem.CanShoot())
+                     {
+
+                         weaponController.Shoot();
+
+
+                         //Debug.Log("shot on state: " + weaponSystem.state);
+                     }
+
+                 }
+                 else if (!weaponSystem.IsReloading())
+                 {
+                     //Debug.Log("not enough ammo");
+                     //weaponSystem.StartReloading();
+                     //Debug.Log("reload");
+                 }
+
+         }
+    }
+
+    public override void OnBehaviourExit()
+    {
+        /*if (handsAnimator != null)
+        {
+            handsAnimator.SetTrigger("EnterIdleStanceMissile1");
+        }*/
+        //movement.Stop();
+        //movement.StopLookAt();
+        weaponController.StopAiming();
+
+       // inRange = false;
+
+        if (handsAnimator != null)
+        {
+            // handsAnimator.SetBool("CombatStance2", false);
+
+        }
+    }
+
+    public override void OnBehaviourEnter()
+    {
+        shootingStarted = false;
+        shootingStartTime = Time.time + shootingStartDelay;
+
+        if (handsAnimator != null)
+        {
+            //handsAnimator.SetBool("CombatStance2", true);
+            handsAnimator.SetBool("IdleStance", false);
+
+        }
+    }
+}
