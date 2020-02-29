@@ -58,20 +58,15 @@ public class EC_Turrent : EntityComponent
             //check if we want to shoot;
 
             //if rotation current desired > tolerableAimingAngleError -> shoot
-            float aimingError = Vector3.Angle(turrentVerticalRotater.forward, desiredVerAimDirection);
+            float aimingError = Quaternion.Angle(turrentVerticalRotater.rotation, Quaternion.LookRotation(nearestEnemyPos - turrentVerticalRotater.position));
           
             if(aimingError < tolerableAimingAngleError)
             {
-                Debug.Log("aimingError: - shoot");
                 if (Time.timeSinceLevelLoad >= nextShootTime)
                 {
                     nextShootTime = Time.timeSinceLevelLoad + shootingInterval;
                     Shoot();
                 }
-            }
-            else
-            {
-                Debug.Log("aiming error too big");
             }
         }
         else

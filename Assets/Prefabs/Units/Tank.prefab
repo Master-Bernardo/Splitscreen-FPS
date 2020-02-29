@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 3000
+  maxHealth: 600
   healthBarFill: {fileID: 0}
   changeColorOnDamage: 1
   damageMaterial: {fileID: 2100000, guid: 8297e0eb55f729243a4875f7b5ffdd3c, type: 2}
@@ -199,7 +199,7 @@ MonoBehaviour:
   turrentVerticalRotater: {fileID: 662468173984679986}
   horizontalRotationSpeed: 50
   verticalRotationSpeed: 50
-  initialLaunchSpeed: 20
+  initialLaunchSpeed: 200
   teamID: 1
   shootPoint: {fileID: 1359856485144977958}
   bloom: 0.5
