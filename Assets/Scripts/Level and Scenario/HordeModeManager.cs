@@ -97,7 +97,7 @@ public class HordeModeManager : MonoBehaviour
 
         //Debug.Log("debug.log( count): " + activePlayers.Count);
 
-        nextWaveTime = prepTime;
+        nextWaveTime = Time.timeSinceLevelLoad + prepTime;
 
         //sound
         musicManager.PlayMusic(pauseMusic, true, 2);
@@ -129,7 +129,7 @@ public class HordeModeManager : MonoBehaviour
             //wave won
             RespawnPlayers();
             state = HordeModeState.Pause;
-            nextWaveTime = Time.time + pauseTime;
+            nextWaveTime = Time.timeSinceLevelLoad + pauseTime;
 
             for (int i = 0; i < hordeUI.Length; i++)
             {
@@ -153,7 +153,7 @@ public class HordeModeManager : MonoBehaviour
         {
             case HordeModeState.Pause:
 
-                if (Time.time > nextWaveTime)
+                if (Time.timeSinceLevelLoad > nextWaveTime)
                 {
                     currentWaveNumber++;
 
@@ -181,7 +181,7 @@ public class HordeModeManager : MonoBehaviour
                 {
                     for (int i = 0; i < hordeUI.Length; i++)
                     {
-                        hordeUI[i].UpdatePauseTimeLeft((int)(nextWaveTime - Time.time));
+                        hordeUI[i].UpdatePauseTimeLeft((int)(nextWaveTime - Time.timeSinceLevelLoad));
                     }
                 }
 
@@ -200,7 +200,7 @@ public class HordeModeManager : MonoBehaviour
                         //wave won
                         RespawnPlayers();
                         state = HordeModeState.Pause;
-                        nextWaveTime = Time.time + pauseTime;
+                        nextWaveTime = Time.timeSinceLevelLoad + pauseTime;
 
                         for (int i = 0; i < hordeUI.Length; i++)
                         {

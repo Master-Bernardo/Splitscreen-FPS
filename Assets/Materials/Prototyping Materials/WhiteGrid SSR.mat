@@ -128,7 +128,7 @@ Material:
     - _Metallic: 0.1
     - _MixBlackColor: 0
     - _Mode: 0
-    - _NearClip: 0.01
+    - _NearClip: 0.005
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
