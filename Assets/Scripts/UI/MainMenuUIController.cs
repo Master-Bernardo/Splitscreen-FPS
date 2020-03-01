@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class MainMenuUIController : MonoBehaviour
 {
     public Text playerNumberText;
+    public Text playerNumberText2;
     public Text hordeModeHardnessText;
     public Text twoMonitorsText;
     public Text enablePlayerMinionsInVersusText;
@@ -25,6 +26,7 @@ public class MainMenuUIController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         playerNumberText.text = GlobalSettings.playerNumber.ToString();
+        playerNumberText2.text = GlobalSettings.playerNumber.ToString();
         hordeModeHardnessText.text = GlobalSettings.hordeModeHardness.ToString();
         twoMonitorsText.text = GlobalSettings.twoMonitors.ToString();
         minionsMultiplierText.text = GlobalSettings.versusUnitsAmount.ToString();
@@ -85,6 +87,7 @@ public class MainMenuUIController : MonoBehaviour
         GlobalSettings.playerNumber++;
         if (GlobalSettings.playerNumber > 4) GlobalSettings.playerNumber = 1;
         playerNumberText.text = GlobalSettings.playerNumber.ToString();
+        playerNumberText2.text = GlobalSettings.playerNumber.ToString();
     }
 
     public void LowerPlayerNumber()
@@ -92,6 +95,7 @@ public class MainMenuUIController : MonoBehaviour
         GlobalSettings.playerNumber--;
         if (GlobalSettings.playerNumber < 1) GlobalSettings.playerNumber = 4;
         playerNumberText.text = GlobalSettings.playerNumber.ToString();
+        playerNumberText2.text = GlobalSettings.playerNumber.ToString();
     }
 
     public void RaiseHordeModeHardness()
