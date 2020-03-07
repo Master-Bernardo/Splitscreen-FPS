@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     public UnityEvent onDieEvent;
 
-    public PlayerMovement playerMovement;
+    public EC_PlayerMovement playerMovement;
     public GameEntity playerEntity;
     public Transform rtsGhostTransform;
     public PlayerMovementRTS deadPlayerMovement;

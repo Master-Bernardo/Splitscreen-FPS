@@ -115,9 +115,9 @@ public class Projectile : MonoBehaviour
             GameEntity entity = collision.gameObject.GetComponent<GameEntity>();
             if (entity != null)
             {
-                if (!Settings.Instance.friendlyFire)
+                if (!SceneSettings.Instance.friendlyFire)
                 {
-                    DiplomacyStatus diplomacyStatus = Settings.Instance.GetDiplomacyStatus(projectileTeamID, entity.teamID);
+                    DiplomacyStatus diplomacyStatus = SceneSettings.Instance.GetDiplomacyStatus(projectileTeamID, entity.teamID);
                     if(diplomacyStatus == DiplomacyStatus.War)
                     {
                         GiveDamage(damageable);
@@ -144,7 +144,7 @@ public class Projectile : MonoBehaviour
             }
             else
             {
-                pusheable.Push(velocityLastFrame.normalized* pushForce * Settings.Instance.forceMultiplier);              
+                pusheable.Push(velocityLastFrame.normalized* pushForce * SceneSettings.Instance.forceMultiplier);              
             }
         }
 

@@ -176,7 +176,7 @@ public class VersusModeManager : MonoBehaviour
 
         for (int i = 0; i < playerEntities.Count; i++)
         {
-            (playerEntities[i] as PlayerEntity).SetTeam(team);
+            (playerEntities[i] as E_PlayerEntity).SetTeam(team);
 
             if (team == 0) team = 1;
             else team = 0;

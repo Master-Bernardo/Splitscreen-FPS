@@ -94,9 +94,9 @@ private void OnTriggerEnter(Collider collider)
             GameEntity entity = collider.gameObject.GetComponent<GameEntity>();
             if (entity != null)
             {
-                if (!Settings.Instance.friendlyFire)
+                if (!SceneSettings.Instance.friendlyFire)
                 {
-                    DiplomacyStatus diplomacyStatus = Settings.Instance.GetDiplomacyStatus(myEntity.teamID, entity.teamID);
+                    DiplomacyStatus diplomacyStatus = SceneSettings.Instance.GetDiplomacyStatus(myEntity.teamID, entity.teamID);
                     if (diplomacyStatus == DiplomacyStatus.War)
                     {
                         if (targetsInsideCollider.Count == 0) StartPlayingElectrocuteSound();

@@ -46,9 +46,9 @@ public class TestRocket : MonoBehaviour
                 GameEntity entity = collidersInRange[i].gameObject.GetComponent<GameEntity>();
                 if (entity != null)
                 {
-                    if (!Settings.Instance.friendlyFire)
+                    if (!SceneSettings.Instance.friendlyFire)
                     {
-                        DiplomacyStatus diplomacyStatus = Settings.Instance.GetDiplomacyStatus(projectileTeamID, entity.teamID);
+                        DiplomacyStatus diplomacyStatus = SceneSettings.Instance.GetDiplomacyStatus(projectileTeamID, entity.teamID);
                         if (diplomacyStatus == DiplomacyStatus.War)
                         {
                             GiveDamage(damageable, pushDirection, distanceModifier);
@@ -70,7 +70,7 @@ public class TestRocket : MonoBehaviour
             if (pusheable != null)
             {
                 //Debug.Log(collidersInRange[i].gameObject + "dist: " + distanceSquared + " mod: " + distanceModifier + "force: " + pushForce * distanceModifier);
-                pusheable.Push((pushDirection.normalized * pushForce  + Vector3.up*upwardsLifter)*distanceModifier * Settings.Instance.forceMultiplier);
+                pusheable.Push((pushDirection.normalized * pushForce  + Vector3.up*upwardsLifter)*distanceModifier * SceneSettings.Instance.forceMultiplier);
 
             }
 

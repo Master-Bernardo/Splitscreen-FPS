@@ -17,10 +17,10 @@ public class EC_HordePointsGiver : EntityComponent
 
     public override void OnTakeDamage(DamageInfo damageInfo)
     {
-        if(damageInfo.damageGiver is PlayerEntity)
+        if(damageInfo.damageGiver is E_PlayerEntity)
         {
             
-                playerRessources.AddPlayerPoints((damageInfo.damageGiver as PlayerEntity).playerID, damageInfo.damage * pointsPerDamage);
+                playerRessources.AddPlayerPoints((damageInfo.damageGiver as E_PlayerEntity).playerID, damageInfo.damage * pointsPerDamage);
         }
         
     }
@@ -31,7 +31,7 @@ public class EC_HordePointsGiver : EntityComponent
         {
             if(killer.tag == "Player")
             {
-                playerRessources.AddPlayerPoints((killer as PlayerEntity).playerID, pointsPerDeath);
+                playerRessources.AddPlayerPoints((killer as E_PlayerEntity).playerID, pointsPerDeath);
             }
         }
     }

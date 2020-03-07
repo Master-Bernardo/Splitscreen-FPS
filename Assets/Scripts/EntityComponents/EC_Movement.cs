@@ -134,7 +134,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         if (movementState == MovementState.BeingPushed)
         {
 
-            rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
+            rb.AddForce(-transform.up * (Physics.gravity.magnitude * SceneSettings.Instance.gravityMultiplier), ForceMode.Acceleration);
 
             float velocityThisTime = rb.velocity.sqrMagnitude;
 
@@ -170,7 +170,7 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
         }
         else if (movementState == MovementState.Dashing)
         {
-           rb.AddForce(-transform.up * (Physics.gravity.magnitude * Settings.Instance.gravityMultiplier), ForceMode.Acceleration);
+           rb.AddForce(-transform.up * (Physics.gravity.magnitude * SceneSettings.Instance.gravityMultiplier), ForceMode.Acceleration);
 
 
             if (Time.time > nextDashEndTime)
@@ -202,11 +202,11 @@ public class EC_Movement : EntityComponent, IPusheable<Vector3>
                 //Debug.Log(gameObject.name + " force added: " + dashDirection * dashForce * Settings.Instance.forceMultiplier);
                 if (agent != null)
                 {
-                    rb.AddForce(dashDirection * dashForce * Settings.Instance.forceMultiplier * dashMultiplier, ForceMode.Acceleration);
+                    rb.AddForce(dashDirection * dashForce * SceneSettings.Instance.forceMultiplier * dashMultiplier, ForceMode.Acceleration);
                 }
                 else
                 {
-                    rb.AddForce(dashDirection * dashForce * Settings.Instance.forceMultiplier, ForceMode.Acceleration);
+                    rb.AddForce(dashDirection * dashForce * SceneSettings.Instance.forceMultiplier, ForceMode.Acceleration);
                 }
             }
 

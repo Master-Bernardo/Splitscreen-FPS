@@ -204,9 +204,9 @@ public class EC_MeleeWeaponController : EntityComponent
                     // Debug.Log("damegable entity: " + entity);
                     if (entity != null)
                     {
-                        if (!Settings.Instance.friendlyFire)
+                        if (!SceneSettings.Instance.friendlyFire)
                         {
-                            DiplomacyStatus diplomacyStatus = Settings.Instance.GetDiplomacyStatus(currentWeapon.teamID, entity.teamID);
+                            DiplomacyStatus diplomacyStatus = SceneSettings.Instance.GetDiplomacyStatus(currentWeapon.teamID, entity.teamID);
                             if (diplomacyStatus == DiplomacyStatus.War)
                             {
                                 GiveDamage(damageable, visibleColliders[i].gameObject);
@@ -247,7 +247,7 @@ public class EC_MeleeWeaponController : EntityComponent
                                 direction = relativeTransform.TransformDirection(currentAttack.pushDirection.normalized);
                             }
 
-                            pusheable.Push(direction * currentAttack.pushForce * Settings.Instance.forceMultiplier);
+                            pusheable.Push(direction * currentAttack.pushForce * SceneSettings.Instance.forceMultiplier);
                         }
                     }
 
